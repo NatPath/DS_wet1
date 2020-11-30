@@ -1,6 +1,7 @@
 #ifndef _AVL_H_
 #define _AVL_H_
 #include <memory>
+#include "Auxiliaries.h"
 
 template<class T>
 class AVL_NODE{
@@ -9,6 +10,7 @@ class AVL_NODE{
     Node_ptr left;
     Node_ptr right;
     Node_ptr parent;
+    int height;
 
     public:
     AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr){}
@@ -18,116 +20,52 @@ class AVL_NODE{
     const T& getValue() const{
         return value;
     }
-    AVL_NODE getRight() {
-        if (right==nullptr){
-            return nullptr;
-        }
-        return *right;
+    Node_ptr getRight() {
+        return right;
     }
-    AVL_NODE getLeft() {
-        if (left==nullptr){
-            return nullptr;
-        }
-        return *left;
+    Node_ptr getLeft() {
+        return left;
     }
-    AVL_NODE getParent() {
-        if (parent==nullptr){
-            return nullptr;
-        }
-        return *parent;
+    Node_ptr getParent() {
+        return parent;
+    }
+    int getHeight(){
+        return height;
     }
     //setters
     void setValue(const T& new_value){
         value=new_value;
     }
-    void setRight(AVL_NODE new_right){
+    void setRight(Node_ptr new_right){
         right=new_right;
-        right.parent=this;
+        if (new_right!=nullptr){
+            right.parent=this;
+        }
     }
-    void setLeft(AVL_NODE new_left){
+    void setLeft(Node_ptr new_left){
         left=new_left;
-        left.parent=this;
-    }
-
-}
-template<class T>
-class AVL_Tree{
-    typedef struct std::shared_ptr Node;
-    typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
-    T& value;
-    Node left;
-    Node right;
-    Node parent;
-    Node_ptr root;
-    int balance_factor;
-
-    
-    void roll_ll(){
-        
-    }
-    void roll_lr();
-    void roll_rr();
-    void roll_rl();
-    Node findNodeAux(Node root ,const T& value,Node parent, const bool return_parent){
-        if(root==nullptr) {
-            if(return_parent){
-                return parent;
-            }
-            else{
-                return nullptr;
-            }
-        }   
-        if (value==root->*value){
-            
-            return root;
+        if (new_left!=nullptr){
+            left.parent=this;
         }
-
-        if(value<root->*value){
-            return findNodeAux(root->left,value,root);
-        }
-        else{
-            return findNodeAux(root->right,value,root);
-        }
-        
-    };
-    //These functions DO NOT preserve invariance
-    void setLeft(Node new_left){
-        new_left.parent=this;
-        left=new_left;
     }
-    void setRight(Node new_right){
-        new_right.parent=this;
-        left=new_right;
+    void setHeight(int new_height){
+        height=new_height;
     }
-    //
-    public:
-    AVL(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr){}
-    AVL(T& value,Node left,Node right ,Node parent):left(left),right(right),parent(parent){};
-    
-    Node getRight(){
-        return right;
-    }
-    Node getLeft(){
-        return left;
-    }
-    Node getParent(){
-        return parent;
+    // functions which can be elsewhere
+    bool isLeaf(AVL_NODE node){
+        return node->left==nullptr&&node->right==nullptr;
     }
 
-    //
-    void climbTree(void* func){}
-
-    Node getRoot(){
-        Node climber;
-        climber=this;
+    AVL_NODE getRoot(AVL_NODE node){
+        AVL_NODE climber=node;
         while(climber.parent!=nullptr){
             climber==climber.parent;
         }
         return climber;
     }
     //returns the distance of the node from the root
-    int getHeightOfNode(){
-        Node climber=parent;
+    int distanceFromRoot(AVL_NODE node){ 
+        Node climber=node;
         int counter=0;
         while(climber!=nullptr){
             counter++;                        
@@ -135,19 +73,112 @@ class AVL_Tree{
         }
         return counter;
     }
+    int calcHeight(AVL_NODE parent_node){
 
-    bool isLeaf(Node node){
-        return node->left==nullptr&&node->right==nullptr;
-
+        AVL_NODE left= parent_node->getLeft();
+        AVL_NODE right= parent_node->getRight();
+        return max(left->height(),right->height())+1;
     }
+
+};
+
+
+template<class T>
+class AVL_Tree{
+    //fields if splitting
+    typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
+    Node_ptr root;
+    //int balance_factor;
+
+    
+    void roll_ll(AVL_NODE ){
+        
+    }
+    void roll_lr();
+    void roll_rr();
+    void roll_rl();
+
+    
+    //given correct height of childrens, calculates the height of the parent
+    public:
+
     void inorder(void* func);
     void postorder(void* func);
-    Node findNode(const T& value){
-        Node root = std::make_shared<AVL>(this);
-        return findNodeAux(root ,value,nullptr,false);
+    //Given children with correct heights, returns balance factor
+    int balance_factor(Node_ptr parent_node){
+        if (parent_node==nullptr){
+            throw ;
+        }
+        int left_height=-1;
+        int right_height=-1;
+        AVL_NODE left= parent_node->getLeft();
+        AVL_NODE right= parent_node->getRight();
+        if (left!=nullptr){
+            left_height=left.getHeight();
+        }
+        if (right!=nullptr){
+            right_height=right.getHeight();
+        }
+        return left_height-right_height;
     }
+
     
-    
+    //
+    Node_ptr findLastOfSearchPath(T& to_find){
+        Node_ptr i=root;
+        if(i==nullptr){
+            return nullptr;
+        }
+        do{
+            
+            if (i->getValue()==to_find){
+                return i;
+            }
+            if (i->getValue()>to_find){
+                
+                if (i->getLeft()!=nullptr){
+                    i=i->getLeft();
+                }
+                else {
+                    return i;
+                }
+            }
+            else{
+                if (i->getRight()!=nullptr){
+                    i=i->getRight();
+                }
+                else {
+                    return i;
+                }
+            }
+
+        } while (true);
+        
+    }
+    int height(Node_ptr root){
+        if (root==nullptr){
+            //shouldn't happen
+            return -1;
+        }
+        int res=0;
+
+        
+    }
+    void insertNode(T& to_insert){
+        Node_ptr found_spot=findLastOfSearchPath(to_insert);
+        if (found_spot->getValue()==to_insert){
+            //value is already in the tree
+            return;
+        }
+        else if(found_spot->getValue() < to_insert){
+            found_spot->setRight(std::make_shared<AVL_NODE>(to_insert));
+        }
+        else{
+            found_spot->setLeft(std::make_shared<AVL_NODE>(to_insert));
+        }
+
+        
+    }
     void insertNode(T to_insert){
         Node found=findNodeAux(root,to_insert,nullptr,true);
         
@@ -167,9 +198,48 @@ class AVL_Tree{
             found.right=new Node(to_insert);
         }
 
+        Node_ptr i = found;
+        i->setHeight(0);
+        Node_ptr parent = i->getParent();
+        int bf;
+        while(i!=root){
+            if(parent->getHeight() >= i->getHeight()+1){
+                return;
+            }
+            parent->setHeight(i->getHeight()+1);
+            bf=balance_factor(parent);
+            if(bf>1){
+                //left
+                if(balance_factor(i)>0){
+                    //left left
+                    roll_ll(parent);
+
+                }
+                else{
+                    // left right
+                    roll_lr(parent);
+                }
+                return;
+
+            }
+            else if(bf<-1){
+                //right
+                if(balance_factor(i)<0){
+                    //right right
+                    roll_rr(parent);
+                }
+                else{
+                    // right left
+                    roll_rl(parent);
+                }
+                return;
+            }
+        }
+
     }
     
     void destroy();
+
     
     
 };
