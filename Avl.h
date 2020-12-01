@@ -1,8 +1,10 @@
 #ifndef _AVL_H_
 #define _AVL_H_
 #include <memory>
+#include <exception>
 #include "Auxiliaries.h"
 
+enum Side {R,L,N};
 template<class T>
 class AVL_NODE{
     typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
@@ -38,18 +40,35 @@ class AVL_NODE{
     }
     void setRight(Node_ptr new_right){
         right=new_right;
-        if (new_right!=nullptr){
-            right.parent=this;
-        }
     }
     void setLeft(Node_ptr new_left){
         left=new_left;
-        if (new_left!=nullptr){
-            left.parent=this;
-        }
     }
+    void setParent(Node_ptr new_parent){
+        parent=new_parent;
+    }
+
+    /*
+    *connects two nodes , parent to child with the side specified
+    */
+
     void setHeight(int new_height){
         height=new_height;
+    }
+    void batmanNode(){
+        if (parent==nullptr){
+            return;
+        }
+        if (parent.getLeft()==this){
+            parent.setLeft()=nullptr;
+        }
+        else if (parent.getRight()==this){
+            parent.setRight()=nullptr;
+        }
+        else{
+            throw std::runtime_error("Excpected node to be child of parent, but it isn't");
+        }
+        parent=nullptr;
     }
     // functions which can be elsewhere
     bool isLeaf(AVL_NODE node){
@@ -75,13 +94,20 @@ class AVL_NODE{
     }
     int calcHeight(AVL_NODE parent_node){
 
-        AVL_NODE left= parent_node->getLeft();
-        AVL_NODE right= parent_node->getRight();
-        return max(left->height(),right->height())+1;
+        int left_height=-1;
+        int right_height=-1;
+        Node_ptr left= parent_node->getLeft();
+        if (left!=nullptr){
+            left_height=left->height();
+        }
+        Node_ptr right= parent_node->getRight();
+        if (right!=nullptr){
+            right_height=right->height();
+        }
+        return max(left_height,right_height)+1;
     }
 
 };
-
 
 template<class T>
 class AVL_Tree{
@@ -91,12 +117,9 @@ class AVL_Tree{
     //int balance_factor;
 
     
-    void roll_ll(AVL_NODE ){
-        
+    void batmanNodes(Node_ptr a,Node_ptr b,Node_ptr c){
+
     }
-    void roll_lr();
-    void roll_rr();
-    void roll_rl();
 
     
     //given correct height of childrens, calculates the height of the parent
@@ -114,10 +137,10 @@ class AVL_Tree{
         AVL_NODE left= parent_node->getLeft();
         AVL_NODE right= parent_node->getRight();
         if (left!=nullptr){
-            left_height=left.getHeight();
+            left_height=left->getHeight();
         }
         if (right!=nullptr){
-            right_height=right.getHeight();
+            right_height=right->getHeight();
         }
         return left_height-right_height;
     }
@@ -243,5 +266,130 @@ class AVL_Tree{
     
     
 };
+template <typename T>
+using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
+
+template <typename T>
+void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
+    if (parent!=nullptr){
+        if (side==R){
+            parent->setRight(child);
+        }
+        else if (side==L){
+            parent->setLeft(child);
+        }
+        else{
+            throw std::runtime_error("Excpected side to be left or right, but is either");
+        }
+    }
+    if (child!=nullptr){
+        child->setParent(parent);
+    }
+}
+/**
+ * Given a parent and a child, returns which side the child is
+ * */
+template <typename T>
+Side childSide(Node_ptr<T> parent,Node_ptr<T> child){
+    if (child==nullptr){
+        //no child , no side
+        return N;
+    }
+    if (parent==nullptr){
+        //no parent , no side
+        return N;
+    }
+    if (parent->getLeft()==child){
+        return L;
+    }
+    if (parent->getRight()==child){
+        return R;
+    }
+    // the child is not connected to the parent
+    return N;
+} 
+
+template <typename T>
+void roll_ll(Node_ptr<T> old_root){
+    Node_ptr<T> parent=old_root->getParent();
+    Node_ptr<T> new_root=old_root->getLeft();
+    Node_ptr<T> LR_Tree=new_root->getRight();
+
+    Side root_side =childSide(parent,old_root);
+    
+    //handle new_root pointers 
+    connectNodes(parent,new_root,root_side);//connect to its parent
+    connectNodes(new_root,old_root,R);//connect old root to its right
+    
+    //handle old_root pointers
+    connectNodes(old_root,LR_Tree,L);
+
+    //handles new heights
+
+
+}
+
+template <typename T>
+void roll_rr(Node_ptr<T> old_root){
+    Node_ptr<T> parent=old_root->getParent();
+    Node_ptr<T> new_root=old_root->getRight();
+    Node_ptr<T> RL_Tree=new_root->getLeft();
+
+    Side root_side =childSide(parent,old_root);
+    
+    //handle new_root pointers 
+    connectNodes(parent,new_root,root_side);//connect to its parent
+    connectNodes(new_root,old_root,L);//connect old root to its left
+    
+    //handle old_root pointers
+    connectNodes(old_root,RL_Tree,R);
+    
+}
+
+template <typename T>
+void roll_lr(Node_ptr<T> old_root){
+    Node_ptr<T> parent=old_root->getParent();
+    Node_ptr<T> left=old_root->getLeft();
+    Node_ptr<T> new_root=left->getRight();
+    Node_ptr<T> LRR_Tree=new_root->getRight();
+    Node_ptr<T> LRL_Tree=new_root->getleft();
+
+    Side root_side =childSide(parent,old_root);
+    
+    //handle new_root pointers 
+    connectNodes(parent,new_root,root_side);//connect to its parent
+    connectNodes(new_root,old_root,R);//connect old root to its right
+    connectNodes(new_root,left,L);//connect left to its left
+    
+    //handle old_root pointers
+    connectNodes(old_root,LRR_Tree,L);
+
+    //handle left pointers
+    connectNodes(left,LRL_Tree,R);
+
+}
+
+template <typename T>
+void roll_rl(Node_ptr<T> old_root){
+    Node_ptr<T> parent=old_root->getParent();
+    Node_ptr<T> right=old_root->getRight();
+    Node_ptr<T> new_root=right->getLeft();
+    Node_ptr<T> RLL_Tree=new_root->getLeft();
+    Node_ptr<T> RLR_Tree=new_root->getRight();
+
+    Side root_side =childSide(parent,old_root);
+    
+    //handle new_root pointers 
+    connectNodes(parent,new_root,root_side);//connect to its parent
+    connectNodes(new_root,old_root,L);//connect old root to its left 
+    connectNodes(new_root,right,R);//connect right to its right 
+    
+    //handle old_root pointers
+    connectNodes(old_root,RLL_Tree,R);
+
+    //handle right pointers
+    connectNodes(right,RLR_Tree,L);
+
+}
 
 #endif 
