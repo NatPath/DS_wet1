@@ -55,21 +55,6 @@ class AVL_NODE{
     void setHeight(int new_height){
         height=new_height;
     }
-    void batmanNode(){
-        if (parent==nullptr){
-            return;
-        }
-        if (parent.getLeft()==this){
-            parent.setLeft()=nullptr;
-        }
-        else if (parent.getRight()==this){
-            parent.setRight()=nullptr;
-        }
-        else{
-            throw std::runtime_error("Excpected node to be child of parent, but it isn't");
-        }
-        parent=nullptr;
-    }
     // functions which can be elsewhere
     bool isLeaf(AVL_NODE node){
         return node->left==nullptr&&node->right==nullptr;
@@ -114,12 +99,6 @@ class AVL_Tree{
     //fields if splitting
     typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
     Node_ptr root;
-    //int balance_factor;
-
-    
-    void batmanNodes(Node_ptr a,Node_ptr b,Node_ptr c){
-
-    }
 
     
     //given correct height of childrens, calculates the height of the parent
@@ -176,15 +155,6 @@ class AVL_Tree{
             }
 
         } while (true);
-        
-    }
-    int height(Node_ptr root){
-        if (root==nullptr){
-            //shouldn't happen
-            return -1;
-        }
-        int res=0;
-
         
     }
     void insertNode(T& to_insert){
@@ -246,29 +216,7 @@ class AVL_Tree{
 
         
     }
-    void insertNode(T to_insert){
-        Node found=findNodeAux(root,to_insert,nullptr,true);
-        
-        if(found==nullptr){
-            // first node inserted, it has no parent, so it must be a root
-            this->value=to_insert;
-            return;
-        }
-        if (found->left==to_insert||found->right==to_insert){
-            //The value we want to insert already exists
-            return;            
-        }
-        if(to_insert < found->value){
-            found.left=AVL(to_insert);
-        }
-        if(to_insert > found->value){
-            found.right=new Node(to_insert);
-        }
-
-        Node_ptr i = found;
-        
-
-    }
+    
     
     void destroy();
 
