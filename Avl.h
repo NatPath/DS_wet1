@@ -15,7 +15,7 @@ class AVL_NODE{
     int height;
 
     public:
-    AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr){}
+    AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
     ~AVL_NODE();
 
     //getters
@@ -189,48 +189,28 @@ class AVL_Tree{
     }
     void insertNode(T& to_insert){
         Node_ptr found_spot=findLastOfSearchPath(to_insert);
+        Node_ptr i;
         if (found_spot->getValue()==to_insert){
             //value is already in the tree
             return;
         }
-        else if(found_spot->getValue() < to_insert){
-            found_spot->setRight(std::make_shared<AVL_NODE>(to_insert));
-        }
-        else{
-            found_spot->setLeft(std::make_shared<AVL_NODE>(to_insert));
-        }
-
-        
-    }
-    void insertNode(T to_insert){
-        Node found=findNodeAux(root,to_insert,nullptr,true);
-        
-        if(found==nullptr){
-            // first node inserted, it has no parent, so it must be a root
-            this->value=to_insert;
-            return;
-        }
-        if (found->left==to_insert||found->right==to_insert){
-            //The value we want to insert already exists
-            return;            
-        }
-        if(to_insert < found->value){
-            found.left=AVL(to_insert);
-        }
-        if(to_insert > found->value){
-            found.right=new Node(to_insert);
+        else {
+            i=std::make_shared<AVL_NODE>(to_insert);
+            if(found_spot->getValue() < to_insert){
+                connectNodes(found_spot,i,R);               
+            }
+            else{
+                connectNodes(found_spot,i,L);
+            }
         }
 
-        Node_ptr i = found;
         i->setHeight(0);
         Node_ptr parent = i->getParent();
         int bf;
-        while(i!=root){
-            if(parent->getHeight() >= i->getHeight()+1){
-                return;
-            }
-            parent->setHeight(i->getHeight()+1);
+        int height;
+        while(i!=root){ 
             bf=balance_factor(parent);
+            parent->setHeight(i->getHeight()+1);
             if(bf>1){
                 //left
                 if(balance_factor(i)>0){
@@ -257,7 +237,36 @@ class AVL_Tree{
                 }
                 return;
             }
+            i=parent;
+            parent=i->getParent();
+            
+            
         }
+        
+
+        
+    }
+    void insertNode(T to_insert){
+        Node found=findNodeAux(root,to_insert,nullptr,true);
+        
+        if(found==nullptr){
+            // first node inserted, it has no parent, so it must be a root
+            this->value=to_insert;
+            return;
+        }
+        if (found->left==to_insert||found->right==to_insert){
+            //The value we want to insert already exists
+            return;            
+        }
+        if(to_insert < found->value){
+            found.left=AVL(to_insert);
+        }
+        if(to_insert > found->value){
+            found.right=new Node(to_insert);
+        }
+
+        Node_ptr i = found;
+        
 
     }
     
@@ -325,6 +334,7 @@ void roll_ll(Node_ptr<T> old_root){
     connectNodes(old_root,LR_Tree,L);
 
     //handles new heights
+    old_root->setHeight(old_root->getHeight()-2);
 
 
 }
@@ -344,6 +354,8 @@ void roll_rr(Node_ptr<T> old_root){
     //handle old_root pointers
     connectNodes(old_root,RL_Tree,R);
     
+    //handles new heights
+    old_root->setHeight(old_root->getHeight()-2);
 }
 
 template <typename T>
@@ -366,6 +378,12 @@ void roll_lr(Node_ptr<T> old_root){
 
     //handle left pointers
     connectNodes(left,LRL_Tree,R);
+
+    //handles new heights
+    old_root->setHeight(old_root->getHeight()-2);
+    new_root->setHeight(new_root->getHeight()+1);
+    left->setHeight(left->getLeft()-1);
+    
 
 }
 
@@ -390,6 +408,10 @@ void roll_rl(Node_ptr<T> old_root){
     //handle right pointers
     connectNodes(right,RLR_Tree,L);
 
+    //handles new heights
+    old_root->setHeight(old_root->getHeight()-2);
+    new_root->setHeight(new_root->getHeight()+1);
+    right->setHeight(right->getLeft()-1);
 }
 
 #endif 
