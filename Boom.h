@@ -1,6 +1,7 @@
 #ifndef BOOM_H_
 #define BOOM_H_
 #include "Avl.h"
+#include "library.h"
 
 
 class Boom{
@@ -9,6 +10,6 @@ class Boom{
     void* init();
     StatusType AddCourse(void *DS,int courseID,int numOfClasses);
 
-}
+};
 
 #endif

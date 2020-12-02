@@ -65,6 +65,7 @@ class AVL_NODE{
         return climber;
     }
     //returns the distance of the node from the root
+    /*
     int distanceFromRoot(AVL_NODE node){ 
         Node climber=node;
         int counter=0;
@@ -74,6 +75,7 @@ class AVL_NODE{
         }
         return counter;
     }
+    */
     int calcHeight(Node_ptr parent_node){
 
         int left_height=-1;
@@ -109,7 +111,7 @@ class AVL_NODE{
 template<class T>
 class AVL_Tree{
     //fields if splitting
-    typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
+    typedef struct std::shared_ptr<AVL_NODE<T>> Node_ptr;
     Node_ptr root;
 
     
@@ -125,8 +127,8 @@ class AVL_Tree{
         }
         int left_height=-1;
         int right_height=-1;
-        AVL_NODE left= parent_node->getLeft();
-        AVL_NODE right= parent_node->getRight();
+        AVL_NODE<T> left= parent_node->getLeft();
+        AVL_NODE<T> right= parent_node->getRight();
         if (left!=nullptr){
             left_height=left->getHeight();
         }
