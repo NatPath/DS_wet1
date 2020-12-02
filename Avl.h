@@ -56,9 +56,6 @@ class AVL_NODE{
         height=new_height;
     }
     // functions which can be elsewhere
-    bool isLeaf(AVL_NODE node){
-        return node->left==nullptr&&node->right==nullptr;
-    }
 
     AVL_NODE getRoot(AVL_NODE node){
         AVL_NODE climber=node;
@@ -77,7 +74,7 @@ class AVL_NODE{
         }
         return counter;
     }
-    int calcHeight(AVL_NODE parent_node){
+    int calcHeight(Node_ptr parent_node){
 
         int left_height=-1;
         int right_height=-1;
@@ -90,6 +87,21 @@ class AVL_NODE{
             right_height=right->height();
         }
         return max(left_height,right_height)+1;
+    }
+    int calcHeight(){
+        int left_height=-1;
+        int right_height=-1;
+        if (left!=nullptr){
+            left_height=left->height();
+        }
+        if (right!=nullptr){
+            right_height=right->height();
+        }
+        return max(left_height,right_height)+1;
+
+    }
+    void updateHeight(){
+        height=this.calcHeight();
     }
 
 };
@@ -217,7 +229,75 @@ class AVL_Tree{
         
     }
     
-    
+    void deleteNode(T& search_value){
+        Node_ptr found_spot=findLastOfSearchPath(search_value);
+        if (found_spot->getValue()!=search_value){
+            //value searched was not found
+            return;
+        }
+        else{
+            //
+            Node_ptr parent_of_found=found_spot->getParent();
+            //
+
+            Side side_of_found=childSide(parent_of_found,found_spot);
+
+            Node_ptr i=found_spot;// define an iterator and assign it the found spot
+
+            //find a subsitute to the node removed, we're looking for the minimum node to its right
+            //O(log(n))
+            while(i->getRight()!=nullptr){
+                Node_ptr temp_min= findMinNode(i->getRight());
+                i.swap(temp_min);
+                i=temp_min;
+            }
+            Node_ptr parent_of_min=i->getParent();
+            Side side_of_min=childSide(parent_of_min,i);
+            connectNodes(parent_of_min,nullptr,side_of_min);
+
+            //trace up and update heights of nodes in the search path
+            i=parent_of_min;//redefine iterator as the parent of the leaf
+
+            //O(log(n))
+            while (i!=nullptr){
+                i->updateHeight();
+                i=i->getParent();
+            }
+            
+            //do rolls
+            i=parent_of_min;//redefine iterator as the parent of the leaf
+            Node_ptr parent =i->getParent();
+            int bf;
+            while(i!=root){ 
+                bf=balance_factor(parent);
+                if(bf>1){
+                    //left
+                    if(balance_factor(i)>0){
+                        //left left
+                        roll_ll(parent);
+
+                    }
+                    else{
+                        // left right
+                        roll_lr(parent);
+                    }
+                }
+                else if(bf<-1){
+                    //right
+                    if(balance_factor(i)<0){
+                        //right right
+                        roll_rr(parent);
+                    }
+                    else{
+                        // right left
+                        roll_rl(parent);
+                    }
+                }
+                i=parent;
+                parent=i->getParent();
+            }
+        }
+    }
     void destroy();
 
     
@@ -225,6 +305,21 @@ class AVL_Tree{
 };
 template <typename T>
 using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
+
+
+template <typename T>
+Node_ptr<T> findMinNode(Node_ptr<T> root){
+    Node_ptr<T> i=root;
+    while (i->getLeft()!=nullptr){
+        i=i->getLeft();
+    }
+    return i;
+}
+
+template <typename T>
+bool isLeaf(Node_ptr<T> node){
+    return node->left==nullptr&&node->right==nullptr;
+}
 
 template <typename T>
 void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
@@ -306,6 +401,7 @@ void roll_rr(Node_ptr<T> old_root){
     old_root->setHeight(old_root->getHeight()-2);
 }
 
+
 template <typename T>
 void roll_lr(Node_ptr<T> old_root){
     Node_ptr<T> parent=old_root->getParent();
@@ -361,5 +457,6 @@ void roll_rl(Node_ptr<T> old_root){
     new_root->setHeight(new_root->getHeight()+1);
     right->setHeight(right->getLeft()-1);
 }
+
 
 #endif 
