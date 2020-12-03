@@ -7,8 +7,8 @@
 enum Side {R,L,N};
 template<class T>
 class AVL_NODE{
-    typedef struct std::shared_ptr<AVL_NODE> Node_ptr;
-    T& value;
+    typedef struct std::shared_ptr<AVL_NODE<T>> Node_ptr;
+    T value;
     Node_ptr left;
     Node_ptr right;
     Node_ptr parent;
