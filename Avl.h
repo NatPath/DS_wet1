@@ -58,13 +58,6 @@ class AVL_NODE{
     }
     // functions which can be elsewhere
 
-    AVL_NODE getRoot(AVL_NODE node){
-        AVL_NODE climber=node;
-        while(climber.parent!=nullptr){
-            climber==climber.parent;
-        }
-        return climber;
-    }
     //returns the distance of the node from the root
     /*
     int distanceFromRoot(AVL_NODE node){ 
@@ -188,6 +181,8 @@ class AVL_Tree{
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<T>>(to_insert);
+            root->setLeft(nullptr);
+            root->setRight(nullptr);
             return;
         }
         if (found_spot->getValue()==to_insert){
@@ -222,6 +217,7 @@ class AVL_Tree{
                     // left right
                     roll_lr(parent);
                 }
+                root=getRootClimb(parent);
                 return;
 
             }
@@ -235,6 +231,7 @@ class AVL_Tree{
                     // right left
                     roll_rl(parent);
                 }
+                root=getRootClimb(parent);
                 return;
             }
             i=parent;
@@ -317,6 +314,9 @@ class AVL_Tree{
         }
     }
     //void destroy();
+    int getHeight(){
+        return root->getHeight();
+    }
 
     
     
@@ -329,6 +329,15 @@ template <typename T>
 void printValue(Node_ptr<T> node){
     print(node->getValue());
 }
+
+template <typename T>
+Node_ptr<T> getRootClimb(Node_ptr<T> node){
+    while(node->getParent()!=nullptr){
+        node=node->getParent();
+    }
+    return node;
+}
+
 template <typename T>
 void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>)){
     if (root==nullptr){
@@ -418,7 +427,7 @@ void roll_ll(Node_ptr<T>& old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
 
-    old_root=new_root;
+//    old_root=new_root;
 
 }
 
@@ -440,7 +449,7 @@ void roll_rr(Node_ptr<T>& old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
 
-    old_root=new_root;
+ //   old_root=new_root;
 }
 
 
@@ -470,7 +479,7 @@ void roll_lr(Node_ptr<T>& old_root){
     new_root->setHeight(new_root->getHeight()+1);
     left->setHeight(left->getHeight()-1);
     
-    old_root=new_root;
+  //  old_root=new_root;
 }
 
 template <typename T>
@@ -499,7 +508,7 @@ void roll_rl(Node_ptr<T>& old_root){
     new_root->setHeight(new_root->getHeight()+1);
     right->setHeight(right->getHeight()-1);
 
-    old_root=new_root;
+ //   old_root=new_root;
 }
 
 
