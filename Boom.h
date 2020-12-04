@@ -1,10 +1,7 @@
-#ifndef BOOM_H_
-#define BOOM_H_
-#include "Avl.h"
-
+#ifndef _BOOM_H_
+#define _BOOM_H_
+#include "types.h"
 #include "library.h"
-
-#include "Course.h"
 #include "BoomDS.h"
 #include "StatusType.h"
 

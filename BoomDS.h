@@ -1,12 +1,12 @@
-#ifndef BOOMDS_H_
-#define BOOMDS_H_
-#include "Avl.h"
-#include "Course.h"
+#ifndef _BOOMDS_H_
+#define _BOOMDS_H_
+#include "types.h"
 #include "StatusType.h"
 
 
 
 class BoomDS{
+    
     AVL_Tree<Course> courses;
     AVL_Tree<Lecture> lectures;
     std::shared_ptr<AVL_NODE<Lecture>> most_watched;
