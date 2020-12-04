@@ -16,7 +16,8 @@ class AVL_NODE{
 
     public:
     AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
-    ~AVL_NODE();
+    ~AVL_NODE(){
+    }
 
     //getters
     const T& getValue() const{
@@ -117,9 +118,19 @@ class AVL_Tree{
     
     //given correct height of childrens, calculates the height of the parent
     public:
+    AVL_Tree():root(nullptr){}
+    Node_ptr getRoot(){return root;}
 
-    void inorder(void* func);
-    void postorder(void* func);
+
+    T getRootValue(){
+        if(root==nullptr){
+            return T();
+        }
+        return root->getValue();
+    }
+
+    //void inorder(void* func);
+    //void postorder(void* func);
     //Given children with correct heights, returns balance factor
     int balance_factor(Node_ptr parent_node){
         if (parent_node==nullptr){
@@ -127,8 +138,8 @@ class AVL_Tree{
         }
         int left_height=-1;
         int right_height=-1;
-        AVL_NODE<T> left= parent_node->getLeft();
-        AVL_NODE<T> right= parent_node->getRight();
+        Node_ptr left= parent_node->getLeft();
+        Node_ptr right= parent_node->getRight();
         if (left!=nullptr){
             left_height=left->getHeight();
         }
@@ -174,12 +185,17 @@ class AVL_Tree{
     void insertNode(T& to_insert){
         Node_ptr found_spot=findLastOfSearchPath(to_insert);
         Node_ptr i;
+        if (found_spot==nullptr){
+            //first node in the tree
+            root=std::make_shared<AVL_NODE<T>>(to_insert);
+            return;
+        }
         if (found_spot->getValue()==to_insert){
             //value is already in the tree
             return;
         }
         else {
-            i=std::make_shared<AVL_NODE>(to_insert);
+            i=std::make_shared<AVL_NODE<T>>(to_insert);
             if(found_spot->getValue() < to_insert){
                 connectNodes(found_spot,i,R);               
             }
@@ -191,7 +207,7 @@ class AVL_Tree{
         i->setHeight(0);
         Node_ptr parent = i->getParent();
         int bf;
-        int height;
+        //int height;
         while(i!=root){ 
             bf=balance_factor(parent);
             parent->setHeight(i->getHeight()+1);
@@ -300,7 +316,7 @@ class AVL_Tree{
             }
         }
     }
-    void destroy();
+    //void destroy();
 
     
     
@@ -308,6 +324,24 @@ class AVL_Tree{
 template <typename T>
 using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
 
+
+template <typename T>
+void printValue(Node_ptr<T> node){
+    print(node->getValue());
+}
+template <typename T>
+void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>)){
+    if (root==nullptr){
+        return;
+    }
+    if (isLeaf(root)){
+        (*f)(root);
+        return;
+    }
+    inOrder(root->getLeft(),f);
+    (*f)(root);
+    inOrder(root->getRight(),f);
+}
 
 template <typename T>
 Node_ptr<T> findMinNode(Node_ptr<T> root){
@@ -320,7 +354,10 @@ Node_ptr<T> findMinNode(Node_ptr<T> root){
 
 template <typename T>
 bool isLeaf(Node_ptr<T> node){
-    return node->left==nullptr&&node->right==nullptr;
+    if (node==nullptr){
+        return false;
+    }
+    return node->getLeft()==nullptr&&node->getRight()==nullptr;
 }
 
 template <typename T>
@@ -364,7 +401,7 @@ Side childSide(Node_ptr<T> parent,Node_ptr<T> child){
 } 
 
 template <typename T>
-void roll_ll(Node_ptr<T> old_root){
+void roll_ll(Node_ptr<T>& old_root){
     Node_ptr<T> parent=old_root->getParent();
     Node_ptr<T> new_root=old_root->getLeft();
     Node_ptr<T> LR_Tree=new_root->getRight();
@@ -381,11 +418,12 @@ void roll_ll(Node_ptr<T> old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
 
+    old_root=new_root;
 
 }
 
 template <typename T>
-void roll_rr(Node_ptr<T> old_root){
+void roll_rr(Node_ptr<T>& old_root){
     Node_ptr<T> parent=old_root->getParent();
     Node_ptr<T> new_root=old_root->getRight();
     Node_ptr<T> RL_Tree=new_root->getLeft();
@@ -401,16 +439,18 @@ void roll_rr(Node_ptr<T> old_root){
     
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
+
+    old_root=new_root;
 }
 
 
 template <typename T>
-void roll_lr(Node_ptr<T> old_root){
+void roll_lr(Node_ptr<T>& old_root){
     Node_ptr<T> parent=old_root->getParent();
     Node_ptr<T> left=old_root->getLeft();
     Node_ptr<T> new_root=left->getRight();
     Node_ptr<T> LRR_Tree=new_root->getRight();
-    Node_ptr<T> LRL_Tree=new_root->getleft();
+    Node_ptr<T> LRL_Tree=new_root->getLeft();
 
     Side root_side =childSide(parent,old_root);
     
@@ -428,13 +468,13 @@ void roll_lr(Node_ptr<T> old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
     new_root->setHeight(new_root->getHeight()+1);
-    left->setHeight(left->getLeft()-1);
+    left->setHeight(left->getHeight()-1);
     
-
+    old_root=new_root;
 }
 
 template <typename T>
-void roll_rl(Node_ptr<T> old_root){
+void roll_rl(Node_ptr<T>& old_root){
     Node_ptr<T> parent=old_root->getParent();
     Node_ptr<T> right=old_root->getRight();
     Node_ptr<T> new_root=right->getLeft();
@@ -457,7 +497,9 @@ void roll_rl(Node_ptr<T> old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
     new_root->setHeight(new_root->getHeight()+1);
-    right->setHeight(right->getLeft()-1);
+    right->setHeight(right->getHeight()-1);
+
+    old_root=new_root;
 }
 
 
