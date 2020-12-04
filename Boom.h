@@ -1,9 +1,13 @@
 #ifndef BOOM_H_
 #define BOOM_H_
 #include "Avl.h"
+
+#include "library.h"
+
 #include "Course.h"
 #include "BoomDS.h"
 #include "StatusType.h"
+
 
 class Boom{
     public:
