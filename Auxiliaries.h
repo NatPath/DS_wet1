@@ -5,7 +5,7 @@
 
 
 template<class T>
-T& max(const T& a,const T& b){
+const T& max(const T& a,const T& b){
     return a<b?b:a; 
 }
 template<class T>

@@ -5,6 +5,9 @@
 #include "Auxiliaries.h"
 
 enum Side {R,L,N};
+enum Order {PRE,POST,IN};
+
+
 template<class T>
 class AVL_NODE{
     typedef struct std::shared_ptr<AVL_NODE<T>> Node_ptr;
@@ -16,8 +19,7 @@ class AVL_NODE{
 
     public:
     AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
-    ~AVL_NODE(){
-    }
+    ~AVL_NODE();
 
     //getters
     const T& getValue() const{
@@ -76,11 +78,11 @@ class AVL_NODE{
         int right_height=-1;
         Node_ptr left= parent_node->getLeft();
         if (left!=nullptr){
-            left_height=left->height();
+            left_height=left->height;
         }
         Node_ptr right= parent_node->getRight();
         if (right!=nullptr){
-            right_height=right->height();
+            right_height=right->height;
         }
         return max(left_height,right_height)+1;
     }
@@ -88,16 +90,16 @@ class AVL_NODE{
         int left_height=-1;
         int right_height=-1;
         if (left!=nullptr){
-            left_height=left->height();
+            left_height=left->height;
         }
         if (right!=nullptr){
-            right_height=right->height();
+            right_height=right->height;
         }
         return max(left_height,right_height)+1;
 
     }
     void updateHeight(){
-        height=this.calcHeight();
+        height=this->calcHeight();
     }
 
 };
@@ -112,6 +114,7 @@ class AVL_Tree{
     //given correct height of childrens, calculates the height of the parent
     public:
     AVL_Tree():root(nullptr){}
+    ~AVL_Tree();
     Node_ptr getRoot(){return root;}
 
 
@@ -181,8 +184,6 @@ class AVL_Tree{
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<T>>(to_insert);
-            root->setLeft(nullptr);
-            root->setRight(nullptr);
             return;
         }
         if (found_spot->getValue()==to_insert){
@@ -218,6 +219,8 @@ class AVL_Tree{
                     roll_lr(parent);
                 }
                 root=getRootClimb(parent);
+
+
                 return;
 
             }
@@ -232,12 +235,12 @@ class AVL_Tree{
                     roll_rl(parent);
                 }
                 root=getRootClimb(parent);
+
+
                 return;
             }
             i=parent;
             parent=i->getParent();
-            
-            
         }
         
 
@@ -255,7 +258,6 @@ class AVL_Tree{
             Node_ptr parent_of_found=found_spot->getParent();
             //
 
-            Side side_of_found=childSide(parent_of_found,found_spot);
 
             Node_ptr i=found_spot;// define an iterator and assign it the found spot
 
@@ -268,7 +270,7 @@ class AVL_Tree{
             }
             Node_ptr parent_of_min=i->getParent();
             Side side_of_min=childSide(parent_of_min,i);
-            connectNodes(parent_of_min,nullptr,side_of_min);
+            connectNodes(parent_of_min,Node_ptr(nullptr),side_of_min);
 
             //trace up and update heights of nodes in the search path
             i=parent_of_min;//redefine iterator as the parent of the leaf
@@ -311,7 +313,9 @@ class AVL_Tree{
                 i=parent;
                 parent=i->getParent();
             }
+            root=getRootClimb(i);
         }
+
     }
     //void destroy();
     int getHeight(){
@@ -321,14 +325,46 @@ class AVL_Tree{
     
     
 };
+
 template <typename T>
 using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
 
 
 template <typename T>
+void freeNodes(Node_ptr<T> to_delete){
+    to_delete->setLeft(nullptr);
+    to_delete->setRight(nullptr);
+    to_delete->setParent(nullptr);
+    to_delete.reset();
+    /*
+    Node_ptr<T> nulli=nullptr;
+    connectNodes(to_delete,nulli,R);
+    connectNodes(to_delete,nulli,L);
+    Side side=childSide(to_delete->getParent(),to_delete);
+    connectNodes(to_delete->getParent(),nulli,side);
+    */
+}
+
+
+template<typename T>
+AVL_Tree<T>::~AVL_Tree(){
+    itterateOrder(root,POST,freeNodes);
+    freeNodes(root);
+}
+template<typename T>
+AVL_NODE<T>::~AVL_NODE(){
+    itterateOrder(left,POST,freeNodes);
+    itterateOrder(right,POST,freeNodes);
+    left=nullptr;
+    right=nullptr;
+    parent=nullptr;
+}
+
+template <typename T>
 void printValue(Node_ptr<T> node){
     print(node->getValue());
 }
+
 
 template <typename T>
 Node_ptr<T> getRootClimb(Node_ptr<T> node){
@@ -352,6 +388,52 @@ void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>)){
     inOrder(root->getRight(),f);
 }
 
+
+template <typename T>
+void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>),bool reverse = false){
+    if (root==nullptr){
+        return;
+    }
+    if (isLeaf(root)){
+        (*f)(root);
+        return;
+    }
+    if (!reverse){
+        if (order==IN){
+            inOrder(root->getLeft(),f);
+            (*f)(root);
+            inOrder(root->getRight(),f);
+        }
+        if (order==POST){
+            inOrder(root->getLeft(),f);
+            inOrder(root->getRight(),f);
+            (*f)(root);
+        }
+        if (order==PRE){
+            (*f)(root);
+            inOrder(root->getLeft(),f);
+            inOrder(root->getRight(),f);
+        }
+    }
+    else{
+        if (order==IN){
+            inOrder(root->getRight(),f);
+            (*f)(root);
+            inOrder(root->getLeft(),f);
+        }
+        if (order==POST){
+            inOrder(root->getRight(),f);
+            inOrder(root->getLeft(),f);
+            (*f)(root);
+        }
+        if (order==PRE){
+            (*f)(root);
+            inOrder(root->getRight(),f);
+            inOrder(root->getLeft(),f);
+        }
+    }
+}
+
 template <typename T>
 Node_ptr<T> findMinNode(Node_ptr<T> root){
     Node_ptr<T> i=root;
@@ -371,6 +453,11 @@ bool isLeaf(Node_ptr<T> node){
 
 template <typename T>
 void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
+    print("-----------------------------------------------------");
+    print("parent use count before:");
+    print(parent.use_count());
+    print("child use count before:");
+    print(child.use_count());
     if (parent!=nullptr){
         if (side==R){
             parent->setRight(child);
@@ -385,6 +472,10 @@ void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
     if (child!=nullptr){
         child->setParent(parent);
     }
+    print("parent use count after:");
+    print(parent.use_count());
+    print("child use count after:");
+    print(child.use_count());
 }
 /**
  * Given a parent and a child, returns which side the child is
@@ -423,6 +514,14 @@ void roll_ll(Node_ptr<T>& old_root){
     
     //handle old_root pointers
     connectNodes(old_root,LR_Tree,L);
+
+
+/*
+    print(parent.use_count());
+    print(new_root.use_count());
+    print(LR_Tree.use_count());
+    print(old_root.use_count());
+*/
 
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
