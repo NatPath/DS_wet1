@@ -5,12 +5,14 @@
 class Course{
 
     int courseId;
-    Lecture unwatched[];
-    List<Lecture> lectures;
+    Lecture* unwatched;
+    List<Lecture>* lectures;
 
 
     public:
-    Course()=default;
+        Course(int courseId,int numOfClasses);
+    
+
 
 };
 
