@@ -8,22 +8,26 @@ enum Side {R,L,N};
 enum Order {PRE,POST,IN};
 
 
-template<class T>
+template<class KEY,class VAL>
 class AVL_NODE{
-    typedef struct std::shared_ptr<AVL_NODE<T>> Node_ptr;
-    T value;
+    typedef struct std::shared_ptr<AVL_NODE<KEY,VAL>> Node_ptr;
+    KEY key;
+    VAL value;
     Node_ptr left;
     Node_ptr right;
     Node_ptr parent;
     int height;
 
     public:
-    AVL_NODE(const T& value):value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
+    AVL_NODE(const KEY& key,const VAL& value):key(key),value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
     ~AVL_NODE();
 
     //getters
-    const T& getValue() const{
+    const VAL& getValue() const{
         return value;
+    }
+    const KEY& getKey() const{
+        return key;
     }
     Node_ptr getRight() {
         return right;
@@ -38,8 +42,11 @@ class AVL_NODE{
         return height;
     }
     //setters
-    void setValue(const T& new_value){
+    void setValue(const VAL& new_value){
         value=new_value;
+    }
+    void setKey(const KEY& new_key){
+        key=new_key;
     }
     void setRight(Node_ptr new_right){
         right=new_right;
@@ -58,20 +65,6 @@ class AVL_NODE{
     void setHeight(int new_height){
         height=new_height;
     }
-    // functions which can be elsewhere
-
-    //returns the distance of the node from the root
-    /*
-    int distanceFromRoot(AVL_NODE node){ 
-        Node climber=node;
-        int counter=0;
-        while(climber!=nullptr){
-            counter++;                        
-            climber=climber.parent;
-        }
-        return counter;
-    }
-    */
     int calcHeight(Node_ptr parent_node){
 
         int left_height=-1;
@@ -104,10 +97,10 @@ class AVL_NODE{
 
 };
 
-template<class T>
+template<class KEY,class VAL>
 class AVL_Tree{
     //fields if splitting
-    typedef struct std::shared_ptr<AVL_NODE<T>> Node_ptr;
+    typedef struct std::shared_ptr<AVL_NODE<KEY,VAL>> Node_ptr;
     Node_ptr root;
 
     
@@ -117,12 +110,17 @@ class AVL_Tree{
     ~AVL_Tree();
     Node_ptr getRoot(){return root;}
 
-
-    T getRootValue(){
+    VAL getRootValue(){
         if(root==nullptr){
-            return T();
+            return VAL();
         }
         return root->getValue();
+    }
+    KEY getRootKey(){
+        if(root==nullptr){
+            return KEY();
+        }
+        return root->getKey();
     }
 
     //void inorder(void* func);
@@ -147,17 +145,17 @@ class AVL_Tree{
 
     
     //
-    Node_ptr findLastOfSearchPath(T& to_find){
+    Node_ptr findLastOfSearchPath(KEY& to_find){
         Node_ptr i=root;
         if(i==nullptr){
             return nullptr;
         }
         do{
             
-            if (i->getValue()==to_find){
+            if (i->getKey()==to_find){
                 return i;
             }
-            if (i->getValue()>to_find){
+            if (i->getKey()>to_find){
                 
                 if (i->getLeft()!=nullptr){
                     i=i->getLeft();
@@ -178,19 +176,19 @@ class AVL_Tree{
         } while (true);
         
     }
-    void insertNode(T& to_insert){
-        Node_ptr found_spot=findLastOfSearchPath(to_insert);
+    void insertNode(KEY& key_insert,VAL& val_insert){
+        Node_ptr found_spot=findLastOfSearchPath(key_insert);
         if (found_spot==nullptr){
             //first node in the tree
-            root=std::make_shared<AVL_NODE<T>>(to_insert);
+            root=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
             return;
         }
-        if (found_spot->getValue()==to_insert){
+        if (found_spot->getKey()==key_insert){
             //value is already in the tree
             return;
         }
-        Node_ptr i=std::make_shared<AVL_NODE<T>>(to_insert);
-        if(found_spot->getValue() < to_insert){
+        Node_ptr i=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
+        if(found_spot->getKey() < key_insert){
             connectNodes(found_spot,i,R);               
         }
         else{
@@ -244,9 +242,9 @@ class AVL_Tree{
         
     }
     
-    void deleteNode(T& search_value){
-        Node_ptr found_spot=findLastOfSearchPath(search_value);
-        if (found_spot->getValue()!=search_value){
+    void deleteNode(KEY& key_to_delete){
+        Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
+        if (found_spot->getKey()!=key_to_delete){
             //value searched was not found
             return;
         }
@@ -275,6 +273,7 @@ class AVL_Tree{
         else if (found_spot->getRight()!=nullptr){
             substitute= findMinNode(i->getRight());
             i=substitute->getParent();
+            found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
             connectNodes(i,substitute->getRight(),L);
@@ -283,6 +282,7 @@ class AVL_Tree{
         else{
             substitute= findMaxNode(i->getLeft());
             i=substitute->getParent();
+            found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
             connectNodes(i,substitute->getLeft(),R);
@@ -343,47 +343,47 @@ class AVL_Tree{
     
 };
 
-template <typename T>
-using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
+template <typename KEY,typename VAL>
+using Node_ptr=std::shared_ptr<AVL_NODE<KEY,VAL>>;
 
 
-template <typename T>
-void freeNode(Node_ptr<T>& to_delete){
+template <typename KEY,typename VAL>
+void freeNode(Node_ptr<KEY,VAL>& to_delete){
     Side side=childSide(to_delete->getParent(),to_delete);
-    connectNodes(to_delete->getParent(),Node_ptr<T>(nullptr),side);
+    connectNodes(to_delete->getParent(),Node_ptr<KEY,VAL>(nullptr),side);
     to_delete.reset();
 }
 
 
-template<typename T>
-AVL_Tree<T>::~AVL_Tree(){
+template<typename KEY,typename VAL>
+AVL_Tree<KEY,VAL>::~AVL_Tree(){
     if (root!=nullptr){
         itterateOrder(root->getRight(),POST,freeNode);
         itterateOrder(root->getLeft(),POST,freeNode);
         root.reset();
     }
 }
-template<typename T>
-AVL_NODE<T>::~AVL_NODE(){
+template<typename KEY,typename VAL>
+AVL_NODE<KEY,VAL>::~AVL_NODE(){
     
 }
 
-template <typename T>
-void printValue(Node_ptr<T>& node){
+template <typename KEY,typename VAL>
+void printValue(Node_ptr<KEY,VAL>& node){
     print(node->getValue());
 }
 
 
-template <typename T>
-Node_ptr<T> getRootClimb(Node_ptr<T> node){
+template <typename KEY,typename VAL>
+Node_ptr<KEY,VAL> getRootClimb(Node_ptr<KEY,VAL> node){
     while(node->getParent()!=nullptr){
         node=node->getParent();
     }
     return node;
 }
 
-template <typename T>
-void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>&)){
+template <typename KEY,typename VAL>
+void inOrder(Node_ptr<KEY,VAL> root, void(*f)(Node_ptr<KEY,VAL>&)){
     if (root==nullptr){
         return;
     }
@@ -397,8 +397,8 @@ void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>&)){
 }
 
 
-template <typename T>
-void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>&),bool reverse = false){
+template <typename KEY,typename VAL>
+void itterateOrder(Node_ptr<KEY,VAL> root,Order order, void(*f)(Node_ptr<KEY,VAL>&),bool reverse = false){
     if (root==nullptr){
         return;
     }
@@ -442,39 +442,39 @@ void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>&),bool rev
     }
 }
 
-template <typename T>
-void swapValues(Node_ptr<T> a,Node_ptr<T> b){
-    T temp = a->getValue();
+template <typename KEY,typename VAL>
+void swapValues(Node_ptr<KEY,VAL> a,Node_ptr<KEY,VAL> b){
+    VAL temp = a->getValue();
     a->setValue(b->getValue());
     b->setValue(temp);
 }
-template <typename T>
-Node_ptr<T> findMaxNode(Node_ptr<T> root){
-    Node_ptr<T> i=root;
+template <typename KEY,typename VAL>
+Node_ptr<KEY,VAL> findMaxNode(Node_ptr<KEY,VAL> root){
+    Node_ptr<KEY,VAL> i=root;
     while (i->getRight()!=nullptr){
         i=i->getRight();
     }
     return i;
 }
-template <typename T>
-Node_ptr<T> findMinNode(Node_ptr<T> root){
-    Node_ptr<T> i=root;
+template <typename KEY,typename VAL>
+Node_ptr<KEY,VAL> findMinNode(Node_ptr<KEY,VAL> root){
+    Node_ptr<KEY,VAL> i=root;
     while (i->getLeft()!=nullptr){
         i=i->getLeft();
     }
     return i;
 }
 
-template <typename T>
-bool isLeaf(Node_ptr<T> node){
+template <typename KEY,typename VAL>
+bool isLeaf(Node_ptr<KEY,VAL> node){
     if (node==nullptr){
         return false;
     }
     return node->getLeft()==nullptr&&node->getRight()==nullptr;
 }
 
-template <typename T>
-void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
+template <typename KEY,typename VAL>
+void connectNodes(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child, Side side){
     /*
     print("-----------------------------------------------------");
     print("parent use count before:");
@@ -506,8 +506,8 @@ void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
 /**
  * Given a parent and a child, returns which side the child is
  * */
-template <typename T>
-Side childSide(Node_ptr<T> parent,Node_ptr<T> child){
+template <typename KEY,typename VAL>
+Side childSide(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child){
     if (child==nullptr){
         //no child , no side
         return N;
@@ -526,11 +526,11 @@ Side childSide(Node_ptr<T> parent,Node_ptr<T> child){
     return N;
 } 
 
-template <typename T>
-void roll_ll(Node_ptr<T>& old_root){
-    Node_ptr<T> parent=old_root->getParent();
-    Node_ptr<T> new_root=old_root->getLeft();
-    Node_ptr<T> LR_Tree=new_root->getRight();
+template <typename KEY,typename VAL>
+void roll_ll(Node_ptr<KEY,VAL>& old_root){
+    Node_ptr<KEY,VAL> parent=old_root->getParent();
+    Node_ptr<KEY,VAL> new_root=old_root->getLeft();
+    Node_ptr<KEY,VAL> LR_Tree=new_root->getRight();
 
     Side root_side =childSide(parent,old_root);
     
@@ -557,11 +557,11 @@ void roll_ll(Node_ptr<T>& old_root){
 
 }
 
-template <typename T>
-void roll_rr(Node_ptr<T>& old_root){
-    Node_ptr<T> parent=old_root->getParent();
-    Node_ptr<T> new_root=old_root->getRight();
-    Node_ptr<T> RL_Tree=new_root->getLeft();
+template <typename KEY,typename VAL>
+void roll_rr(Node_ptr<KEY,VAL>& old_root){
+    Node_ptr<KEY,VAL> parent=old_root->getParent();
+    Node_ptr<KEY,VAL> new_root=old_root->getRight();
+    Node_ptr<KEY,VAL> RL_Tree=new_root->getLeft();
 
     Side root_side =childSide(parent,old_root);
     
@@ -579,13 +579,13 @@ void roll_rr(Node_ptr<T>& old_root){
 }
 
 
-template <typename T>
-void roll_lr(Node_ptr<T>& old_root){
-    Node_ptr<T> parent=old_root->getParent();
-    Node_ptr<T> left=old_root->getLeft();
-    Node_ptr<T> new_root=left->getRight();
-    Node_ptr<T> LRR_Tree=new_root->getRight();
-    Node_ptr<T> LRL_Tree=new_root->getLeft();
+template <typename KEY,typename VAL>
+void roll_lr(Node_ptr<KEY,VAL>& old_root){
+    Node_ptr<KEY,VAL> parent=old_root->getParent();
+    Node_ptr<KEY,VAL> left=old_root->getLeft();
+    Node_ptr<KEY,VAL> new_root=left->getRight();
+    Node_ptr<KEY,VAL> LRR_Tree=new_root->getRight();
+    Node_ptr<KEY,VAL> LRL_Tree=new_root->getLeft();
 
     Side root_side =childSide(parent,old_root);
     
@@ -608,13 +608,13 @@ void roll_lr(Node_ptr<T>& old_root){
     old_root=new_root;
 }
 
-template <typename T>
-void roll_rl(Node_ptr<T>& old_root){
-    Node_ptr<T> parent=old_root->getParent();
-    Node_ptr<T> right=old_root->getRight();
-    Node_ptr<T> new_root=right->getLeft();
-    Node_ptr<T> RLL_Tree=new_root->getLeft();
-    Node_ptr<T> RLR_Tree=new_root->getRight();
+template <typename KEY,typename VAL>
+void roll_rl(Node_ptr<KEY,VAL>& old_root){
+    Node_ptr<KEY,VAL> parent=old_root->getParent();
+    Node_ptr<KEY,VAL> right=old_root->getRight();
+    Node_ptr<KEY,VAL> new_root=right->getLeft();
+    Node_ptr<KEY,VAL> RLL_Tree=new_root->getLeft();
+    Node_ptr<KEY,VAL> RLR_Tree=new_root->getRight();
 
     Side root_side =childSide(parent,old_root);
     
