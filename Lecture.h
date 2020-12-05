@@ -15,6 +15,12 @@ class Lecture{
     int getViews(){
         return num_views;
     }
+    int getCourseID() const{
+        return courseID;
+    }
+    int getLectureID() const{
+        return lectureId;
+    }
 
 };
 
