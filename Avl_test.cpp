@@ -30,7 +30,7 @@ void testInOrder(){
     return;
 }
 template <typename T>
-void usecount(Node_ptr<T> n){
+void usecount(Node_ptr<T>& n){
     print(n.use_count());
 }
 void testSmallTree(){
@@ -41,15 +41,18 @@ void testSmallTree(){
     int d=4;
     */
     AVL_Tree<int> tree;
-    int arr[300];
-    for (int i=0 ;i<300;i++){
-        arr[i]=300-i;
+    int n=1000;
+    int* arr=new int[n];
+    for (int i=0 ;i<n;i++){
+        arr[i]=n-i;
         tree.insertNode(arr[i]);
-        itterateOrder(tree.getRoot(),IN,usecount);
     }
 
     print("Printing usecount:");
     itterateOrder(tree.getRoot(),IN,usecount);
+    print("Printing tree");
+    itterateOrder(tree.getRoot(),IN,printValue);
+    delete[] arr;
 
     //print(tree.getRoot().use_count());
 }
@@ -70,7 +73,7 @@ void testDeleteNode(){
 }
 int main(){
     //testInOrder();
-    //testSmallTree();
-    testDeleteNode();
+    testSmallTree();
+    //testDeleteNode();
     //testAvlNode();
 }

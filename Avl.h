@@ -180,7 +180,6 @@ class AVL_Tree{
     }
     void insertNode(T& to_insert){
         Node_ptr found_spot=findLastOfSearchPath(to_insert);
-        Node_ptr i;
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<T>>(to_insert);
@@ -190,14 +189,12 @@ class AVL_Tree{
             //value is already in the tree
             return;
         }
-        else {
-            i=std::make_shared<AVL_NODE<T>>(to_insert);
-            if(found_spot->getValue() < to_insert){
-                connectNodes(found_spot,i,R);               
-            }
-            else{
-                connectNodes(found_spot,i,L);
-            }
+        Node_ptr i=std::make_shared<AVL_NODE<T>>(to_insert);
+        if(found_spot->getValue() < to_insert){
+            connectNodes(found_spot,i,R);               
+        }
+        else{
+            connectNodes(found_spot,i,L);
         }
 
         i->setHeight(0);
@@ -331,37 +328,41 @@ using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
 
 
 template <typename T>
-void freeNodes(Node_ptr<T> to_delete){
+void freeNodes(Node_ptr<T>& to_delete){
+    /*
     to_delete->setLeft(nullptr);
     to_delete->setRight(nullptr);
     to_delete->setParent(nullptr);
     to_delete.reset();
-    /*
+    */
+    print("Printing use_count before node deletion:");
+    print(to_delete.use_count());
     Node_ptr<T> nulli=nullptr;
     connectNodes(to_delete,nulli,R);
     connectNodes(to_delete,nulli,L);
     Side side=childSide(to_delete->getParent(),to_delete);
     connectNodes(to_delete->getParent(),nulli,side);
-    */
+    //print("Printing use_count after node deletion:");
+    print(to_delete.use_count());
+    //print("Printing use_count after reset:");
+    to_delete.reset();
+    print(to_delete.use_count());
 }
 
 
 template<typename T>
 AVL_Tree<T>::~AVL_Tree(){
-    itterateOrder(root,POST,freeNodes);
-    freeNodes(root);
+    itterateOrder(root->getRight(),POST,freeNodes);
+    itterateOrder(root->getLeft(),POST,freeNodes);
+    root.reset();
 }
 template<typename T>
 AVL_NODE<T>::~AVL_NODE(){
-    itterateOrder(left,POST,freeNodes);
-    itterateOrder(right,POST,freeNodes);
-    left=nullptr;
-    right=nullptr;
-    parent=nullptr;
+    
 }
 
 template <typename T>
-void printValue(Node_ptr<T> node){
+void printValue(Node_ptr<T>& node){
     print(node->getValue());
 }
 
@@ -375,7 +376,7 @@ Node_ptr<T> getRootClimb(Node_ptr<T> node){
 }
 
 template <typename T>
-void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>)){
+void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>&)){
     if (root==nullptr){
         return;
     }
@@ -390,7 +391,7 @@ void inOrder(Node_ptr<T> root, void(*f)(Node_ptr<T>)){
 
 
 template <typename T>
-void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>),bool reverse = false){
+void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>&),bool reverse = false){
     if (root==nullptr){
         return;
     }
@@ -400,36 +401,36 @@ void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>),bool reve
     }
     if (!reverse){
         if (order==IN){
-            inOrder(root->getLeft(),f);
+            itterateOrder(root->getLeft(),IN,f);
             (*f)(root);
-            inOrder(root->getRight(),f);
+            itterateOrder(root->getRight(),IN,f);
         }
         if (order==POST){
-            inOrder(root->getLeft(),f);
-            inOrder(root->getRight(),f);
+            itterateOrder(root->getLeft(),POST,f);
+            itterateOrder(root->getRight(),POST,f);
             (*f)(root);
         }
         if (order==PRE){
             (*f)(root);
-            inOrder(root->getLeft(),f);
-            inOrder(root->getRight(),f);
+            itterateOrder(root->getLeft(),PRE,f);
+            itterateOrder(root->getRight(),PRE,f);
         }
     }
     else{
         if (order==IN){
-            inOrder(root->getRight(),f);
+            itterateOrder(root->getLeft(),IN,f,true);
             (*f)(root);
-            inOrder(root->getLeft(),f);
+            itterateOrder(root->getRight(),IN,f,true);
         }
         if (order==POST){
-            inOrder(root->getRight(),f);
-            inOrder(root->getLeft(),f);
+            itterateOrder(root->getLeft(),POST,f,true);
+            itterateOrder(root->getRight(),POST,f,true);
             (*f)(root);
         }
         if (order==PRE){
             (*f)(root);
-            inOrder(root->getRight(),f);
-            inOrder(root->getLeft(),f);
+            itterateOrder(root->getLeft(),PRE,f,true);
+            itterateOrder(root->getRight(),PRE,f,true);
         }
     }
 }
@@ -453,11 +454,13 @@ bool isLeaf(Node_ptr<T> node){
 
 template <typename T>
 void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
+    /*
     print("-----------------------------------------------------");
     print("parent use count before:");
     print(parent.use_count());
     print("child use count before:");
     print(child.use_count());
+    */
     if (parent!=nullptr){
         if (side==R){
             parent->setRight(child);
@@ -472,10 +475,12 @@ void connectNodes(Node_ptr<T> parent,Node_ptr<T> child, Side side){
     if (child!=nullptr){
         child->setParent(parent);
     }
+    /*
     print("parent use count after:");
     print(parent.use_count());
     print("child use count after:");
     print(child.use_count());
+    */
 }
 /**
  * Given a parent and a child, returns which side the child is
