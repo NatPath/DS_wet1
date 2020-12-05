@@ -14,7 +14,7 @@ class ListNode{
     Node_ptr prev;
 
     public:
-
+    ListNode()=default;
     ListNode(const Value_ptr value):value(value),next(nullptr),prev(nullptr){}
      
     Value_ptr getValue() {
@@ -34,7 +34,7 @@ class ListNode{
         value = new_value;
     }
 
-    void connnectNext(Node_ptr after){
+    void connectNext(Node_ptr after){
         next = after;
         if(after){
             after.prev = std::shared_ptr<ListNode<T>>(this);
@@ -77,6 +77,10 @@ class List{
     List()=default;
     List(Node_ptr root):root(root){}
 
+    Node_ptr getRoot(){
+        return root;
+    }
+
     bool isEmpty(){
         return root==nullptr;
     }
@@ -90,6 +94,11 @@ class List{
         //check unique?
         Node_ptr new_node = std::make_shared<ListNode<T>>(to_add);
         addNode(new_node);
+    }
+
+    void add(ListNode<T> to_add){
+        //check unique?
+        addNode(Node_ptr(to_add));
     }
 
     void remove(T& to_remove){
@@ -113,6 +122,7 @@ class List{
        while(i){
            if(i->getValue()==to_remove){
                i->getPrev()->connectNext(i->getNext());
+               
                return;
            }
        }

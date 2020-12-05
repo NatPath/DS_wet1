@@ -7,14 +7,21 @@ class Course{
     
     int courseID;
     //Lecture* unwatched_arr;
-    Lecture_ptr* lecture_arr;
-    List<Lecture_ptr>* unwatched;
+    ListNode<Lecture>** lecture_arr;
+    List<Lecture>* unwatched;
+    bool* is_watched;
 
 
     public:
         Course(int courseID,int numOfClasses);
         Course(const Course& copy);
-        Lecture_ptr* getLectureArray();
+        ListNode<Lecture>**  getLectureArray();
+        bool get_watched(int classID) const;
+        std::shared_ptr<ListNode<Lecture>> getUnwatchedRoot() const;
+        int get_id() const;
+        void set_watched(int classID);
+        void reset_unwatched();
+
         
         
     
