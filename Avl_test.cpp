@@ -34,12 +34,6 @@ void usecount(Node_ptr<T>& n){
     print(n.use_count());
 }
 void testSmallTree(){
-    /*
-    int a=1;
-    int b=2;
-    int c=3;
-    int d=4;
-    */
     AVL_Tree<int> tree;
     int n=1000;
     int* arr=new int[n];
@@ -64,16 +58,20 @@ void testDeleteNode(){
         arr[i]=n-i;
         tree.insertNode(arr[i]);
     }
+    print("printing tree before deletion");
+    itterateOrder(tree.getRoot(),IN,printValue);
     for (int i=0 ;i<n;i++){
-        tree.deleteNode(arr[i]);
+        tree.deleteNode(arr[n-i-1]);
+        print("printing meanwhile tree");
         itterateOrder(tree.getRoot(),IN,printValue);
     }
     itterateOrder(tree.getRoot(),IN,printValue);
+    delete[] arr;
     
 }
 int main(){
     //testInOrder();
-    testSmallTree();
-    //testDeleteNode();
+    //testSmallTree();
+    testDeleteNode();
     //testAvlNode();
 }

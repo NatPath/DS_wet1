@@ -130,7 +130,7 @@ class AVL_Tree{
     //Given children with correct heights, returns balance factor
     int balance_factor(Node_ptr parent_node){
         if (parent_node==nullptr){
-            throw ;
+            return 0;
         }
         int left_height=-1;
         int right_height=-1;
@@ -250,69 +250,89 @@ class AVL_Tree{
             //value searched was not found
             return;
         }
+        Node_ptr i=found_spot;// define an iterator and assign it the found spot
+
+        //find a subsitute to the node removed, we're looking for the minimum node to its right
+        //O(log(n))
+        /*
+        while(i->getRight()!=nullptr){
+            Node_ptr temp_min= findMinNode(i->getRight());
+            i.swap(temp_min);
+            i=temp_min;
+        }
+        */
+        Node_ptr parent_of_found=found_spot->getParent();
+        Node_ptr substitute(nullptr);
+        Node_ptr parent_of_subsitute(nullptr);
+        if (isLeaf(found_spot)){
+            if (found_spot==root){
+                root.reset();
+                return;
+            }
+            freeNode(found_spot);
+            i=parent_of_found;
+        }
+        else if (found_spot->getRight()!=nullptr){
+            substitute= findMinNode(i->getRight());
+            i=substitute->getParent();
+            found_spot->setValue(substitute->getValue());
+            //swapValues(found_spot,substitute);
+            connectNodes(i,substitute->getRight(),L);
+            freeNode(substitute);
+        }
         else{
-            //
-            Node_ptr parent_of_found=found_spot->getParent();
-            //
-
-
-            Node_ptr i=found_spot;// define an iterator and assign it the found spot
-
-            //find a subsitute to the node removed, we're looking for the minimum node to its right
-            //O(log(n))
-            while(i->getRight()!=nullptr){
-                Node_ptr temp_min= findMinNode(i->getRight());
-                i.swap(temp_min);
-                i=temp_min;
-            }
-            Node_ptr parent_of_min=i->getParent();
-            Side side_of_min=childSide(parent_of_min,i);
-            connectNodes(parent_of_min,Node_ptr(nullptr),side_of_min);
-
-            //trace up and update heights of nodes in the search path
-            i=parent_of_min;//redefine iterator as the parent of the leaf
-
-            //O(log(n))
-            while (i!=nullptr){
-                i->updateHeight();
-                i=i->getParent();
-            }
-            
-            //do rolls
-            i=parent_of_min;//redefine iterator as the parent of the leaf
-            Node_ptr parent =i->getParent();
-            int bf;
-            while(i!=root){ 
-                bf=balance_factor(parent);
-                if(bf>1){
-                    //left
-                    if(balance_factor(i)>0){
-                        //left left
-                        roll_ll(parent);
-
-                    }
-                    else{
-                        // left right
-                        roll_lr(parent);
-                    }
-                }
-                else if(bf<-1){
-                    //right
-                    if(balance_factor(i)<0){
-                        //right right
-                        roll_rr(parent);
-                    }
-                    else{
-                        // right left
-                        roll_rl(parent);
-                    }
-                }
-                i=parent;
-                parent=i->getParent();
-            }
-            root=getRootClimb(i);
+            substitute= findMaxNode(i->getLeft());
+            i=substitute->getParent();
+            found_spot->setValue(substitute->getValue());
+            //swapValues(found_spot,substitute);
+            connectNodes(i,substitute->getLeft(),R);
+            freeNode(substitute);
         }
 
+
+        //trace up and update heights of nodes in the search path
+        //O(log(n))
+        Node_ptr j=i;//temporary iterator
+        while (j!=nullptr){
+            j->updateHeight();
+            j=j->getParent();
+        }
+        j.reset();
+
+        //handles corner case of i being the root
+        //do rolls
+        Node_ptr parent =i->getParent();
+        int bf;
+        while(i!=nullptr){ 
+            bf=balance_factor(i);
+            if(bf>1){
+                //left
+                if(balance_factor(i->getLeft())>0){
+                    //left left
+                    roll_ll(i);
+
+                }
+                else{
+                    // left right
+                    roll_lr(i);
+                }
+            }
+            else if(bf<-1){
+                //right
+                if(balance_factor(i->getRight())<0){
+                    //right right
+                    roll_rr(i);
+                }
+                else{
+                    // right left
+                    roll_rl(i);
+                }
+            }
+            if (i->getParent()==nullptr){
+                root=i;
+            }
+            i=i->getParent();
+        }
     }
     //void destroy();
     int getHeight(){
@@ -328,33 +348,20 @@ using Node_ptr=std::shared_ptr<AVL_NODE<T>>;
 
 
 template <typename T>
-void freeNodes(Node_ptr<T>& to_delete){
-    /*
-    to_delete->setLeft(nullptr);
-    to_delete->setRight(nullptr);
-    to_delete->setParent(nullptr);
-    to_delete.reset();
-    */
-    print("Printing use_count before node deletion:");
-    print(to_delete.use_count());
-    Node_ptr<T> nulli=nullptr;
-    connectNodes(to_delete,nulli,R);
-    connectNodes(to_delete,nulli,L);
+void freeNode(Node_ptr<T>& to_delete){
     Side side=childSide(to_delete->getParent(),to_delete);
-    connectNodes(to_delete->getParent(),nulli,side);
-    //print("Printing use_count after node deletion:");
-    print(to_delete.use_count());
-    //print("Printing use_count after reset:");
+    connectNodes(to_delete->getParent(),Node_ptr<T>(nullptr),side);
     to_delete.reset();
-    print(to_delete.use_count());
 }
 
 
 template<typename T>
 AVL_Tree<T>::~AVL_Tree(){
-    itterateOrder(root->getRight(),POST,freeNodes);
-    itterateOrder(root->getLeft(),POST,freeNodes);
-    root.reset();
+    if (root!=nullptr){
+        itterateOrder(root->getRight(),POST,freeNode);
+        itterateOrder(root->getLeft(),POST,freeNode);
+        root.reset();
+    }
 }
 template<typename T>
 AVL_NODE<T>::~AVL_NODE(){
@@ -435,6 +442,20 @@ void itterateOrder(Node_ptr<T> root,Order order, void(*f)(Node_ptr<T>&),bool rev
     }
 }
 
+template <typename T>
+void swapValues(Node_ptr<T> a,Node_ptr<T> b){
+    T temp = a->getValue();
+    a->setValue(b->getValue());
+    b->setValue(temp);
+}
+template <typename T>
+Node_ptr<T> findMaxNode(Node_ptr<T> root){
+    Node_ptr<T> i=root;
+    while (i->getRight()!=nullptr){
+        i=i->getRight();
+    }
+    return i;
+}
 template <typename T>
 Node_ptr<T> findMinNode(Node_ptr<T> root){
     Node_ptr<T> i=root;
@@ -531,7 +552,8 @@ void roll_ll(Node_ptr<T>& old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
 
-//    old_root=new_root;
+    old_root=new_root;
+
 
 }
 
@@ -553,7 +575,7 @@ void roll_rr(Node_ptr<T>& old_root){
     //handles new heights
     old_root->setHeight(old_root->getHeight()-2);
 
- //   old_root=new_root;
+    old_root=new_root;
 }
 
 
@@ -583,7 +605,7 @@ void roll_lr(Node_ptr<T>& old_root){
     new_root->setHeight(new_root->getHeight()+1);
     left->setHeight(left->getHeight()-1);
     
-  //  old_root=new_root;
+    old_root=new_root;
 }
 
 template <typename T>
@@ -612,7 +634,7 @@ void roll_rl(Node_ptr<T>& old_root){
     new_root->setHeight(new_root->getHeight()+1);
     right->setHeight(right->getHeight()-1);
 
- //   old_root=new_root;
+    old_root=new_root;
 }
 
 
