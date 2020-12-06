@@ -181,6 +181,8 @@ class AVL_Tree{
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
+
+            //root= std::shared_ptr<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
             return;
         }
         if (found_spot->getKey()==key_insert){
@@ -188,6 +190,8 @@ class AVL_Tree{
             return;
         }
         Node_ptr i=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
+        
+        //Node_ptr i=std::shared_ptr<AVL_NODE<KEY,VAL>>(key_insert,val_insert); 
         if(found_spot->getKey() < key_insert){
             connectNodes(found_spot,i,R);               
         }

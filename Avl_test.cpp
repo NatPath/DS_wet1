@@ -51,7 +51,7 @@ void testSmallTree(){
     //print(tree.getRoot().use_count());
 }
 void testDeleteNode(){
-    int n=10;
+    int n=10000;
     int* arr=new int[n];
     AVL_Tree<int,int> tree;
     for (int i=0 ;i<n;i++){
@@ -59,13 +59,16 @@ void testDeleteNode(){
         tree.insertNode(arr[i],arr[i]);
     }
     print("printing tree before deletion");
-    itterateOrder(tree.getRoot(),IN,printValue);
     for (int i=0 ;i<n;i++){
         tree.deleteNode(arr[n-i-1]);
-        print("printing meanwhile tree");
-        itterateOrder(tree.getRoot(),IN,printValue);
     }
-    itterateOrder(tree.getRoot(),IN,printValue);
+    for (int i=0 ;i<n;i++){
+        arr[i]=n-i;
+        tree.insertNode(arr[i],arr[i]);
+    }
+    for (int i=0 ;i<n;i++){
+        tree.deleteNode(arr[n-i-1]);
+    }
     delete[] arr;
     
 }
