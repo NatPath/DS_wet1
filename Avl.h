@@ -176,18 +176,18 @@ class AVL_Tree{
         } while (true);
         
     }
-    void insertNode(KEY& key_insert,VAL& val_insert){
+    bool insertNode(KEY& key_insert,VAL& val_insert){
         Node_ptr found_spot=findLastOfSearchPath(key_insert);
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
 
             //root= std::shared_ptr<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
-            return;
+            return true;
         }
         if (found_spot->getKey()==key_insert){
             //value is already in the tree
-            return;
+            return false;
         }
         Node_ptr i=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
         
@@ -220,7 +220,7 @@ class AVL_Tree{
                 root=getRootClimb(parent);
 
 
-                return;
+                return true;
 
             }
             else if(bf<-1){
@@ -236,21 +236,21 @@ class AVL_Tree{
                 root=getRootClimb(parent);
 
 
-                return;
+                return true;
             }
             i=parent;
             parent=i->getParent();
         }
         
 
-        
+        return true;
     }
     
-    void deleteNode(KEY& key_to_delete){
+    bool deleteNode(KEY& key_to_delete){
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
         if (found_spot->getKey()!=key_to_delete){
             //value searched was not found
-            return;
+            return false;
         }
         Node_ptr i=found_spot;// define an iterator and assign it the found spot
 
@@ -269,7 +269,7 @@ class AVL_Tree{
         if (isLeaf(found_spot)){
             if (found_spot==root){
                 root.reset();
-                return;
+                return true;
             }
             freeNode(found_spot);
             i=parent_of_found;
@@ -337,6 +337,7 @@ class AVL_Tree{
             }
             i=i->getParent();
         }
+        return true;
     }
     //void destroy();
     int getHeight(){
