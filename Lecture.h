@@ -8,7 +8,7 @@ class Lecture{
     int num_views;
 
     public:
-    Lecture(int courseID, int lectureID):courseID(courseID),lectureID(lectureID),num_views(0){}
+    Lecture(int courseID, int lectureID,int time=0):courseID(courseID),lectureID(lectureID),num_views(0){}
     void addViews(int to_add){
         num_views+=to_add;
     }
