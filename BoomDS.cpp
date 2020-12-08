@@ -76,13 +76,12 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
 }
 
 StatusType BoomDS::GetMostViewedClasses(int numOfClasses, int *courses, int *classes){
-    int* index;
-    *index = 0;
-    reverseClimbLectures(most_watched,true,true,true,index,courses,classes,numOfClasses);
-    if(*index<numOfClasses){
-        reverseClimbCourses(largest_id,true,true,true,index,courses,classes,numOfClasses);
+    int index=0;
+    reverseClimbLectures(most_watched,true,true,true,&index,courses,classes,numOfClasses);
+    if(index<numOfClasses){
+        reverseClimbCourses(largest_id,true,true,true,&index,courses,classes,numOfClasses);
     }
-    if(*index<numOfClasses){
+    if(index<numOfClasses){
         // there are less than numofclasses lectures in system
         return StatusType::FAILURE;
     }
@@ -91,7 +90,7 @@ StatusType BoomDS::GetMostViewedClasses(int numOfClasses, int *courses, int *cla
 
 
 
-void reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m ){
+void BoomDS::reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m ){
 
     if(!root || *index >=m){
         return;
@@ -129,7 +128,7 @@ void reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> root, bool 
 }
 
 
-void reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m ){
+void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m ){
 
     if(!root || *index >=m){
         return;
@@ -171,7 +170,7 @@ void reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, bool goUp,b
 }
 
 
-void removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched){
+void BoomDS::removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched){
     if(!watched->getNext() && !watched->getPrev()){
         //only lecture
         watched_course.reset_unwatched();

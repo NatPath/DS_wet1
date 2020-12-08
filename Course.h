@@ -1,8 +1,10 @@
 #ifndef _COURSE_H_
 #define _COURSE_H_
 
+#include <exception>
 #include "List.h"
 #include "types.h"
+#include "Lecture.h"
 class Course{
     
     int courseID;
@@ -21,10 +23,6 @@ class Course{
         int get_id() const;
         void set_watched(int classID);
         void reset_unwatched();
-
-        
-        
-    
 
 
 };

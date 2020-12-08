@@ -2,6 +2,10 @@
 #define _BOOMDS_H_
 #include "types.h"
 #include "StatusType.h"
+#include "Avl.h"
+#include "List.h"
+#include "Lecture.h"
+#include "Course.h"
 
 
 
@@ -12,8 +16,9 @@ class BoomDS{
     std::shared_ptr<AVL_NODE<Lecture,Lecture>> most_watched;
     std::shared_ptr<AVL_NODE<int,Course>> largest_id;
 
-    void removeFromUnwatched(Course watched_course,ListNode<Lecture>* watched);
+    void removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched);
     void reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m );
+    void reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m );
     public:
         BoomDS()=default;
         StatusType AddCourse(int courseID,int numOfClasses);

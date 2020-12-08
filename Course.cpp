@@ -3,12 +3,17 @@
 Course::Course(int courseID, int numOfClasses){
     this->courseID = courseID;
     //this->unwatched_arr = new Lecture[numOfClasses];
-    lecture_arr = new ListNode<Lecture>*[numOfClasses];
-    unwatched = new List<Lecture>();
-    is_watched = new bool[numOfClasses];
-    for(int i = 0; i<numOfClasses; i++){
-        lecture_arr[i] = new ListNode<Lecture>(std::make_shared<Lecture>(i));
-        is_watched[i] = false;
+    try{
+        lecture_arr = new ListNode<Lecture>*[numOfClasses];
+        unwatched = new List<Lecture>();
+        is_watched = new bool[numOfClasses];
+        for(int i = 0; i<numOfClasses; i++){
+            lecture_arr[i] = new ListNode<Lecture>(std::make_shared<Lecture>(courseID,i));
+            is_watched[i] = false;
+        }
+    }
+    catch(std::exception e){
+        throw e;
     }
 
     for(int i = numOfClasses-1; i>=0; i--){
@@ -16,6 +21,12 @@ Course::Course(int courseID, int numOfClasses){
     }
 
     
+}
+Course::Course(const Course& copy){
+    courseID=copy.courseID;
+    lecture_arr=copy.lecture_arr;
+    unwatched=copy.unwatched;
+    is_watched=copy.is_watched;
 }
 
 bool Course::get_watched(int classID) const{

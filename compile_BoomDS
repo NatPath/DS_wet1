@@ -1,0 +1,1 @@
+g++ -std=c++11 -DNDEBUG -Wall BoomDS.cpp Lecture.cpp Course.cpp TestBoomDs.cpp

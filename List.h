@@ -37,14 +37,14 @@ class ListNode{
     void connectNext(Node_ptr after){
         next = after;
         if(after){
-            after.prev = std::shared_ptr<ListNode<T>>(this);
+            after->prev = std::shared_ptr<ListNode<T>>(this);
         }
     }
 
     void connectPrev(Node_ptr before){
         prev = before;
         if(before){
-            before.next = std::shared_ptr<ListNode<T>>(this);
+            before->next = std::shared_ptr<ListNode<T>>(this);
         }
     }
 
@@ -98,11 +98,10 @@ class List{
 
     void add(ListNode<T> to_add){
         //check unique?
-        addNode(Node_ptr(to_add));
+        addNode(Node_ptr(&to_add));
     }
 
     void remove(T& to_remove){
-      /
         Node_ptr i=root;
 
         /* single link version
