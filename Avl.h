@@ -247,8 +247,11 @@ class AVL_Tree{
     }
     
     bool deleteNode(KEY& key_to_delete){
+        if(key_to_delete==6621){
+            print("here");
+        }
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
-        if (found_spot->getKey()!=key_to_delete){
+        if (root==nullptr||found_spot->getKey()!=key_to_delete){
             //value searched was not found
             return false;
         }
@@ -281,7 +284,15 @@ class AVL_Tree{
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
             connectNodes(i,substitute->getRight(),L);
+            /*
+            Node_ptr temp=substitute->getRight();
+            connectNodes(i,temp,L);
+            */
             freeNode(substitute);
+            /*
+            substitute->setParent(nullptr);
+            substitute.reset();
+            */
         }
         else{
             substitute= findMaxNode(i->getLeft());
@@ -290,6 +301,10 @@ class AVL_Tree{
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
             connectNodes(i,substitute->getLeft(),R);
+            /*
+            Node_ptr temp=substitute->getLeft();
+            connectNodes(i,temp,R);
+            */
             freeNode(substitute);
         }
 
@@ -341,7 +356,12 @@ class AVL_Tree{
     }
     //void destroy();
     int getHeight(){
-        return root->getHeight();
+        if (root!=nullptr){
+            return root->getHeight();
+        }
+        else{
+            return -1;
+        }
     }
 
     
@@ -495,7 +515,7 @@ void connectNodes(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child, Side side){
             parent->setLeft(child);
         }
         else{
-            throw std::runtime_error("Excpected side to be left or right, but is either");
+            //throw std::runtime_error("Excpected side to be left or right, but is either");
         }
     }
     if (child!=nullptr){

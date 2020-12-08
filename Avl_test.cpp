@@ -72,9 +72,31 @@ void testDeleteNode(){
     delete[] arr;
     
 }
+void testRandomInsert(){
+    int n=1000;
+    int* arr=new int[n];
+    AVL_Tree<int,int> tree;
+    for (int i=0;i<n;i++){
+        arr[i]=rand()%20000;
+        tree.insertNode(arr[i],arr[i]);
+    }
+    itterateOrder(tree.getRoot(),IN,printValue);
+    int temp;
+    for (int i=0;i<n;i++){
+        temp=arr[i];
+        tree.deleteNode(temp);
+    }
+    print("tree after deletions");
+    itterateOrder(tree.getRoot(),IN,printValue);
+    print(tree.getHeight());
+    delete[] arr;
+
+    
+}
 int main(){
     //testInOrder();
     //testSmallTree();
-    testDeleteNode();
+    //testDeleteNode();
+    testRandomInsert();
     //testAvlNode();
 }
