@@ -247,9 +247,9 @@ class AVL_Tree{
     }
     
     bool deleteNode(KEY& key_to_delete){
-        if(key_to_delete==6621){
+        if (key_to_delete==169658){
             print("here");
-        }
+        } 
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
         if (root==nullptr||found_spot->getKey()!=key_to_delete){
             //value searched was not found
@@ -283,16 +283,19 @@ class AVL_Tree{
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
-            connectNodes(i,substitute->getRight(),L);
+            if (i==found_spot){
+                connectNodes(i,substitute->getRight(),R);
+            }
+            else{
+                connectNodes(i,substitute->getRight(),L);
+            }
             /*
             Node_ptr temp=substitute->getRight();
             connectNodes(i,temp,L);
             */
-            freeNode(substitute);
-            /*
+            //freeNode(substitute);
             substitute->setParent(nullptr);
             substitute.reset();
-            */
         }
         else{
             substitute= findMaxNode(i->getLeft());
@@ -300,12 +303,21 @@ class AVL_Tree{
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
             //swapValues(found_spot,substitute);
-            connectNodes(i,substitute->getLeft(),R);
+            if (i==found_spot){
+                //corner case - the subsitute is a child of res
+                connectNodes(i,substitute->getLeft(),L);
+            }
+            else{
+                connectNodes(i,substitute->getLeft(),R);
+            }
             /*
             Node_ptr temp=substitute->getLeft();
             connectNodes(i,temp,R);
             */
-            freeNode(substitute);
+
+            //freeNode(substitute);
+            substitute->setParent(nullptr);
+            substitute.reset();
         }
 
 

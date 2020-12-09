@@ -73,11 +73,11 @@ void testDeleteNode(){
     
 }
 void testRandomInsert(){
-    int n=1000;
+    int n=100000;
     int* arr=new int[n];
     AVL_Tree<int,int> tree;
     for (int i=0;i<n;i++){
-        arr[i]=rand()%20000;
+        arr[i]=rand()%200000;
         tree.insertNode(arr[i],arr[i]);
     }
     itterateOrder(tree.getRoot(),IN,printValue);
