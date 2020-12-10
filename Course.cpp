@@ -12,12 +12,12 @@ Course::Course(int courseID, int numOfClasses){
             is_watched[i] = false;
         }
     }
-    catch(std::exception e){
+    catch(const std::exception& e){
         throw e;
     }
 
     for(int i = numOfClasses-1; i>=0; i--){
-        unwatched->add(*lecture_arr[i]);
+        unwatched->add(lecture_arr[i]);
     }
 
     
@@ -49,7 +49,7 @@ ListNode<Lecture>** Course::getLectureArray(){
     return lecture_arr;
 }
 
-std::shared_ptr<ListNode<Lecture>> Course::getUnwatchedRoot() const{
+ListNode<Lecture>*  Course::getUnwatchedRoot() const{
     return unwatched->getRoot();
 }
 

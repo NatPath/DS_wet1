@@ -138,7 +138,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
         reverseClimbCourses(root->getRight(),false,true,true,index,courses,classes,m);
     }
 
-    std::shared_ptr<ListNode<Lecture>> i = root->getValue().getUnwatchedRoot();
+    ListNode<Lecture>* i = root->getValue().getUnwatchedRoot();
     while(*index<m && i ){
         courses[*index] = i->getValue()->getCourseID();
         classes[*index] = i->getValue()->getLectureID();

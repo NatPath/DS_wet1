@@ -19,7 +19,7 @@ class Course{
         Course(const Course& copy);
         ListNode<Lecture>**  getLectureArray();
         bool get_watched(int classID) const;
-        std::shared_ptr<ListNode<Lecture>> getUnwatchedRoot() const;
+        ListNode<Lecture>*  getUnwatchedRoot() const;
         int get_id() const;
         void set_watched(int classID);
         void reset_unwatched();

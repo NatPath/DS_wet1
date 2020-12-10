@@ -10,8 +10,8 @@ class ListNode{
     typedef struct std::shared_ptr<ListNode<T>> Node_ptr;
     typedef struct std::shared_ptr<T> Value_ptr;
     Value_ptr value;
-    Node_ptr next;
-    Node_ptr prev;
+    ListNode<T>* next;
+    ListNode<T>* prev;
 
     public:
     ListNode()=default;
@@ -21,30 +21,30 @@ class ListNode{
         return value;
     }
 
-    Node_ptr getNext(){
+    ListNode<T>* getNext(){
         return next;
     }
 
     
-    Node_ptr getPrev(){
-        return next;
+    ListNode<T>* getPrev(){
+        return prev;
     }
 
     void setValue(Value_ptr new_value) {
         value = new_value;
     }
 
-    void connectNext(Node_ptr after){
+    void connectNext(ListNode<T>* after){
         next = after;
         if(after){
-            after->prev = std::shared_ptr<ListNode<T>>(this);
+            after->prev = this;
         }
     }
 
-    void connectPrev(Node_ptr before){
+    void connectPrev(ListNode<T>* before){
         prev = before;
         if(before){
-            before->next = std::shared_ptr<ListNode<T>>(this);
+            before->next =this;
         }
     }
 
@@ -54,11 +54,11 @@ template<class T>
 class List{
 
     typedef struct std::shared_ptr<ListNode<T>> Node_ptr;
-    Node_ptr root;
+    ListNode<T>* root;
  
 
-    Node_ptr find(const T& value){
-        Node_ptr i=root;
+    ListNode<T>*  find(const T& value){
+        ListNode<T>*  i=root;
         while(i){
             if(i->getValue() == value){
                 return i;
@@ -67,17 +67,19 @@ class List{
         return nullptr;
     }
 
-    void addNode(Node_ptr to_add){
+    void addNode(ListNode<T>*  to_add){
         to_add->connectNext(root);
         root = to_add;
     }
 
+
+
     public:
 
     List()=default;
-    List(Node_ptr root):root(root){}
+    List(ListNode<T>*  root):root(root){}
 
-    Node_ptr getRoot(){
+    ListNode<T>* getRoot(){
         return root;
     }
 
@@ -92,17 +94,20 @@ class List{
     
     void add(T& to_add){
         //check unique?
-        Node_ptr new_node = std::make_shared<ListNode<T>>(to_add);
-        addNode(new_node);
+        ListNode<T>* new_node = new ListNode<T>(to_add);
+        add(new_node);
     }
+    
 
-    void add(ListNode<T> to_add){
+    void add(ListNode<T>* to_add){
         //check unique?
-        addNode(Node_ptr(&to_add));
+        to_add->connectNext(root);
+        root = to_add;
     }
+    
 
     void remove(T& to_remove){
-        Node_ptr i=root;
+        ListNode<T>* i=root;
 
         /* single link version
         if(!i->getNext()){
@@ -127,6 +132,17 @@ class List{
        }
 
 
+    }
+
+    ~List(){
+        ListNode<T>* i = root;
+
+        while (i)
+        {
+            ListNode<T>* next = i->next;
+            delete i;
+            i = next;
+        }
     }
 
 
