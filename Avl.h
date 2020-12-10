@@ -205,7 +205,8 @@ class AVL_Tree{
         //int height;
         while(i!=root){ 
             bf=balance_factor(parent);
-            parent->setHeight(i->getHeight()+1);
+            //parent->setHeight(i->getHeight()+1);
+            parent->updateHeight();
             if(bf>1){
                 //left
                 if(balance_factor(i)>0){
@@ -247,9 +248,6 @@ class AVL_Tree{
     }
     
     bool deleteNode(KEY& key_to_delete){
-        if (key_to_delete==169658){
-            print("here");
-        } 
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
         if (root==nullptr||found_spot->getKey()!=key_to_delete){
             //value searched was not found
@@ -319,7 +317,6 @@ class AVL_Tree{
             substitute->setParent(nullptr);
             substitute.reset();
         }
-
 
         //trace up and update heights of nodes in the search path
         //O(log(n))
@@ -587,7 +584,8 @@ void roll_ll(Node_ptr<KEY,VAL>& old_root){
 */
 
     //handles new heights
-    old_root->setHeight(old_root->getHeight()-2);
+    //old_root->setHeight(old_root->getHeight()-2);
+    old_root->updateHeight();
 
     old_root=new_root;
 
@@ -610,7 +608,8 @@ void roll_rr(Node_ptr<KEY,VAL>& old_root){
     connectNodes(old_root,RL_Tree,R);
     
     //handles new heights
-    old_root->setHeight(old_root->getHeight()-2);
+    //old_root->setHeight(old_root->getHeight()-2);
+    old_root->updateHeight();
 
     old_root=new_root;
 }
@@ -623,6 +622,7 @@ void roll_lr(Node_ptr<KEY,VAL>& old_root){
     Node_ptr<KEY,VAL> new_root=left->getRight();
     Node_ptr<KEY,VAL> LRR_Tree=new_root->getRight();
     Node_ptr<KEY,VAL> LRL_Tree=new_root->getLeft();
+
 
     Side root_side =childSide(parent,old_root);
     
@@ -638,9 +638,13 @@ void roll_lr(Node_ptr<KEY,VAL>& old_root){
     connectNodes(left,LRL_Tree,R);
 
     //handles new heights
-    old_root->setHeight(old_root->getHeight()-2);
-    new_root->setHeight(new_root->getHeight()+1);
-    left->setHeight(left->getHeight()-1);
+    //old_root->setHeight(old_root->getHeight()-2);
+    //new_root->setHeight(old_height);
+    //left->setHeight(left->getHeight()-1);
+    //
+    old_root->updateHeight();
+    left->updateHeight();
+    new_root->updateHeight();
     
     old_root=new_root;
 }
@@ -667,9 +671,13 @@ void roll_rl(Node_ptr<KEY,VAL>& old_root){
     connectNodes(right,RLR_Tree,L);
 
     //handles new heights
-    old_root->setHeight(old_root->getHeight()-2);
-    new_root->setHeight(new_root->getHeight()+1);
-    right->setHeight(right->getHeight()-1);
+    //old_root->setHeight(old_root->getHeight()-2);
+    //new_root->setHeight(new_root->getHeight()+1);
+    //new_root->setHeight(old_height);
+    //right->setHeight(right->getHeight()-1);
+    old_root->updateHeight();
+    right->updateHeight();
+    new_root->updateHeight();
 
     old_root=new_root;
 }
