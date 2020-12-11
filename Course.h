@@ -12,6 +12,7 @@ class Course{
     ListNode<Lecture>** lecture_arr;
     List<Lecture>* unwatched;
     bool* is_watched;
+    int num_of_classes;
 
 
     public:
@@ -21,6 +22,7 @@ class Course{
         bool get_watched(int classID) const;
         ListNode<Lecture>*  getUnwatchedRoot() const;
         int get_id() const;
+        int getNumOfClasses();
         void set_watched(int classID);
         void reset_unwatched();
 

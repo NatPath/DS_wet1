@@ -2,6 +2,7 @@
 
 Course::Course(int courseID, int numOfClasses){
     this->courseID = courseID;
+    this->num_of_classes=numOfClasses;
     //this->unwatched_arr = new Lecture[numOfClasses];
     try{
         lecture_arr = new ListNode<Lecture>*[numOfClasses];
@@ -27,6 +28,7 @@ Course::Course(const Course& copy){
     lecture_arr=copy.lecture_arr;
     unwatched=copy.unwatched;
     is_watched=copy.is_watched;
+    num_of_classes=copy.num_of_classes;
 }
 
 bool Course::get_watched(int classID) const{
@@ -45,6 +47,10 @@ void Course::reset_unwatched(){
     unwatched = nullptr;
 }
 
+int Course::getNumOfClasses(){
+    return num_of_classes;
+
+}
 ListNode<Lecture>** Course::getLectureArray(){
     return lecture_arr;
 }

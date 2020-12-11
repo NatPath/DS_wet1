@@ -39,10 +39,6 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     if(watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
     }
-    if(classID+1>watched_course.getNumOfClasses()){
-        return StatusType::INVALID_INPUT;
-    }
-    
     ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
     int old_time = watched_lecture->getValue()->getViews();
     Lecture key = Lecture(courseID,classID,old_time);
@@ -73,9 +69,6 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
     Course watched_course = courses.findLastOfSearchPath(courseID)->getValue();
     if(watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
-    }
-    if(classID+1>watched_course.getNumOfClasses()){
-        return StatusType::INVALID_INPUT;
     }
     ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
     *timeViewed = watched_lecture->getValue()->getViews();
@@ -145,7 +138,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
         reverseClimbCourses(root->getRight(),false,true,true,index,courses,classes,m);
     }
 
-    ListNode<Lecture>* i = root->getValue().getUnwatchedRoot();
+    std::shared_ptr<ListNode<Lecture>> i = root->getValue().getUnwatchedRoot();
     while(*index<m && i ){
         courses[*index] = i->getValue()->getCourseID();
         classes[*index] = i->getValue()->getLectureID();
