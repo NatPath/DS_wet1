@@ -43,10 +43,6 @@ void Course::set_watched(int classID){
     is_watched[classID] = true;
 }
 
-void Course::reset_unwatched(){
-    unwatched = nullptr;
-}
-
 int Course::getNumOfClasses(){
     return num_of_classes;
 
@@ -57,5 +53,9 @@ ListNode<Lecture>** Course::getLectureArray(){
 
 ListNode<Lecture>*  Course::getUnwatchedRoot() const{
     return unwatched->getRoot();
+}
+
+void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) const {
+    unwatched->setRoot(new_root);
 }
 

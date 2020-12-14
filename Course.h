@@ -21,6 +21,7 @@ class Course{
         ListNode<Lecture>**  getLectureArray();
         bool get_watched(int classID) const;
         ListNode<Lecture>*  getUnwatchedRoot() const;
+        void setUnwatchedRoot(ListNode<Lecture>* new_root) const;
         int get_id() const;
         int getNumOfClasses();
         void set_watched(int classID);

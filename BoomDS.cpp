@@ -14,8 +14,8 @@ StatusType BoomDS::AddCourse(int courseID,int numOfClasses){
         return StatusType::FAILURE;
     }
     
-    if(largest_id == nullptr || courseID > largest_id->getValue().get_id()){
-        largest_id=courses.findLastOfSearchPath(courseID);
+    if(smallest_id == nullptr || courseID < smallest_id->getValue().get_id()){
+        smallest_id=courses.findLastOfSearchPath(courseID);
     }
     return StatusType::SUCCESS;
 }
@@ -42,7 +42,7 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     if(classID+1>watched_course.getNumOfClasses()){
         return StatusType::INVALID_INPUT;
     }
-    
+
     ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
     int old_time = watched_lecture->getValue()->getViews();
     Lecture key = Lecture(courseID,classID,old_time);
@@ -86,7 +86,7 @@ StatusType BoomDS::GetMostViewedClasses(int numOfClasses, int *courses, int *cla
     int index=0;
     reverseClimbLectures(most_watched,true,true,true,&index,courses,classes,numOfClasses);
     if(index<numOfClasses){
-        reverseClimbCourses(largest_id,true,true,true,&index,courses,classes,numOfClasses);
+        reverseClimbCourses(smallest_id,true,true,true,&index,courses,classes,numOfClasses);
     }
     if(index<numOfClasses){
         // there are less than numofclasses lectures in system
@@ -123,7 +123,6 @@ void BoomDS::reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> roo
         // decide if this is the right or left child so we don't return here
         // add > operator to lecture, just activate the > operator of LectureKey
         if(root->getKey() > root->getParent()->getKey() ){
-            // this was the right child, don't go right again
            reverseClimbLectures(root->getParent(),true,false,true,index,courses,classes,m);
         }
         else{
@@ -140,9 +139,10 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
     if(!root || *index >=m){
         return;
     }
-    // go right
-    if(root->getRight() && goRight){
-        reverseClimbCourses(root->getRight(),false,true,true,index,courses,classes,m);
+    // go left
+    if(root->getLeft() && goLeft){
+        reverseClimbCourses(root->getLeft(),false,true,true,index,courses,classes,m);
+        
     }
 
     ListNode<Lecture>* i = root->getValue().getUnwatchedRoot();
@@ -153,17 +153,17 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
         i = i->getNext();
 
     }
-    
 
-    // go left
-    if(root->getLeft() && goLeft){
-        reverseClimbCourses(root->getLeft(),false,true,true,index,courses,classes,m);
+
+    // go right
+    if(root->getRight() && goRight){
+       
+        reverseClimbCourses(root->getRight(),false,true,true,index,courses,classes,m);
     }
 
     // go up
     if(root->getParent() && goUp){
         // decide if this is the right or left child so we don't return here
-        // add > operator to lecture, just activate the > operator of LectureKey
         if(root->getKey() > root->getParent()->getKey() ){
             // this was the right child, don't go right again
            reverseClimbCourses(root->getParent(),true,false,true,index,courses,classes,m);
@@ -180,7 +180,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
 void BoomDS::removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched){
     if(!watched->getNext() && !watched->getPrev()){
         //only lecture
-        watched_course.reset_unwatched();
+        watched_course.setUnwatchedRoot(nullptr);
     }
     else if(!watched->getNext()){
         //remove last
@@ -189,6 +189,7 @@ void BoomDS::removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watch
     else if(!watched->getPrev()){
         //remove first
         watched->getNext()->connectPrev(nullptr);
+        watched_course.setUnwatchedRoot(watched->getNext());
     }
     else{
         //remove in the middle of the list

@@ -104,6 +104,11 @@ class List{
         to_add->connectNext(root);
         root = to_add;
     }
+
+    void setRoot(ListNode<T>* new_root){
+        delete root;
+        root = new_root;
+    }
     
 
     void remove(T& to_remove){
@@ -133,6 +138,8 @@ class List{
 
 
     }
+
+
 
     ~List(){
         ListNode<T>* i = root;

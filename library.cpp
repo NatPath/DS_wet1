@@ -7,7 +7,9 @@ void* Init(){
 }
 
 void Quit(void** DS){
-    delete DS;
+
+    delete (BoomDS*)*DS;
+    *DS=nullptr;
 }
 
 

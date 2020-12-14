@@ -14,7 +14,7 @@ class BoomDS{
     AVL_Tree<int,Course> courses;
     AVL_Tree<Lecture,Lecture> lectures;
     std::shared_ptr<AVL_NODE<Lecture,Lecture>> most_watched;
-    std::shared_ptr<AVL_NODE<int,Course>> largest_id;
+    std::shared_ptr<AVL_NODE<int,Course>> smallest_id;
 
     void removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched);
     void reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> root, bool goUp,bool goRight, bool goLeft,int *index, int *courses, int *classes, int m );
