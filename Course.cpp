@@ -25,10 +25,26 @@ Course::Course(int courseID, int numOfClasses){
 }
 Course::Course(const Course& copy){
     courseID=copy.courseID;
-    lecture_arr=copy.lecture_arr;
-    unwatched=copy.unwatched;
-    is_watched=copy.is_watched;
+    //unwatched= new List<Lecture>();
+    //*unwatched = *copy.unwatched;
+    unwatched = copy.unwatched;
     num_of_classes=copy.num_of_classes;
+    lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
+    is_watched=new bool[num_of_classes];
+    
+    for(int i =0; i<num_of_classes;i++){
+        lecture_arr[i]=copy.lecture_arr[i];
+        is_watched[i] = copy.is_watched[i];
+    }
+
+    for(int i =0; i<num_of_classes-1;i++){
+        lecture_arr[i]->connectNext(lecture_arr[i+1]);
+    }
+    
+   
+    
+
+    
 }
 
 bool Course::get_watched(int classID) const{
@@ -57,5 +73,12 @@ ListNode<Lecture>*  Course::getUnwatchedRoot() const{
 
 void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) const {
     unwatched->setRoot(new_root);
+}
+
+Course::~Course(){
+    for(int i=0;i<num_of_classes;i++){
+        delete lecture_arr[i];
+    }
+    delete[] is_watched;
 }
 

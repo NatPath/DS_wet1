@@ -27,6 +27,8 @@ class Course{
         void set_watched(int classID);
         void reset_unwatched();
 
+        ~Course();
+
 
 };
 
