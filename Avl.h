@@ -94,6 +94,9 @@ class AVL_NODE{
     void updateHeight(){
         height=this->calcHeight();
     }
+    void printValue(){
+        print(value);
+    }
 
 };
 
