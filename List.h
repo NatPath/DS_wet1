@@ -15,6 +15,17 @@ class ListNode{
     public:
     ListNode()=default;
     ListNode(const Value_ptr value):value(value),next(nullptr),prev(nullptr){}
+    ListNode(const ListNode<T>& to_copy){
+        if(to_copy){
+            T actual_value;
+            if (to_copy.value){
+                actual_value=*(to_copy.value);
+            }
+            value=std::make_shared<T>(actual_value);
+            next=to_copy.next;
+            prev=to_copy.prev;
+        }
+    }
      
     Value_ptr getValue() {
         return value;
@@ -51,6 +62,9 @@ class ListNode{
             print(*value);
         }
     }
+    ~ListNode(){
+        value.reset();
+    }
 
 };
 
@@ -82,6 +96,20 @@ class List{
 
     List():root(nullptr){};
     List(ListNode<T>*  root):root(root){}
+    List(const List<T>& another_list){
+        ListNode<T>* itt=another_list.root;
+        T new_val;
+        root=new ListNode<T>();
+        ListNode<T>* new_itt=root;
+        while(itt){
+            new_val=*(itt->getValue());
+            ListNode<T>* next=new ListNode<T>(std::make_shared<T>(new_val));
+            new_itt->connectNext(next);
+            itt=itt->getNext();
+            new_itt=new_itt->getNext();
+        }
+
+    }
 
     ListNode<T>* getRoot(){
         return root;
@@ -137,17 +165,24 @@ class List{
         */
 
        while(i){
-           if(i->getValue()==to_remove){
-               i->getPrev()->connectNext(i->getNext());
+           if(*(i->getValue())==to_remove){
+               if (i->getPrev()){
+                   i->getPrev()->connectNext(i->getNext());
+                   delete i;
+               }
+               else{
+                   //deleting root
+                   root=i->getNext();
+                   delete i;
+               }
                
                return;
            }
+           i=i->getNext();
        }
 
 
     }
-
-
 
     ~List(){
         ListNode<T>* i = root;
@@ -166,8 +201,42 @@ class List{
             itt=itt->getNext();
         }
     }
+    /*
+    class iterator;
+    iterator begin(){
+        return iterator(this,0);
+    }
+    */
+
 
 
 };
+/*
+template<class T>
+class List<T>::iterator{
+    friend class List<T>;
+    List<T>* list;
+    int index;
+
+    public:
+    iterator(List<T>* list,int index):list(list),index(index){};
+    iterator operator++(int){
+        iterator result=*this;
+        ++*this;
+        return result;
+    }
+    iterator& operator++(){
+        ++index;
+        return *this;
+    }
+    T& operator*() const{
+        if (index>=list->size()){
+            throw std::runtime_error("trying to access out of range index");
+        }
+        return *list.value;
+
+    }
+};
+*/
 
 #endif
