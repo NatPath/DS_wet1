@@ -7,7 +7,6 @@
 
 template<class T>
 class ListNode{
-    typedef struct std::shared_ptr<ListNode<T>> Node_ptr;
     typedef struct std::shared_ptr<T> Value_ptr;
     Value_ptr value;
     ListNode<T>* next;
@@ -47,6 +46,11 @@ class ListNode{
             before->next =this;
         }
     }
+    void printValue(){
+        if (value){
+            print(*value);
+        }
+    }
 
 };
 
@@ -76,7 +80,7 @@ class List{
 
     public:
 
-    List()=default;
+    List():root(nullptr){};
     List(ListNode<T>*  root):root(root){}
 
     ListNode<T>* getRoot(){
@@ -94,13 +98,17 @@ class List{
     
     void add(T& to_add){
         //check unique?
-        ListNode<T>* new_node = new ListNode<T>(to_add);
+        ListNode<T>* new_node = new ListNode<T>(std::make_shared<T>(to_add));
         add(new_node);
     }
     
 
     void add(ListNode<T>* to_add){
         //check unique?
+        if (!root){
+            root=to_add;
+            return;
+        }
         to_add->connectNext(root);
         root = to_add;
     }
@@ -146,9 +154,16 @@ class List{
 
         while (i)
         {
-            ListNode<T>* next = i->next;
+            ListNode<T>* next = i->getNext();
             delete i;
             i = next;
+        }
+    }
+    void printList(){
+        ListNode<T>* itt=root;        
+        while (itt!=nullptr){
+            itt->printValue();
+            itt=itt->getNext();
         }
     }
 
