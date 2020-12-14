@@ -20,7 +20,7 @@ class AVL_NODE{
 
     public:
     AVL_NODE(const KEY& key,const VAL& value):key(key),value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
-    ~AVL_NODE();
+    ~AVL_NODE()=default;
 
     //getters
     const VAL& getValue() const{
@@ -400,10 +400,13 @@ AVL_Tree<KEY,VAL>::~AVL_Tree(){
         root.reset();
     }
 }
+/*
 template<typename KEY,typename VAL>
 AVL_NODE<KEY,VAL>::~AVL_NODE(){
-    
+    value.reset();    
+    key.reset();
 }
+*/
 
 template <typename KEY,typename VAL>
 void printValue(Node_ptr<KEY,VAL>& node){
