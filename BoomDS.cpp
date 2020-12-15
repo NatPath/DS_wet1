@@ -146,6 +146,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
     }
 
     ListNode<Lecture>* i = root->getValue().getUnwatchedRoot();
+    
     while(*index<m && i ){
         courses[*index] = i->getValue()->getCourseID();
         classes[*index] = i->getValue()->getLectureID();
@@ -180,6 +181,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
 void BoomDS::removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched){
     if(!watched->getNext() && !watched->getPrev()){
         //only lecture
+    
         watched_course.setUnwatchedRoot(nullptr);
     }
     else if(!watched->getNext()){

@@ -18,6 +18,7 @@ class Course{
     public:
         Course(int courseID,int numOfClasses);
         Course(const Course& copy);
+        Course& operator=(const Course& copy);
         ListNode<Lecture>**  getLectureArray();
         bool get_watched(int classID) const;
         ListNode<Lecture>*  getUnwatchedRoot() const;

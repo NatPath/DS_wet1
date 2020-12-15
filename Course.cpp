@@ -50,6 +50,32 @@ Course::Course(const Course& copy){
     
 }
 
+Course&  Course::operator=(const Course& copy){
+    courseID=copy.courseID;
+    unwatched= new List<Lecture>();
+    num_of_classes=copy.num_of_classes;
+    lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
+    is_watched=new bool[num_of_classes];
+    
+    for(int i =0; i<num_of_classes;i++){
+        lecture_arr[i]= new ListNode<Lecture>();
+        *lecture_arr[i] = *copy.lecture_arr[i];
+        is_watched[i] = copy.is_watched[i];
+    }
+
+    for(int i =0; i<num_of_classes-1;i++){
+        lecture_arr[i]->connectNext(lecture_arr[i+1]);
+    }
+
+     for(int i = num_of_classes-1; i>=0; i--){
+        unwatched->add(lecture_arr[i]);
+    }
+
+    return *this;
+    
+
+}
+
 bool Course::get_watched(int classID) const{
     return is_watched[classID];
 }
