@@ -1,0 +1,3 @@
+Init
+AddCourse 1 2
+AddCourse 2 2

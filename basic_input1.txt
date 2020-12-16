@@ -1,0 +1,7 @@
+Init
+AddCourse 3 10
+AddCourse 2 2
+AddCourse 1 2
+AddCourse 4 2
+RemoveCourse 3 
+Quit

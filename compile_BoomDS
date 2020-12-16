@@ -1,1 +1,1 @@
-g++ -std=c++11 -DNDEBUG -Wall -g BoomDS.cpp Lecture.cpp Course.cpp TestBoomDs.cpp -o test_boom.out
+g++ -std=c++11 -DNDEBUG -Wall -g BoomDS.cpp Lecture.cpp Course.cpp library.cpp main1.cpp -o test_boom.out
