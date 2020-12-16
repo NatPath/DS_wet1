@@ -3,10 +3,12 @@
 #include <random>
 #include <vector>
 
+/*
 template <typename KEY,typename VAL>
 void printNode(Node_ptr<KEY,VAL>& a){
     print(a->getKey());   
 }
+*/
 void TestRandomInserts(){
     int n=10000;
     int *arr=new int[n];
@@ -66,7 +68,7 @@ void TestTreeOfTrees(){
 }
 
 int main(){
-    //TestRandomInserts();
-    TestComplexObjects();
+    TestRandomInserts();
+    //TestComplexObjects();
 
 }

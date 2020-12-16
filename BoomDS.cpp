@@ -96,6 +96,7 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
 }
 
 StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
+    //search for course in the courses tree O(log(n))
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
@@ -104,6 +105,7 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
     }
     Course watched_course = found_spot->getValue();
     if( watched_course.get_id()!=courseID){
+        //there is no such course
         return StatusType::FAILURE;
     }
     if(classID+1>watched_course.getNumOfClasses()){

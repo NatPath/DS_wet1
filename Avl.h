@@ -58,14 +58,17 @@ class AVL_NODE{
     void setParent(Node_ptr new_parent){
         parent=new_parent;
     }
-
-    /*
-    *connects two nodes , parent to child with the side specified
-    */
-
     void setHeight(int new_height){
         height=new_height;
     }
+
+    //Height functions
+    /*
+    * Gets a vertex of a tree and returns the height of it
+    * The height of a vertex is calculated by the max height of its children +1
+    * Input Expectations:
+    *   left-child and right-child have correct heights already 
+    */
     int calcHeight(Node_ptr parent_node) const{
 
         int left_height=-1;
@@ -80,6 +83,9 @@ class AVL_NODE{
         }
         return max(left_height,right_height)+1;
     }
+    /*
+    * Member function of AVL_NODE, does the same as calcHeight(Node_ptr):
+    */
     int calcHeight() const{
         int left_height=-1;
         int right_height=-1;
@@ -92,9 +98,11 @@ class AVL_NODE{
         return max(left_height,right_height)+1;
 
     }
+    //Calculates height and sets new height to be it
     void updateHeight(){
         height=this->calcHeight();
     }
+    // print functions- expects printable type
     void printValue() const{
         print("value:");
         print(value);
@@ -105,19 +113,15 @@ class AVL_NODE{
     }
 
 };
+/*
+* AREA_NODE functions:
+*/
 template <typename KEY,typename VAL>
 using Node_ptr=std::shared_ptr<AVL_NODE<KEY,VAL>>;
 
 template<class KEY,class VAL>
 void printNode(Node_ptr<KEY,VAL>& node) {
     std::cout<<node->getKey()<<" BF: "<<balance_factor(node)<<" Height: "<< node->getHeight()<<std::endl;
-    /*
-    print(node->getKey());
-    print(" BF: ");
-    print(balance_factor(node));
-    print(" Height: ");
-    print() +node->getHeight());
-    */
 }
 
 template <typename KEY,typename VAL>
@@ -129,7 +133,7 @@ void freeNode(Node_ptr<KEY,VAL>& to_delete){
      to_delete.reset();
 }
 
-//Given children with correct heights, returns balance factor
+//Given children with correct heights, returns balance factor (left.height - right.height)
 template <typename KEY,typename VAL>
 int balance_factor(Node_ptr<KEY,VAL> parent_node) {
     if (parent_node==nullptr){
@@ -163,12 +167,14 @@ class AVL_Tree{
 
     VAL getRootValue() const{
         if(root==nullptr){
+            //default values when the root is null(?)
             return VAL();
         }
         return root->getValue();
     }
     KEY getRootKey() const{
         if(root==nullptr){
+            //default values when the root is null(?)
             return KEY();
         }
         return root->getKey();
@@ -176,14 +182,17 @@ class AVL_Tree{
 
 
     
-    //
+    /*
+    * Gets a key, searches for the vertex in the AVL with the key. 
+    * if a vertex with the same key is found , returns it.
+    * otherwise, returns the last vertex on the search path.(note: it must be a leaf or with only one child)
+    */
     Node_ptr findLastOfSearchPath(const KEY& to_find) const{
         Node_ptr i=root;
         if(i==nullptr){
             return nullptr;
         }
         do{
-            
             if (i->getKey()==to_find){
                 return i;
             }
@@ -208,36 +217,45 @@ class AVL_Tree{
         } while (true);
         
     }
+    /*
+    * InsertNode:
+    *   create a new Node and enter it into the tree. returns wether the insertion was successful or not.
+    * 1)  searching for the place it should apear. - if already exists return false
+    * 2)  connecting it in the correct spot.
+    * 3)  update heights in the search path and do a roll if needed 
+    * O(log(n))
+    */
     bool insertNode(const KEY& key_insert,const VAL& val_insert){
+        // search for the key in the tree O(log(n))
         Node_ptr found_spot=findLastOfSearchPath(key_insert);
         if (found_spot==nullptr){
             //first node in the tree
             root=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
-
-            //root= std::shared_ptr<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
             return true;
         }
         if (found_spot->getKey()==key_insert){
             //value is already in the tree
             return false;
         }
-        Node_ptr i=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
+        //
         
-        //Node_ptr i=std::shared_ptr<AVL_NODE<KEY,VAL>>(key_insert,val_insert); 
+        //creates the new node and connects it
+        Node_ptr i=std::make_shared<AVL_NODE<KEY,VAL>>(key_insert,val_insert);
         if(found_spot->getKey() < key_insert){
             connectNodes(found_spot,i,R);               
         }
         else{
             connectNodes(found_spot,i,L);
         }
-
         i->setHeight(0);
+        //
+
+        //iterates over the search path and update the heights accordingly, checks balance factor and do rolls accordingly
+        //O(log(n)) - iteratation over the search path is log(n) , rolls are O(1)
         Node_ptr parent = i->getParent();
         int bf;
-        //int height;
         while(i!=root){ 
             bf=balance_factor(parent);
-            //parent->setHeight(i->getHeight()+1);
             parent->updateHeight();
             if(bf>1){
                 //left
@@ -267,8 +285,6 @@ class AVL_Tree{
                     roll_rl(parent);
                 }
                 root=getRootClimb(parent);
-
-
                 return true;
             }
             i=parent;
@@ -279,6 +295,11 @@ class AVL_Tree{
         return true;
     }
     
+    /*
+    * DeleteNode:
+    *   delete the vertex with the given key from the tree. returns wether the deletion was successful/
+    *   
+    */
     bool deleteNode(const KEY& key_to_delete){
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
         if (root==nullptr||found_spot->getKey()!=key_to_delete){
@@ -287,15 +308,8 @@ class AVL_Tree{
         }
         Node_ptr i=found_spot;// define an iterator and assign it the found spot
 
-        //find a subsitute to the node removed, we're looking for the minimum node to its right
+        //find a subsitute to the node removed, we're looking for the minimum node to its right, or the maximum node to its left
         //O(log(n))
-        /*
-        while(i->getRight()!=nullptr){
-            Node_ptr temp_min= findMinNode(i->getRight());
-            i.swap(temp_min);
-            i=temp_min;
-        }
-        */
         Node_ptr parent_of_found=found_spot->getParent();
         Node_ptr substitute(nullptr);
         Node_ptr parent_of_subsitute(nullptr);
@@ -312,18 +326,12 @@ class AVL_Tree{
             i=substitute->getParent();
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
-            //swapValues(found_spot,substitute);
             if (i==found_spot){
                 connectNodes(i,substitute->getRight(),R);
             }
             else{
                 connectNodes(i,substitute->getRight(),L);
             }
-            /*
-            Node_ptr temp=substitute->getRight();
-            connectNodes(i,temp,L);
-            */
-            //freeNode(substitute);
             substitute->setParent(nullptr);
             substitute.reset();
         }
@@ -332,20 +340,12 @@ class AVL_Tree{
             i=substitute->getParent();
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
-            //swapValues(found_spot,substitute);
             if (i==found_spot){
-                //corner case - the subsitute is a child of res
                 connectNodes(i,substitute->getLeft(),L);
             }
             else{
                 connectNodes(i,substitute->getLeft(),R);
             }
-            /*
-            Node_ptr temp=substitute->getLeft();
-            connectNodes(i,temp,R);
-            */
-
-            //freeNode(substitute);
             substitute->setParent(nullptr);
             substitute.reset();
         }
@@ -395,24 +395,25 @@ class AVL_Tree{
         }
         return true;
     }
-    //void destroy();
+
     int getHeight() const{
         if (root!=nullptr){
             return root->getHeight();
         }
         else{
+            //if tree is empty
             return -1;
         }
     }
+    // Prints the tree in the format: ${key} BF: ${BF} Height: ${Height}
     void printTree() const{
         itterateOrder(root,IN,printNode);
     }
-    //an outside destructor
+    //an outside destructor- clears the tree(used mainly for testing)
     void treeClear(){
         if (root!=nullptr){
             itterateOrder(root->getRight(),POST,freeNode);
             itterateOrder(root->getLeft(),POST,freeNode);
-            
             root.reset();
         }
     }
@@ -421,6 +422,12 @@ class AVL_Tree{
 };
 
 
+
+/*
+* Desctructor of AVL_Tree-
+*   delete tree from the nodes , iterating post orderly 
+*   time complexity is O(n). each node costs O(1) actions
+*/
 
 template<typename KEY,typename VAL>
 AVL_Tree<KEY,VAL>::~AVL_Tree(){
@@ -431,13 +438,6 @@ AVL_Tree<KEY,VAL>::~AVL_Tree(){
         root.reset();
     }
 }
-/*
-template<typename KEY,typename VAL>
-AVL_NODE<KEY,VAL>::~AVL_NODE(){
-    value.reset();    
-    key.reset();
-}
-*/
 
 template <typename KEY,typename VAL>
 void printValue(Node_ptr<KEY,VAL>& node){
@@ -445,6 +445,10 @@ void printValue(Node_ptr<KEY,VAL>& node){
 }
 
 
+/*
+*Given a vertex, returns the root.
+*does so by climbing parent by parent untill the is non
+*/
 template <typename KEY,typename VAL>
 Node_ptr<KEY,VAL> getRootClimb(Node_ptr<KEY,VAL> node){
     while(node->getParent()!=nullptr){
@@ -453,6 +457,10 @@ Node_ptr<KEY,VAL> getRootClimb(Node_ptr<KEY,VAL> node){
     return node;
 }
 
+/*
+* InOrder-
+*   given a root vertex, iterates Inorder over the tree under it. and activate a given function 'f' on the vertices
+*/
 template <typename KEY,typename VAL>
 void inOrder(Node_ptr<KEY,VAL> root, void(*f)(Node_ptr<KEY,VAL>&)){
     if (root==nullptr){
@@ -468,6 +476,11 @@ void inOrder(Node_ptr<KEY,VAL> root, void(*f)(Node_ptr<KEY,VAL>&)){
 }
 
 
+/*
+* ittarateOrder:
+*   iterates over the tree from the root given by the order given and activates function 'f' on each vertex while doing so.
+*   reverse- if set to true, the iteration is done backwards
+*/
 template <typename KEY,typename VAL>
 void itterateOrder(Node_ptr<KEY,VAL> root,Order order, void(*f)(Node_ptr<KEY,VAL>&),bool reverse = false){
     if (root==nullptr){
@@ -513,12 +526,18 @@ void itterateOrder(Node_ptr<KEY,VAL> root,Order order, void(*f)(Node_ptr<KEY,VAL
     }
 }
 
+/*
+* swaps values of two nodes given
+*/
 template <typename KEY,typename VAL>
 void swapValues(Node_ptr<KEY,VAL> a,Node_ptr<KEY,VAL> b){
     VAL temp = a->getValue();
     a->setValue(b->getValue());
     b->setValue(temp);
 }
+/*
+* given a root, returns the rightest node to it
+*/
 template <typename KEY,typename VAL>
 Node_ptr<KEY,VAL> findMaxNode(Node_ptr<KEY,VAL> root){
     if (root==nullptr){
@@ -530,6 +549,9 @@ Node_ptr<KEY,VAL> findMaxNode(Node_ptr<KEY,VAL> root){
     }
     return i;
 }
+/*
+* given a root, returns the leftest node to it
+*/
 template <typename KEY,typename VAL>
 Node_ptr<KEY,VAL> findMinNode(Node_ptr<KEY,VAL> root){
     if (root==nullptr){
@@ -542,6 +564,7 @@ Node_ptr<KEY,VAL> findMinNode(Node_ptr<KEY,VAL> root){
     return i;
 }
 
+//checks wether a vertex is a leaf(has no children)
 template <typename KEY,typename VAL>
 bool isLeaf(Node_ptr<KEY,VAL> node){
     if (node==nullptr){
@@ -550,15 +573,11 @@ bool isLeaf(Node_ptr<KEY,VAL> node){
     return node->getLeft()==nullptr&&node->getRight()==nullptr;
 }
 
+/*
+* connect parent to child to its side, and child to parent
+*/
 template <typename KEY,typename VAL>
 void connectNodes(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child, Side side){
-    /*
-    print("-----------------------------------------------------");
-    print("parent use count before:");
-    print(parent.use_count());
-    print("child use count before:");
-    print(child.use_count());
-    */
     if (parent!=nullptr){
         if (side==R){
             parent->setRight(child);
@@ -567,18 +586,12 @@ void connectNodes(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child, Side side){
             parent->setLeft(child);
         }
         else{
-            //throw std::runtime_error("Excpected side to be left or right, but is either");
+            throw std::runtime_error("Excpected side to be left or right, but is either");
         }
     }
     if (child!=nullptr){
         child->setParent(parent);
     }
-    /*
-    print("parent use count after:");
-    print(parent.use_count());
-    print("child use count after:");
-    print(child.use_count());
-    */
 }
 /**
  * Given a parent and a child, returns which side the child is
@@ -603,6 +616,7 @@ Side childSide(Node_ptr<KEY,VAL> parent,Node_ptr<KEY,VAL> child){
     return N;
 } 
 
+//left left roll
 template <typename KEY,typename VAL>
 void roll_ll(Node_ptr<KEY,VAL>& old_root){
     Node_ptr<KEY,VAL> parent=old_root->getParent();
@@ -618,16 +632,6 @@ void roll_ll(Node_ptr<KEY,VAL>& old_root){
     //handle old_root pointers
     connectNodes(old_root,LR_Tree,L);
 
-
-/*
-    print(parent.use_count());
-    print(new_root.use_count());
-    print(LR_Tree.use_count());
-    print(old_root.use_count());
-*/
-
-    //handles new heights
-    //old_root->setHeight(old_root->getHeight()-2);
     old_root->updateHeight();
 
     old_root=new_root;
@@ -635,6 +639,7 @@ void roll_ll(Node_ptr<KEY,VAL>& old_root){
 
 }
 
+//right right roll
 template <typename KEY,typename VAL>
 void roll_rr(Node_ptr<KEY,VAL>& old_root){
     Node_ptr<KEY,VAL> parent=old_root->getParent();
@@ -651,13 +656,13 @@ void roll_rr(Node_ptr<KEY,VAL>& old_root){
     connectNodes(old_root,RL_Tree,R);
     
     //handles new heights
-    //old_root->setHeight(old_root->getHeight()-2);
     old_root->updateHeight();
 
     old_root=new_root;
 }
 
 
+//left right roll
 template <typename KEY,typename VAL>
 void roll_lr(Node_ptr<KEY,VAL>& old_root){
     Node_ptr<KEY,VAL> parent=old_root->getParent();
@@ -680,11 +685,7 @@ void roll_lr(Node_ptr<KEY,VAL>& old_root){
     //handle left pointers
     connectNodes(left,LRL_Tree,R);
 
-    //handles new heights
-    //old_root->setHeight(old_root->getHeight()-2);
-    //new_root->setHeight(old_height);
-    //left->setHeight(left->getHeight()-1);
-    //
+    //corrects heights
     old_root->updateHeight();
     left->updateHeight();
     new_root->updateHeight();
@@ -692,6 +693,7 @@ void roll_lr(Node_ptr<KEY,VAL>& old_root){
     old_root=new_root;
 }
 
+//right left roll
 template <typename KEY,typename VAL>
 void roll_rl(Node_ptr<KEY,VAL>& old_root){
     Node_ptr<KEY,VAL> parent=old_root->getParent();
@@ -714,10 +716,6 @@ void roll_rl(Node_ptr<KEY,VAL>& old_root){
     connectNodes(right,RLR_Tree,L);
 
     //handles new heights
-    //old_root->setHeight(old_root->getHeight()-2);
-    //new_root->setHeight(new_root->getHeight()+1);
-    //new_root->setHeight(old_height);
-    //right->setHeight(right->getHeight()-1);
     old_root->updateHeight();
     right->updateHeight();
     new_root->updateHeight();

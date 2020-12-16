@@ -50,7 +50,7 @@ Course::Course(const Course& copy){
     
 }
 
-Course&  Course::operator=(const Course& copy){
+Course& Course::operator=(const Course& copy){
 
     ListNode<Lecture>** lecture_arr_tmp = new ListNode<Lecture>*[copy.num_of_classes];
     bool* is_watched_tmp=new bool[copy.num_of_classes];
@@ -67,7 +67,7 @@ Course&  Course::operator=(const Course& copy){
 
         for (int i = 0; i < copy.num_of_classes - 1; i++)
         {
-            lecture_arr_tmp[i]->connectNext(lecture_arr[i + 1]);
+            lecture_arr_tmp[i]->connectNext(lecture_arr_tmp[i + 1]);
         }
 
         for (int i = 0; i < num_of_classes; i++)
