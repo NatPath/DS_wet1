@@ -52,9 +52,23 @@ Course::Course(const Course& copy){
 
 Course&  Course::operator=(const Course& copy){
     courseID=copy.courseID;
-    unwatched= List<Lecture>();
+    
     num_of_classes=copy.num_of_classes;
+
+     for(int i=0;i<num_of_classes;i++){
+        if(is_watched[i]){
+            delete lecture_arr[i];
+        }
+        
+    }
+
+    delete[] lecture_arr;
+    delete[] is_watched;
+    unwatched.~List();
+    unwatched= List<Lecture>();
+
     lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
+
     is_watched=new bool[num_of_classes];
     
     for(int i =0; i<num_of_classes;i++){
