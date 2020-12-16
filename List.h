@@ -111,7 +111,7 @@ class List{
 
     }
 
-    ListNode<T>* getRoot(){
+    ListNode<T>* getRoot() const{
         return root;
     }
 

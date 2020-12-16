@@ -10,7 +10,7 @@ class Course{
     int courseID;
     //Lecture* unwatched_arr;
     ListNode<Lecture>** lecture_arr;
-    List<Lecture>* unwatched;
+    List<Lecture> unwatched;
     bool* is_watched;
     int num_of_classes;
 
@@ -22,7 +22,7 @@ class Course{
         ListNode<Lecture>**  getLectureArray();
         bool get_watched(int classID) const;
         ListNode<Lecture>*  getUnwatchedRoot() const;
-        void setUnwatchedRoot(ListNode<Lecture>* new_root) const;
+        void setUnwatchedRoot(ListNode<Lecture>* new_root) ;
         int get_id() const;
         int getNumOfClasses();
         void set_watched(int classID);

@@ -6,7 +6,7 @@ Course::Course(int courseID, int numOfClasses){
     //this->unwatched_arr = new Lecture[numOfClasses];
     try{
         lecture_arr = new ListNode<Lecture>*[numOfClasses];
-        unwatched = new List<Lecture>();
+        unwatched = List<Lecture>();
         is_watched = new bool[numOfClasses];
         for(int i = 0; i<numOfClasses; i++){
             lecture_arr[i] = new ListNode<Lecture>(std::make_shared<Lecture>(courseID,i));
@@ -18,14 +18,14 @@ Course::Course(int courseID, int numOfClasses){
     }
 
     for(int i = numOfClasses-1; i>=0; i--){
-        unwatched->add(lecture_arr[i]);
+        unwatched.add(lecture_arr[i]);
     }
 
     
 }
 Course::Course(const Course& copy){
     courseID=copy.courseID;
-    unwatched= new List<Lecture>();
+    unwatched= List<Lecture>();
     num_of_classes=copy.num_of_classes;
     lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
     is_watched=new bool[num_of_classes];
@@ -41,7 +41,7 @@ Course::Course(const Course& copy){
     }
 
      for(int i = num_of_classes-1; i>=0; i--){
-        unwatched->add(lecture_arr[i]);
+        unwatched.add(lecture_arr[i]);
     }
     
    
@@ -52,7 +52,7 @@ Course::Course(const Course& copy){
 
 Course&  Course::operator=(const Course& copy){
     courseID=copy.courseID;
-    unwatched= new List<Lecture>();
+    unwatched= List<Lecture>();
     num_of_classes=copy.num_of_classes;
     lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
     is_watched=new bool[num_of_classes];
@@ -68,7 +68,7 @@ Course&  Course::operator=(const Course& copy){
     }
 
      for(int i = num_of_classes-1; i>=0; i--){
-        unwatched->add(lecture_arr[i]);
+        unwatched.add(lecture_arr[i]);
     }
 
     return *this;
@@ -97,16 +97,16 @@ ListNode<Lecture>** Course::getLectureArray(){
 }
 
 ListNode<Lecture>*  Course::getUnwatchedRoot() const{
-    return unwatched->getRoot();
+    return unwatched.getRoot();
 }
 
-void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) const {
-    unwatched->setRoot(new_root);
+void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) {
+    unwatched.setRoot(new_root);
 }
 
 Course::~Course(){
 
-    delete unwatched;
+    //delete unwatched;
     
     for(int i=0;i<num_of_classes;i++){
         if(is_watched[i]){
