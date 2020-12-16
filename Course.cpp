@@ -51,11 +51,26 @@ Course::Course(const Course& copy){
 }
 
 Course&  Course::operator=(const Course& copy){
-    courseID=copy.courseID;
-    
-    num_of_classes=copy.num_of_classes;
 
-     for(int i=0;i<num_of_classes;i++){
+    ListNode<Lecture>** lecture_arr_tmp = new ListNode<Lecture>*[copy.num_of_classes];
+    bool* is_watched_tmp=new bool[copy.num_of_classes];
+
+    try{
+
+    for(int i =0; i<copy.num_of_classes;i++){
+        lecture_arr_tmp[i]= new ListNode<Lecture>();
+        *lecture_arr_tmp[i] = *copy.lecture_arr[i];
+        is_watched_tmp[i] = copy.is_watched[i];
+    }
+
+   
+    for(int i =0; i<copy.num_of_classes-1;i++){
+        lecture_arr_tmp[i]->connectNext(lecture_arr[i+1]);
+    }
+
+
+
+    for(int i=0;i<num_of_classes;i++){
         if(is_watched[i]){
             delete lecture_arr[i];
         }
@@ -64,25 +79,25 @@ Course&  Course::operator=(const Course& copy){
 
     delete[] lecture_arr;
     delete[] is_watched;
+    
+    courseID=copy.courseID;
+    
+    num_of_classes=copy.num_of_classes;
+
+    lecture_arr = lecture_arr_tmp;
+    is_watched = is_watched_tmp;
+
     unwatched.~List();
     unwatched= List<Lecture>();
 
-    lecture_arr = new ListNode<Lecture>*[copy.num_of_classes];
 
-    is_watched=new bool[num_of_classes];
-    
-    for(int i =0; i<num_of_classes;i++){
-        lecture_arr[i]= new ListNode<Lecture>();
-        *lecture_arr[i] = *copy.lecture_arr[i];
-        is_watched[i] = copy.is_watched[i];
-    }
-
-    for(int i =0; i<num_of_classes-1;i++){
-        lecture_arr[i]->connectNext(lecture_arr[i+1]);
-    }
-
-     for(int i = num_of_classes-1; i>=0; i--){
+    for(int i = num_of_classes-1; i>=0; i--){
         unwatched.add(lecture_arr[i]);
+    }
+    }
+    catch(...){
+        delete[] lecture_arr_tmp;
+        delete[] is_watched_tmp;
     }
 
     return *this;
