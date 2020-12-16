@@ -55,54 +55,54 @@ Course&  Course::operator=(const Course& copy){
     ListNode<Lecture>** lecture_arr_tmp = new ListNode<Lecture>*[copy.num_of_classes];
     bool* is_watched_tmp=new bool[copy.num_of_classes];
 
-    try{
+    try
+    {
 
-    for(int i =0; i<copy.num_of_classes;i++){
-        lecture_arr_tmp[i]= new ListNode<Lecture>();
-        *lecture_arr_tmp[i] = *copy.lecture_arr[i];
-        is_watched_tmp[i] = copy.is_watched[i];
-    }
-
-   
-    for(int i =0; i<copy.num_of_classes-1;i++){
-        lecture_arr_tmp[i]->connectNext(lecture_arr[i+1]);
-    }
-
-
-
-    for(int i=0;i<num_of_classes;i++){
-        if(is_watched[i]){
-            delete lecture_arr[i];
+        for (int i = 0; i < copy.num_of_classes; i++)
+        {
+            lecture_arr_tmp[i] = new ListNode<Lecture>();
+            *lecture_arr_tmp[i] = *copy.lecture_arr[i];
+            is_watched_tmp[i] = copy.is_watched[i];
         }
-        
+
+        for (int i = 0; i < copy.num_of_classes - 1; i++)
+        {
+            lecture_arr_tmp[i]->connectNext(lecture_arr[i + 1]);
+        }
+
+        for (int i = 0; i < num_of_classes; i++)
+        {
+            if (is_watched[i])
+            {
+                delete lecture_arr[i];
+            }
+        }
+
+        delete[] lecture_arr;
+        delete[] is_watched;
+
+        courseID = copy.courseID;
+
+        num_of_classes = copy.num_of_classes;
+
+        lecture_arr = lecture_arr_tmp;
+        is_watched = is_watched_tmp;
+
+        unwatched.~List();
+        unwatched = List<Lecture>();
+
+        for (int i = num_of_classes - 1; i >= 0; i--)
+        {
+            unwatched.add(lecture_arr[i]);
+        }
     }
-
-    delete[] lecture_arr;
-    delete[] is_watched;
-    
-    courseID=copy.courseID;
-    
-    num_of_classes=copy.num_of_classes;
-
-    lecture_arr = lecture_arr_tmp;
-    is_watched = is_watched_tmp;
-
-    unwatched.~List();
-    unwatched= List<Lecture>();
-
-
-    for(int i = num_of_classes-1; i>=0; i--){
-        unwatched.add(lecture_arr[i]);
-    }
-    }
-    catch(...){
+    catch (...)
+    {
         delete[] lecture_arr_tmp;
         delete[] is_watched_tmp;
     }
 
     return *this;
-    
-
 }
 
 bool Course::get_watched(int classID) const{

@@ -35,7 +35,13 @@ StatusType BoomDS::RemoveCourse(int courseID){
 }
 
 StatusType BoomDS::WatchClass(int courseID, int classID, int time){
-    Course watched_course = courses.findLastOfSearchPath(courseID)->getValue();
+    std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
+    if(!found_spot){
+        //empty course tree
+        return StatusType::FAILURE;
+
+    }
+    Course watched_course = found_spot->getValue();
     if(watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
     }
@@ -70,8 +76,14 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
 }
 
 StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
-    Course watched_course = courses.findLastOfSearchPath(courseID)->getValue();
-    if(watched_course.get_id()!=courseID){
+    std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
+    if(!found_spot){
+        //empty course tree
+        return StatusType::FAILURE;
+
+    }
+    Course watched_course = found_spot->getValue();
+    if( watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
     }
     if(classID+1>watched_course.getNumOfClasses()){
@@ -105,6 +117,10 @@ void BoomDS::reverseClimbLectures(std::shared_ptr<AVL_NODE<Lecture,Lecture>> roo
     // go right
     if(root->getRight() && goRight){
         reverseClimbLectures(root->getRight(),false,true,true,index,courses,classes,m);
+    }
+
+    if(*index>=m){
+        return;
     }
 
     // save this node
