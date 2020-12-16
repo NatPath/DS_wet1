@@ -21,6 +21,7 @@ class AVL_NODE{
     public:
     AVL_NODE(const KEY& key,const VAL& value):key(key),value(value),left(nullptr),right(nullptr),parent(nullptr),height(0){}
     ~AVL_NODE()=default;
+   
 
     //getters
     const VAL& getValue() const{
@@ -387,8 +388,10 @@ using Node_ptr=std::shared_ptr<AVL_NODE<KEY,VAL>>;
 template <typename KEY,typename VAL>
 void freeNode(Node_ptr<KEY,VAL>& to_delete){
     Side side=childSide(to_delete->getParent(),to_delete);
-    connectNodes(to_delete->getParent(),Node_ptr<KEY,VAL>(nullptr),side);
-    to_delete.reset();
+    Node_ptr<KEY,VAL> parent = to_delete->getParent();
+   
+    connectNodes(parent,Node_ptr<KEY,VAL>(nullptr),side);
+     to_delete.reset();
 }
 
 
@@ -397,6 +400,7 @@ AVL_Tree<KEY,VAL>::~AVL_Tree(){
     if (root!=nullptr){
         itterateOrder(root->getRight(),POST,freeNode);
         itterateOrder(root->getLeft(),POST,freeNode);
+        
         root.reset();
     }
 }

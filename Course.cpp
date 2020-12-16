@@ -105,10 +105,16 @@ void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) const {
 }
 
 Course::~Course(){
+
+    delete unwatched;
     
     for(int i=0;i<num_of_classes;i++){
-        delete lecture_arr[i];
+        if(is_watched[i]){
+            delete lecture_arr[i];
+        }
+        
     }
+
     
     delete[] lecture_arr;
     delete[] is_watched;
