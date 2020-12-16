@@ -133,9 +133,14 @@ void Course::setUnwatchedRoot(ListNode<Lecture>* new_root) {
     unwatched.setRoot(new_root);
 }
 
+Lecture& Course::getLecture(int classID){
+    return *lecture_arr[classID]->getValue();
+}
+
+
 Course::~Course(){
 
-    //delete unwatched;
+    
     
     for(int i=0;i<num_of_classes;i++){
         if(is_watched[i]){

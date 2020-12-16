@@ -25,12 +25,29 @@ StatusType BoomDS::RemoveCourse(int courseID){
     Course del = Course(courseID,1);
     courses.deleteNode(del);
     return StatusType::SUCCESS;
-    */
-   
-    if(!courses.deleteNode(courseID)){
-        // node not in tree
+    */ 
+    std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
+    if(!found_spot){
+        //empty course tree
+        return StatusType::INVALID_INPUT;
+
+    }
+
+    Course watched_course = found_spot->getValue();
+    if(watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
-    } 
+    }
+
+    for (int i = 0; i < watched_course.getNumOfClasses() ; i++)
+    {
+        lectures.deleteNode(watched_course.getLecture(i));
+    }
+    
+
+    courses.deleteNode(courseID);
+    
+    
+   
     return StatusType::SUCCESS;
 }
 
@@ -38,9 +55,10 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
-        return StatusType::FAILURE;
+        return StatusType::INVALID_INPUT;
 
     }
+
     Course watched_course = found_spot->getValue();
     if(watched_course.get_id()!=courseID){
         return StatusType::FAILURE;
@@ -79,7 +97,7 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
-        return StatusType::FAILURE;
+        return StatusType::INVALID_INPUT;
 
     }
     Course watched_course = found_spot->getValue();
@@ -159,6 +177,10 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
     if(root->getLeft() && goLeft){
         reverseClimbCourses(root->getLeft(),false,true,true,index,courses,classes,m);
         
+    }
+
+    if(*index >=m){
+        return;
     }
 
     ListNode<Lecture>* i = root->getValue().getUnwatchedRoot();

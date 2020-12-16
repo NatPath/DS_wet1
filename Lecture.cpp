@@ -15,14 +15,14 @@ bool Lecture::operator>(const Lecture& compare) const{
         return false;
     }
     // num_views == compare.getViews()
-    if (courseID > compare.getCourseID()){
+    if (courseID < compare.getCourseID()){
         return true;
     }
-    if (courseID < compare.getCourseID()){
+    if (courseID > compare.getCourseID()){
         return false;
     }
     // num_views == compare.getViews() && courseId==compare.getCourseId()
-    if (lectureID > compare.getLectureID()){
+    if (lectureID < compare.getLectureID()){
         return true;
     }
     else{

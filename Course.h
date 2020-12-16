@@ -20,6 +20,7 @@ class Course{
         Course(const Course& copy);
         Course& operator=(const Course& copy);
         ListNode<Lecture>**  getLectureArray();
+        Lecture& getLecture(int classID);
         bool get_watched(int classID) const;
         ListNode<Lecture>*  getUnwatchedRoot() const;
         void setUnwatchedRoot(ListNode<Lecture>* new_root) ;
@@ -27,6 +28,7 @@ class Course{
         int getNumOfClasses();
         void set_watched(int classID);
         void reset_unwatched();
+        
 
         ~Course();
 
