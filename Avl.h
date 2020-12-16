@@ -30,16 +30,16 @@ class AVL_NODE{
     const KEY& getKey() const{
         return key;
     }
-    Node_ptr getRight() {
+    Node_ptr getRight() const{
         return right;
     }
-    Node_ptr getLeft() {
+    Node_ptr getLeft() const{
         return left;
     }
-    Node_ptr getParent() {
+    Node_ptr getParent() const{
         return parent;
     }
-    int getHeight(){
+    int getHeight() const{
         return height;
     }
     //setters
@@ -66,7 +66,7 @@ class AVL_NODE{
     void setHeight(int new_height){
         height=new_height;
     }
-    int calcHeight(Node_ptr parent_node){
+    int calcHeight(Node_ptr parent_node) const{
 
         int left_height=-1;
         int right_height=-1;
@@ -80,7 +80,7 @@ class AVL_NODE{
         }
         return max(left_height,right_height)+1;
     }
-    int calcHeight(){
+    int calcHeight() const{
         int left_height=-1;
         int right_height=-1;
         if (left!=nullptr){
@@ -95,11 +95,58 @@ class AVL_NODE{
     void updateHeight(){
         height=this->calcHeight();
     }
-    void printValue(){
+    void printValue() const{
+        print("value:");
         print(value);
+    }
+    void printKey() const{
+        print("key:");
+        print(key);
     }
 
 };
+template <typename KEY,typename VAL>
+using Node_ptr=std::shared_ptr<AVL_NODE<KEY,VAL>>;
+
+template<class KEY,class VAL>
+void printNode(Node_ptr<KEY,VAL>& node) {
+    std::cout<<node->getKey()<<" BF: "<<balance_factor(node)<<" Height: "<< node->getHeight()<<std::endl;
+    /*
+    print(node->getKey());
+    print(" BF: ");
+    print(balance_factor(node));
+    print(" Height: ");
+    print() +node->getHeight());
+    */
+}
+
+template <typename KEY,typename VAL>
+void freeNode(Node_ptr<KEY,VAL>& to_delete){
+    Side side=childSide(to_delete->getParent(),to_delete);
+    Node_ptr<KEY,VAL> parent = to_delete->getParent();
+   
+    connectNodes(parent,Node_ptr<KEY,VAL>(nullptr),side);
+     to_delete.reset();
+}
+
+//Given children with correct heights, returns balance factor
+template <typename KEY,typename VAL>
+int balance_factor(Node_ptr<KEY,VAL> parent_node) {
+    if (parent_node==nullptr){
+        return 0;
+    }
+    int left_height=-1;
+    int right_height=-1;
+    Node_ptr<KEY,VAL> left= parent_node->getLeft();
+    Node_ptr<KEY,VAL> right= parent_node->getRight();
+    if (left!=nullptr){
+        left_height=left->getHeight();
+    }
+    if (right!=nullptr){
+        right_height=right->getHeight();
+    }
+    return left_height-right_height;
+}
 
 template<class KEY,class VAL>
 class AVL_Tree{
@@ -112,44 +159,25 @@ class AVL_Tree{
     public:
     AVL_Tree():root(nullptr){}
     ~AVL_Tree();
-    Node_ptr getRoot(){return root;}
+    Node_ptr getRoot() const{return root;}
 
-    VAL getRootValue(){
+    VAL getRootValue() const{
         if(root==nullptr){
             return VAL();
         }
         return root->getValue();
     }
-    KEY getRootKey(){
+    KEY getRootKey() const{
         if(root==nullptr){
             return KEY();
         }
         return root->getKey();
     }
 
-    //void inorder(void* func);
-    //void postorder(void* func);
-    //Given children with correct heights, returns balance factor
-    int balance_factor(Node_ptr parent_node){
-        if (parent_node==nullptr){
-            return 0;
-        }
-        int left_height=-1;
-        int right_height=-1;
-        Node_ptr left= parent_node->getLeft();
-        Node_ptr right= parent_node->getRight();
-        if (left!=nullptr){
-            left_height=left->getHeight();
-        }
-        if (right!=nullptr){
-            right_height=right->getHeight();
-        }
-        return left_height-right_height;
-    }
 
     
     //
-    Node_ptr findLastOfSearchPath(KEY& to_find){
+    Node_ptr findLastOfSearchPath(const KEY& to_find) const{
         Node_ptr i=root;
         if(i==nullptr){
             return nullptr;
@@ -180,7 +208,7 @@ class AVL_Tree{
         } while (true);
         
     }
-    bool insertNode(KEY& key_insert,VAL& val_insert){
+    bool insertNode(const KEY& key_insert,const VAL& val_insert){
         Node_ptr found_spot=findLastOfSearchPath(key_insert);
         if (found_spot==nullptr){
             //first node in the tree
@@ -251,7 +279,7 @@ class AVL_Tree{
         return true;
     }
     
-    bool deleteNode(KEY& key_to_delete){
+    bool deleteNode(const KEY& key_to_delete){
         Node_ptr found_spot=findLastOfSearchPath(key_to_delete);
         if (root==nullptr||found_spot->getKey()!=key_to_delete){
             //value searched was not found
@@ -368,7 +396,7 @@ class AVL_Tree{
         return true;
     }
     //void destroy();
-    int getHeight(){
+    int getHeight() const{
         if (root!=nullptr){
             return root->getHeight();
         }
@@ -376,23 +404,22 @@ class AVL_Tree{
             return -1;
         }
     }
-
+    void printTree() const{
+        itterateOrder(root,IN,printNode);
+    }
+    //an outside destructor
+    void treeClear(){
+        if (root!=nullptr){
+            itterateOrder(root->getRight(),POST,freeNode);
+            itterateOrder(root->getLeft(),POST,freeNode);
+            
+            root.reset();
+        }
+    }
     
     
 };
 
-template <typename KEY,typename VAL>
-using Node_ptr=std::shared_ptr<AVL_NODE<KEY,VAL>>;
-
-
-template <typename KEY,typename VAL>
-void freeNode(Node_ptr<KEY,VAL>& to_delete){
-    Side side=childSide(to_delete->getParent(),to_delete);
-    Node_ptr<KEY,VAL> parent = to_delete->getParent();
-   
-    connectNodes(parent,Node_ptr<KEY,VAL>(nullptr),side);
-     to_delete.reset();
-}
 
 
 template<typename KEY,typename VAL>
@@ -494,6 +521,9 @@ void swapValues(Node_ptr<KEY,VAL> a,Node_ptr<KEY,VAL> b){
 }
 template <typename KEY,typename VAL>
 Node_ptr<KEY,VAL> findMaxNode(Node_ptr<KEY,VAL> root){
+    if (root==nullptr){
+        return root;
+    }
     Node_ptr<KEY,VAL> i=root;
     while (i->getRight()!=nullptr){
         i=i->getRight();
@@ -502,6 +532,9 @@ Node_ptr<KEY,VAL> findMaxNode(Node_ptr<KEY,VAL> root){
 }
 template <typename KEY,typename VAL>
 Node_ptr<KEY,VAL> findMinNode(Node_ptr<KEY,VAL> root){
+    if (root==nullptr){
+        return root;
+    }
     Node_ptr<KEY,VAL> i=root;
     while (i->getLeft()!=nullptr){
         i=i->getLeft();

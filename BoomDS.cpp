@@ -35,6 +35,7 @@ StatusType BoomDS::RemoveCourse(int courseID){
 
     Course watched_course = found_spot->getValue();
     if(watched_course.get_id()!=courseID){
+        //there is no such course
         return StatusType::FAILURE;
     }
 
@@ -45,9 +46,10 @@ StatusType BoomDS::RemoveCourse(int courseID){
     
 
     courses.deleteNode(courseID);
+
+    most_watched=findMaxNode(lectures.getRoot());
+    smallest_id=findMinNode(courses.getRoot());
     
-    
-   
     return StatusType::SUCCESS;
 }
 
