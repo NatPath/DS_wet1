@@ -1,44 +1,44 @@
 init done.
 AddCourse: SUCCESS
-AddCourse: SUCCESS
 AddCourse: INVALID_INPUT
-AddCourse: SUCCESS
-RemoveCourse: INVALID_INPUT
-AddCourse: FAILURE
-AddCourse: SUCCESS
-AddCourse: INVALID_INPUT
-AddCourse: INVALID_INPUT
-RemoveCourse: SUCCESS
-AddCourse: FAILURE
-AddCourse: SUCCESS
 AddCourse: INVALID_INPUT
 AddCourse: SUCCESS
-RemoveCourse: SUCCESS
-AddCourse: SUCCESS
-AddCourse: INVALID_INPUT
-AddCourse: FAILURE
-AddCourse: FAILURE
-RemoveCourse: SUCCESS
-AddCourse: INVALID_INPUT
-AddCourse: FAILURE
-AddCourse: FAILURE
-AddCourse: INVALID_INPUT
-RemoveCourse: SUCCESS
-AddCourse: INVALID_INPUT
-AddCourse: SUCCESS
-AddCourse: SUCCESS
-AddCourse: INVALID_INPUT
 RemoveCourse: FAILURE
+AddCourse: INVALID_INPUT
 AddCourse: SUCCESS
-AddCourse: FAILURE
 AddCourse: SUCCESS
 AddCourse: FAILURE
 RemoveCourse: FAILURE
 AddCourse: INVALID_INPUT
+AddCourse: SUCCESS
 AddCourse: FAILURE
-AddCourse: INVALID_INPUT
 AddCourse: SUCCESS
 RemoveCourse: FAILURE
+AddCourse: FAILURE
+AddCourse: INVALID_INPUT
+AddCourse: FAILURE
+AddCourse: INVALID_INPUT
+RemoveCourse: FAILURE
+AddCourse: INVALID_INPUT
+AddCourse: SUCCESS
+AddCourse: INVALID_INPUT
+AddCourse: SUCCESS
+RemoveCourse: SUCCESS
+AddCourse: FAILURE
+AddCourse: FAILURE
+AddCourse: INVALID_INPUT
+AddCourse: FAILURE
+RemoveCourse: FAILURE
+AddCourse: INVALID_INPUT
+AddCourse: FAILURE
+AddCourse: SUCCESS
+AddCourse: FAILURE
+RemoveCourse: FAILURE
+AddCourse: SUCCESS
+AddCourse: FAILURE
+AddCourse: FAILURE
+AddCourse: SUCCESS
+RemoveCourse: SUCCESS
 GetMostViewedClasses: SUCCESS
 Course	|	Class
 12	|	0
@@ -49,26 +49,58 @@ Course	|	Class
 12	|	5
 12	|	6
 12	|	7
+12	|	8
+12	|	9
+12	|	10
+12	|	11
+12	|	12
+12	|	13
+12	|	14
+12	|	15
+13	|	0
 --End of most viewed classes--
 GetMostViewedClasses: INVALID_INPUT
 WatchClass: SUCCESS
-WatchClass: FAILURE
-WatchClass: FAILURE
-GetMostViewedClasses: INVALID_INPUT
 WatchClass: INVALID_INPUT
-WatchClass: INVALID_INPUT
-WatchClass: INVALID_INPUT
-WatchClass: INVALID_INPUT
-WatchClass: FAILURE
 WatchClass: SUCCESS
-WatchClass: INVALID_INPUT
-WatchClass: FAILURE
-WatchClass: FAILURE
-TimeViewed: 0
 GetMostViewedClasses: SUCCESS
 Course	|	Class
-15	|	7
-44252	|	7
+104022	|	3
+236319	|	27
+12	|	0
+12	|	1
+12	|	2
+12	|	3
+12	|	4
+12	|	5
+12	|	6
+12	|	7
+12	|	8
+12	|	9
+12	|	10
+12	|	11
+12	|	12
+12	|	13
+12	|	14
+--End of most viewed classes--
+WatchClass: INVALID_INPUT
+WatchClass: SUCCESS
+WatchClass: SUCCESS
+WatchClass: INVALID_INPUT
+WatchClass: INVALID_INPUT
+WatchClass: SUCCESS
+WatchClass: INVALID_INPUT
+WatchClass: SUCCESS
+WatchClass: INVALID_INPUT
+TimeViewed: FAILURE
+GetMostViewedClasses: SUCCESS
+Course	|	Class
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	3
+236319	|	27
+104022	|	6
 12	|	0
 12	|	1
 12	|	2
@@ -87,29 +119,31 @@ Course	|	Class
 12	|	15
 13	|	0
 13	|	1
-13	|	2
-13	|	3
-13	|	4
 --End of most viewed classes--
-WatchClass: FAILURE
+WatchClass: INVALID_INPUT
+WatchClass: INVALID_INPUT
+WatchClass: INVALID_INPUT
+TimeViewed: 0
 WatchClass: SUCCESS
-WatchClass: INVALID_INPUT
-TimeViewed: INVALID_INPUT
-WatchClass: INVALID_INPUT
-WatchClass: INVALID_INPUT
+WatchClass: FAILURE
 WatchClass: INVALID_INPUT
 TimeViewed: FAILURE
 WatchClass: SUCCESS
-WatchClass: INVALID_INPUT
+WatchClass: FAILURE
 WatchClass: INVALID_INPUT
 TimeViewed: 0
 GetMostViewedClasses: SUCCESS
 Course	|	Class
-17	|	11
-15	|	7
-44252	|	7
-12	|	1
+236319	|	23
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	13
+236319	|	3
+236319	|	27
+104022	|	6
 12	|	0
+12	|	1
 12	|	2
 12	|	3
 12	|	4
@@ -121,70 +155,78 @@ Course	|	Class
 12	|	10
 12	|	11
 12	|	12
-12	|	13
-12	|	14
-12	|	15
-13	|	0
-13	|	1
 --End of most viewed classes--
 WatchClass: INVALID_INPUT
 WatchClass: INVALID_INPUT
-WatchClass: INVALID_INPUT
-TimeViewed: 0
-AddCourse: SUCCESS
-RemoveCourse: SUCCESS
-WatchClass: INVALID_INPUT
-GetMostViewedClasses: SUCCESS
-Course	|	Class
-17	|	11
-15	|	7
-12	|	1
-12	|	0
-12	|	2
-12	|	3
-12	|	4
-12	|	5
-12	|	6
-12	|	7
-12	|	8
-12	|	9
-12	|	10
-12	|	11
-12	|	12
-12	|	13
-12	|	14
-12	|	15
-13	|	0
-13	|	1
-13	|	2
-13	|	3
-13	|	4
-13	|	5
-13	|	6
-13	|	7
-13	|	8
-13	|	9
-13	|	10
-13	|	11
---End of most viewed classes--
-TimeViewed: INVALID_INPUT
-GetMostViewedClasses: SUCCESS
-Course	|	Class
-17	|	11
-15	|	7
-12	|	1
---End of most viewed classes--
 WatchClass: SUCCESS
 TimeViewed: INVALID_INPUT
+AddCourse: FAILURE
+RemoveCourse: SUCCESS
+WatchClass: SUCCESS
+GetMostViewedClasses: SUCCESS
+Course	|	Class
+236319	|	23
+236319	|	25
+44252	|	0
+104022	|	3
+236319	|	14
+--End of most viewed classes--
 TimeViewed: INVALID_INPUT
+GetMostViewedClasses: SUCCESS
+Course	|	Class
+236319	|	23
+236319	|	25
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	13
+44252	|	15
+236319	|	3
+236319	|	27
+104022	|	6
+12	|	0
+12	|	1
+12	|	2
+12	|	3
+12	|	4
+--End of most viewed classes--
+WatchClass: INVALID_INPUT
+TimeViewed: FAILURE
+TimeViewed: 0
+TimeViewed: INVALID_INPUT
+GetMostViewedClasses: SUCCESS
+Course	|	Class
+236319	|	23
+236319	|	25
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	13
+44252	|	15
+236319	|	3
+236319	|	27
+104022	|	6
+12	|	0
+12	|	1
+--End of most viewed classes--
+TimeViewed: FAILURE
+WatchClass: INVALID_INPUT
+TimeViewed: FAILURE
 TimeViewed: 0
 GetMostViewedClasses: SUCCESS
 Course	|	Class
-17	|	11
-15	|	7
-12	|	1
-104095	|	21
+236319	|	23
+236319	|	25
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	13
+44252	|	15
+236319	|	3
+236319	|	27
+104022	|	6
 12	|	0
+12	|	1
 12	|	2
 12	|	3
 12	|	4
@@ -201,70 +243,25 @@ Course	|	Class
 12	|	15
 13	|	0
 13	|	1
-13	|	2
-13	|	3
-13	|	4
-13	|	5
-13	|	6
-13	|	7
-13	|	8
-13	|	9
-13	|	10
-13	|	11
-13	|	12
 --End of most viewed classes--
-TimeViewed: 0
-WatchClass: INVALID_INPUT
-TimeViewed: 0
+TimeViewed: FAILURE
+TimeViewed: INVALID_INPUT
+WatchClass: SUCCESS
 TimeViewed: 0
 GetMostViewedClasses: SUCCESS
 Course	|	Class
-17	|	11
-15	|	7
-12	|	1
-104095	|	21
-12	|	0
-12	|	2
-12	|	3
-12	|	4
-12	|	5
-12	|	6
-12	|	7
-12	|	8
-12	|	9
-12	|	10
---End of most viewed classes--
-TimeViewed: 0
-TimeViewed: INVALID_INPUT
-WatchClass: INVALID_INPUT
-TimeViewed: INVALID_INPUT
-GetMostViewedClasses: SUCCESS
-Course	|	Class
-17	|	11
-15	|	7
-12	|	1
-104095	|	21
-12	|	0
-12	|	2
-12	|	3
-12	|	4
-12	|	5
-12	|	6
-12	|	7
-12	|	8
-12	|	9
-12	|	10
-12	|	11
-12	|	12
-12	|	13
-12	|	14
-12	|	15
-13	|	0
-13	|	1
-13	|	2
-13	|	3
-13	|	4
+236319	|	23
+236319	|	25
+44252	|	0
+104022	|	3
+236319	|	14
+236319	|	13
+44252	|	15
+236319	|	3
+236319	|	28
+236319	|	27
+104022	|	6
 --End of most viewed classes--
 TimeViewed: INVALID_INPUT
-TimeViewed: 0
+TimeViewed: 5
 quit done.
