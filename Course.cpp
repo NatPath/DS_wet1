@@ -41,7 +41,10 @@ Course::Course(const Course& copy){
     }
 
      for(int i = num_of_classes-1; i>=0; i--){
-        unwatched.add(lecture_arr[i]);
+        if(!is_watched[i]) {
+            unwatched.add(lecture_arr[i]);
+        }
+       
     }
     
    
@@ -95,7 +98,10 @@ Course& Course::operator=(const Course& copy){
 
         for (int i = num_of_classes - 1; i >= 0; i--)
         {
-            unwatched.add(lecture_arr[i]);
+            if(!is_watched[i]){
+                unwatched.add(lecture_arr[i]);
+            }
+            
         }
     }
     catch (...)

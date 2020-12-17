@@ -13,7 +13,7 @@ class ListNode{
     ListNode<T>* prev;
 
     public:
-    ListNode():value(nullptr),next(nullptr),prev(nullptr){};
+    ListNode()=default;
     ListNode(const Value_ptr value):value(value),next(nullptr),prev(nullptr){}
     ListNode(const ListNode<T>& to_copy){
         if(to_copy){
@@ -25,17 +25,6 @@ class ListNode{
             next=to_copy.next;
             prev=to_copy.prev;
         }
-        else{
-            value=nullptr;
-            next=nullptr;
-            prev=nullptr;
-        }
-    }
-    ListNode<T>& operator=(const ListNode<T>& to_copy){
-        value=to_copy.value;
-        next=to_copy.next;
-        prev=to_copy.prev;
-        return *this;
     }
      
     Value_ptr getValue() {
@@ -153,7 +142,7 @@ class List{
     }
 
     void setRoot(ListNode<T>* new_root){
-        delete root;
+        //delete root;
         root = new_root;
     }
     
