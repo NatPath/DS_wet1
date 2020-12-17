@@ -33,15 +33,15 @@ StatusType BoomDS::RemoveCourse(int courseID){
 
     }
 
-    Course watched_course = found_spot->getValue();
-    if(watched_course.get_id()!=courseID){
+    //Course watched_course = found_spot->getValue();
+    if(found_spot->getValue().get_id()!=courseID){
         //there is no such course
         return StatusType::FAILURE;
     }
 
-    for (int i = 0; i < watched_course.getNumOfClasses() ; i++)
+    for (int i = 0; i < found_spot->getValue().getNumOfClasses() ; i++)
     {
-        lectures.deleteNode(watched_course.getLecture(i));
+        lectures.deleteNode(found_spot->getValue().getLecture(i));
     }
     
 
