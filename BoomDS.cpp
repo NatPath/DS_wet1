@@ -61,15 +61,15 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
 
     }
 
-    Course watched_course = found_spot->getValue();
-    if(watched_course.get_id()!=courseID){
+   // Course watched_course = found_spot->getValue();
+    if(found_spot->getValue().get_id()!=courseID){
         return StatusType::FAILURE;
     }
-    if(classID+1>watched_course.getNumOfClasses()){
+    if(classID+1>found_spot->getValue().getNumOfClasses()){
         return StatusType::INVALID_INPUT;
     }
 
-    ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
+    ListNode<Lecture>* watched_lecture = (found_spot->getValue().getLectureArray())[classID];
     int old_time = watched_lecture->getValue()->getViews();
     Lecture key = Lecture(courseID,classID,old_time);
     lectures.deleteNode(key);
@@ -85,10 +85,10 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
         most_watched = inserted;
     }
 
-    if(!watched_course.get_watched(classID)){
+    if(!found_spot->getValue().get_watched(classID)){
         // since watched_course is a copy, and courses contain lectures as a list or pointer to list, changes don't stay after this function. need to use found_spot->getValue() but make sure
-        removeFromUnwatched(watched_course,watched_lecture);
-        watched_course.set_watched(classID);
+        removeFromUnwatched(found_spot->getValue(),watched_lecture);
+        found_spot->getValue().set_watched(classID);
     }
 
     return StatusType::SUCCESS;
@@ -102,14 +102,14 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
         return StatusType::INVALID_INPUT;
 
     }
-    Course watched_course = found_spot->getValue();
-    if( watched_course.get_id()!=courseID){
+    //Course watched_course = found_spot->getValue();
+    if( found_spot->getValue().get_id()!=courseID){
         return StatusType::FAILURE;
     }
-    if(classID+1>watched_course.getNumOfClasses()){
+    if(classID+1>found_spot->getValue().getNumOfClasses()){
         return StatusType::INVALID_INPUT;
     }
-    ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
+    ListNode<Lecture>* watched_lecture = (found_spot->getValue().getLectureArray())[classID];
     *timeViewed = watched_lecture->getValue()->getViews();
     return StatusType::SUCCESS;
 }
@@ -220,8 +220,7 @@ void BoomDS::reverseClimbCourses(std::shared_ptr<AVL_NODE<int,Course>> root, boo
 
 void BoomDS::removeFromUnwatched(Course& watched_course,ListNode<Lecture>* watched){
     if(!watched->getNext() && !watched->getPrev()){
-        //only lecture
-    
+        //only lecture 
         watched_course.setUnwatchedRoot(nullptr);
     }
     else if(!watched->getNext()){

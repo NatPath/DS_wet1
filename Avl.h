@@ -24,7 +24,7 @@ class AVL_NODE{
    
 
     //getters
-    const VAL& getValue() const{
+    VAL& getValue(){
         return value;
     }
     const KEY& getKey() const{
