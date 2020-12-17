@@ -29,7 +29,8 @@ StatusType BoomDS::RemoveCourse(int courseID){
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
-        return StatusType::INVALID_INPUT;
+        //empty course tree means failure (because the course doesn't exist), if we are in this function DS can't be null
+        return StatusType::FAILURE;
 
     }
 
@@ -57,7 +58,8 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
-        return StatusType::INVALID_INPUT;
+        //empty course tree means failure (because the course doesn't exist), if we are in this function DS can't be null
+        return StatusType::FAILURE;
 
     }
 
@@ -99,7 +101,8 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
-        return StatusType::INVALID_INPUT;
+        //empty course tree means failure (because the course doesn't exist), if we are in this function DS can't be null
+        return StatusType::FAILURE;
 
     }
     //Course watched_course = found_spot->getValue();
