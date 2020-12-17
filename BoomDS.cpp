@@ -72,7 +72,6 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     ListNode<Lecture>* watched_lecture = (watched_course.getLectureArray())[classID];
     int old_time = watched_lecture->getValue()->getViews();
     Lecture key = Lecture(courseID,classID,old_time);
-    //check if this doesn't free the object
     lectures.deleteNode(key);
     watched_lecture->getValue()->addViews(time);
     Lecture* to_add = watched_lecture->getValue().get();
@@ -87,6 +86,7 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
     }
 
     if(!watched_course.get_watched(classID)){
+        // since watched_course is a copy, and courses contain lectures as a list or pointer to list, changes don't stay after this function. need to use found_spot->getValue() but make sure
         removeFromUnwatched(watched_course,watched_lecture);
         watched_course.set_watched(classID);
     }
@@ -96,7 +96,6 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
 }
 
 StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
-    //search for course in the courses tree O(log(n))
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
@@ -105,7 +104,6 @@ StatusType BoomDS::TimeViewed( int courseID, int classID, int *timeViewed){
     }
     Course watched_course = found_spot->getValue();
     if( watched_course.get_id()!=courseID){
-        //there is no such course
         return StatusType::FAILURE;
     }
     if(classID+1>watched_course.getNumOfClasses()){

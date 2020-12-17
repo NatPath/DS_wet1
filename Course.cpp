@@ -50,6 +50,8 @@ Course::Course(const Course& copy){
     
 }
 
+
+
 Course& Course::operator=(const Course& copy){
 
     ListNode<Lecture>** lecture_arr_tmp = new ListNode<Lecture>*[copy.num_of_classes];

@@ -20,6 +20,7 @@ class Course{
         Course(const Course& copy);
         Course& operator=(const Course& copy);
         ListNode<Lecture>**  getLectureArray();
+    
         Lecture& getLecture(int classID);
         /*
         * returns wether the class with the given ID has been watched already
@@ -49,6 +50,8 @@ class Course{
         * ???
         */
         void reset_unwatched();
+
+
         
 
         ~Course();
