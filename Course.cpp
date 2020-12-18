@@ -35,10 +35,11 @@ Course::Course(const Course& copy){
         *lecture_arr[i] = *copy.lecture_arr[i];
         is_watched[i] = copy.is_watched[i];
     }
-
+    /*
     for(int i =0; i<num_of_classes-1;i++){
         lecture_arr[i]->connectNext(lecture_arr[i+1]);
     }
+    */
 
      for(int i = num_of_classes-1; i>=0; i--){
         if(!is_watched[i]) {
@@ -70,10 +71,14 @@ Course& Course::operator=(const Course& copy){
             is_watched_tmp[i] = copy.is_watched[i];
         }
 
+
+    
+        /*
         for (int i = 0; i < copy.num_of_classes - 1; i++)
         {
             lecture_arr_tmp[i]->connectNext(lecture_arr_tmp[i + 1]);
         }
+        */
 
         for (int i = 0; i < num_of_classes; i++)
         {
@@ -106,6 +111,12 @@ Course& Course::operator=(const Course& copy){
     }
     catch (...)
     {
+        for(int i=0;i<copy.num_of_classes;i++){
+            if(is_watched_tmp[i]){
+                delete lecture_arr_tmp[i];
+            }
+        
+         }
         delete[] lecture_arr_tmp;
         delete[] is_watched_tmp;
     }
