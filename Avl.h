@@ -4,9 +4,9 @@
 #include <exception>
 #include "Auxiliaries.h"
 
-enum Side {R,L,N};
-enum Order {PRE,POST,IN};
 
+typedef enum Side {R,L,N} Side;
+enum Order {PRE,POST,IN};
 
 template<class KEY,class VAL>
 class AVL_NODE{
@@ -124,6 +124,77 @@ void printNode(Node_ptr<KEY,VAL>& node) {
     std::cout<<node->getKey()<<" BF: "<<balance_factor(node)<<" Height: "<< node->getHeight()<<std::endl;
 }
 
+/*
+Side oppSide(Side side){
+    if (side==L){
+        return R;
+    }
+    if (side == R){
+        return L;
+    }
+    else{
+        return N;
+    }
+}
+*/
+template <typename KEY,typename VAL>
+void swapNodes(Node_ptr<KEY,VAL>& node1,Node_ptr<KEY,VAL>& node2){
+    Node_ptr<KEY,VAL> temp_left1=node1->getLeft();
+    Node_ptr<KEY,VAL> temp_right1=node1->getRight();
+    Node_ptr<KEY,VAL> temp_parent1=node1->getParent();
+
+    Node_ptr<KEY,VAL> temp_left2=node2->getLeft();
+    Node_ptr<KEY,VAL> temp_right2=node2->getRight();
+    Node_ptr<KEY,VAL> temp_parent2=node2->getParent();
+
+    Side side1=childSide(temp_parent1,node1);
+    Side side2=childSide(temp_parent2,node2);
+
+    //corner cases
+    if (temp_left1==node2 || temp_right1==node2){
+        //node1 is the parent of node2
+        connectNodes(node1,temp_left2,L);
+        connectNodes(node1,temp_right2,R);
+
+
+        connectNodes(temp_parent1,node2,side1);
+        if (side2==L){
+            connectNodes(node2,temp_right1,R);
+        }
+        else{
+            connectNodes(node2,temp_left1,L);
+        }
+
+        connectNodes(node2,node1,side2);
+    }
+    else if (temp_left2==node1 || temp_right2==node1){
+        connectNodes(node2,temp_left1,L);
+        connectNodes(node2,temp_right1,R);
+
+        connectNodes(temp_parent2,node1,side2);
+        if (side1==L){
+            connectNodes(node1,temp_right2,R);
+        }
+        else{
+            connectNodes(node1,temp_left2,L);
+        }
+
+        connectNodes(node1,node2,side1);
+    }
+    else{
+        connectNodes(temp_parent2,node1,side2);
+        connectNodes(node1,temp_left2,L);
+        connectNodes(node1,temp_right2,R);
+
+        connectNodes(temp_parent1,node2,side1);
+        connectNodes(node2,temp_left1,L);
+        connectNodes(node2,temp_right1,R);
+    }
+    //change back the names
+    Node_ptr<KEY,VAL> temp=node1;
+    node1=node2;
+    node2=temp;
+}
 template <typename KEY,typename VAL>
 void freeNode(Node_ptr<KEY,VAL>& to_delete){
     Side side=childSide(to_delete->getParent(),to_delete);
@@ -323,9 +394,13 @@ class AVL_Tree{
         }
         else if (found_spot->getRight()!=nullptr){
             substitute= findMinNode(i->getRight());
-            i=substitute->getParent();
+            //i=substitute->getParent();
+            /*
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
+            */
+            swapNodes(substitute,found_spot);
+            i=substitute->getParent();
             if (i==found_spot){
                 connectNodes(i,substitute->getRight(),R);
             }
@@ -337,9 +412,12 @@ class AVL_Tree{
         }
         else{
             substitute= findMaxNode(i->getLeft());
-            i=substitute->getParent();
+            /*
             found_spot->setKey(substitute->getKey());
             found_spot->setValue(substitute->getValue());
+            */
+            swapNodes(substitute,found_spot);
+            i=substitute->getParent();
             if (i==found_spot){
                 connectNodes(i,substitute->getLeft(),L);
             }
