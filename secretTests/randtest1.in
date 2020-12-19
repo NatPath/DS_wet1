@@ -1,0 +1,202 @@
+Init
+AddCourse 94635 11
+AddCourse 65885 -7
+AddCourse -40040 16
+AddCourse -81377 -50
+AddCourse -45989 -22
+AddCourse -97123 39
+AddCourse -28392 17
+AddCourse -31072 36
+AddCourse -79047 1
+AddCourse 23242 2
+AddCourse 13573 36
+AddCourse 47934 -46
+AddCourse -15434 -4
+AddCourse 38427 13
+AddCourse -15573 -14
+AddCourse 13061 -33
+AddCourse -22319 -40
+AddCourse -63261 -13
+AddCourse 38410 12
+AddCourse 76832 -27
+AddCourse -92965 -37
+AddCourse 23084 33
+AddCourse 22971 1
+AddCourse 31730 -32
+AddCourse 48253 14
+AddCourse -13044 18
+AddCourse 55145 14
+AddCourse -40847 38
+AddCourse -47367 -12
+AddCourse -53959 -31
+AddCourse -46997 -27
+AddCourse -31151 11
+AddCourse 54895 13
+AddCourse 57832 23
+AddCourse 69384 -31
+AddCourse -92965 -23
+AddCourse -76016 3
+AddCourse -95230 -38
+AddCourse 62743 -33
+AddCourse 32552 -20
+AddCourse 50808 37
+AddCourse 38370 8
+AddCourse -95647 -1
+AddCourse 12375 -25
+AddCourse 14628 34
+AddCourse 92286 -39
+AddCourse -72432 -22
+AddCourse 19972 32
+AddCourse -69687 -43
+AddCourse 20194 31
+AddCourse -49630 -32
+AddCourse -39313 -27
+AddCourse -87327 -44
+AddCourse 64526 47
+AddCourse 79927 24
+AddCourse 35052 -23
+AddCourse 34955 39
+AddCourse 15540 -27
+AddCourse -12187 40
+AddCourse 14373 -14
+AddCourse 56169 4
+AddCourse 71159 -22
+AddCourse 16238 39
+AddCourse -64818 -17
+AddCourse -14478 2
+AddCourse -37397 -46
+AddCourse -16939 6
+AddCourse 82543 47
+AddCourse -92688 19
+AddCourse -95456 23
+AddCourse 40008 19
+AddCourse -72888 -37
+AddCourse -49212 -38
+AddCourse -51412 -34
+AddCourse 44084 11
+AddCourse -60206 -4
+AddCourse 74231 -50
+AddCourse 86767 -24
+AddCourse 81802 -50
+AddCourse 60742 -30
+AddCourse -63581 -8
+AddCourse -24101 -26
+AddCourse -68118 49
+AddCourse 45218 -27
+AddCourse 93407 -33
+AddCourse -45876 -34
+AddCourse -42454 -14
+AddCourse -30008 8
+AddCourse -75395 33
+AddCourse 48281 -12
+AddCourse 21651 -17
+AddCourse 92239 -42
+AddCourse -77098 -11
+AddCourse 43491 16
+AddCourse -52666 35
+AddCourse 79516 -15
+AddCourse -18227 -23
+AddCourse -85111 -11
+AddCourse -85627 38
+AddCourse -85853 29
+RemoveCourse 94635
+RemoveCourse 65885
+RemoveCourse -40040
+RemoveCourse -81377
+RemoveCourse -45989
+RemoveCourse -97123
+RemoveCourse -28392
+RemoveCourse -31072
+RemoveCourse -79047
+RemoveCourse 23242
+RemoveCourse 13573
+RemoveCourse 47934
+RemoveCourse -15434
+RemoveCourse 38427
+RemoveCourse -15573
+RemoveCourse 13061
+RemoveCourse -22319
+RemoveCourse -63261
+RemoveCourse 38410
+RemoveCourse 76832
+RemoveCourse -92965
+RemoveCourse 23084
+RemoveCourse 22971
+RemoveCourse 31730
+RemoveCourse 48253
+RemoveCourse -13044
+RemoveCourse 55145
+RemoveCourse -40847
+RemoveCourse -47367
+RemoveCourse -53959
+RemoveCourse -46997
+RemoveCourse -31151
+RemoveCourse 54895
+RemoveCourse 57832
+RemoveCourse 69384
+RemoveCourse -92965
+RemoveCourse -76016
+RemoveCourse -95230
+RemoveCourse 62743
+RemoveCourse 32552
+RemoveCourse 50808
+RemoveCourse 38370
+RemoveCourse -95647
+RemoveCourse 12375
+RemoveCourse 14628
+RemoveCourse 92286
+RemoveCourse -72432
+RemoveCourse 19972
+RemoveCourse -69687
+RemoveCourse 20194
+RemoveCourse -49630
+RemoveCourse -39313
+RemoveCourse -87327
+RemoveCourse 64526
+RemoveCourse 79927
+RemoveCourse 35052
+RemoveCourse 34955
+RemoveCourse 15540
+RemoveCourse -12187
+RemoveCourse 14373
+RemoveCourse 56169
+RemoveCourse 71159
+RemoveCourse 16238
+RemoveCourse -64818
+RemoveCourse -14478
+RemoveCourse -37397
+RemoveCourse -16939
+RemoveCourse 82543
+RemoveCourse -92688
+RemoveCourse -95456
+RemoveCourse 40008
+RemoveCourse -72888
+RemoveCourse -49212
+RemoveCourse -51412
+RemoveCourse 44084
+RemoveCourse -60206
+RemoveCourse 74231
+RemoveCourse 86767
+RemoveCourse 81802
+RemoveCourse 60742
+RemoveCourse -63581
+RemoveCourse -24101
+RemoveCourse -68118
+RemoveCourse 45218
+RemoveCourse 93407
+RemoveCourse -45876
+RemoveCourse -42454
+RemoveCourse -30008
+RemoveCourse -75395
+RemoveCourse 48281
+RemoveCourse 21651
+RemoveCourse 92239
+RemoveCourse -77098
+RemoveCourse 43491
+RemoveCourse -52666
+RemoveCourse 79516
+RemoveCourse -18227
+RemoveCourse -85111
+RemoveCourse -85627
+RemoveCourse -85853
+Quit

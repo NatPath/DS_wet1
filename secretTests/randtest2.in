@@ -1,0 +1,202 @@
+Init
+AddCourse -79909 -41
+AddCourse -84033 4
+AddCourse 14916 2
+AddCourse -39191 21
+AddCourse -74048 28
+AddCourse 40226 -31
+AddCourse -64937 16
+AddCourse 92276 -40
+AddCourse -31355 -9
+AddCourse -49713 10
+AddCourse -61963 39
+AddCourse -81780 19
+AddCourse -53706 -47
+AddCourse -84961 30
+AddCourse -67971 -23
+AddCourse 31925 -10
+AddCourse -64206 35
+AddCourse -41706 -7
+AddCourse 38720 -1
+AddCourse 98848 -15
+AddCourse 22044 2
+AddCourse 92866 43
+AddCourse 84068 -43
+AddCourse 18186 -24
+AddCourse 24062 43
+AddCourse -87357 2
+AddCourse 84994 -31
+AddCourse 10381 -45
+AddCourse -77760 -7
+AddCourse -51795 -23
+AddCourse -27545 22
+AddCourse 71132 20
+AddCourse 35571 -17
+AddCourse -40614 39
+AddCourse 39580 -27
+AddCourse -62346 -22
+AddCourse -54710 9
+AddCourse -97803 9
+AddCourse -24953 27
+AddCourse -52479 2
+AddCourse -55318 -7
+AddCourse 82002 -15
+AddCourse -58925 -43
+AddCourse 30729 4
+AddCourse -26666 7
+AddCourse 36199 -18
+AddCourse -83294 -48
+AddCourse 23336 -49
+AddCourse -71745 -16
+AddCourse 21981 6
+AddCourse 93792 5
+AddCourse 83181 -44
+AddCourse 51734 11
+AddCourse -89546 21
+AddCourse -28483 38
+AddCourse 14125 16
+AddCourse 11674 -5
+AddCourse 50208 49
+AddCourse -54359 -11
+AddCourse -47513 17
+AddCourse -10660 46
+AddCourse -55805 26
+AddCourse -99202 15
+AddCourse 55989 -36
+AddCourse 74109 -37
+AddCourse 37896 20
+AddCourse 22118 -8
+AddCourse -71527 13
+AddCourse -20390 -35
+AddCourse -60306 -2
+AddCourse -70394 -9
+AddCourse 94478 12
+AddCourse 77964 46
+AddCourse -20883 -9
+AddCourse 10390 -46
+AddCourse 37639 22
+AddCourse -87698 -9
+AddCourse -72085 -3
+AddCourse -32295 -21
+AddCourse -39325 31
+AddCourse -64788 -45
+AddCourse 25771 28
+AddCourse 75903 -45
+AddCourse 55517 -26
+AddCourse -76058 8
+AddCourse 10951 10
+AddCourse 63136 24
+AddCourse 48467 -37
+AddCourse 16184 26
+AddCourse 94683 5
+AddCourse -39838 -20
+AddCourse 23692 12
+AddCourse 42988 16
+AddCourse 34043 46
+AddCourse -70577 12
+AddCourse 24952 -24
+AddCourse -89939 14
+AddCourse 72016 8
+AddCourse -15867 23
+AddCourse -92305 35
+RemoveCourse -79909
+RemoveCourse -84033
+RemoveCourse 14916
+RemoveCourse -39191
+RemoveCourse -74048
+RemoveCourse 40226
+RemoveCourse -64937
+RemoveCourse 92276
+RemoveCourse -31355
+RemoveCourse -49713
+RemoveCourse -61963
+RemoveCourse -81780
+RemoveCourse -53706
+RemoveCourse -84961
+RemoveCourse -67971
+RemoveCourse 31925
+RemoveCourse -64206
+RemoveCourse -41706
+RemoveCourse 38720
+RemoveCourse 98848
+RemoveCourse 22044
+RemoveCourse 92866
+RemoveCourse 84068
+RemoveCourse 18186
+RemoveCourse 24062
+RemoveCourse -87357
+RemoveCourse 84994
+RemoveCourse 10381
+RemoveCourse -77760
+RemoveCourse -51795
+RemoveCourse -27545
+RemoveCourse 71132
+RemoveCourse 35571
+RemoveCourse -40614
+RemoveCourse 39580
+RemoveCourse -62346
+RemoveCourse -54710
+RemoveCourse -97803
+RemoveCourse -24953
+RemoveCourse -52479
+RemoveCourse -55318
+RemoveCourse 82002
+RemoveCourse -58925
+RemoveCourse 30729
+RemoveCourse -26666
+RemoveCourse 36199
+RemoveCourse -83294
+RemoveCourse 23336
+RemoveCourse -71745
+RemoveCourse 21981
+RemoveCourse 93792
+RemoveCourse 83181
+RemoveCourse 51734
+RemoveCourse -89546
+RemoveCourse -28483
+RemoveCourse 14125
+RemoveCourse 11674
+RemoveCourse 50208
+RemoveCourse -54359
+RemoveCourse -47513
+RemoveCourse -10660
+RemoveCourse -55805
+RemoveCourse -99202
+RemoveCourse 55989
+RemoveCourse 74109
+RemoveCourse 37896
+RemoveCourse 22118
+RemoveCourse -71527
+RemoveCourse -20390
+RemoveCourse -60306
+RemoveCourse -70394
+RemoveCourse 94478
+RemoveCourse 77964
+RemoveCourse -20883
+RemoveCourse 10390
+RemoveCourse 37639
+RemoveCourse -87698
+RemoveCourse -72085
+RemoveCourse -32295
+RemoveCourse -39325
+RemoveCourse -64788
+RemoveCourse 25771
+RemoveCourse 75903
+RemoveCourse 55517
+RemoveCourse -76058
+RemoveCourse 10951
+RemoveCourse 63136
+RemoveCourse 48467
+RemoveCourse 16184
+RemoveCourse 94683
+RemoveCourse -39838
+RemoveCourse 23692
+RemoveCourse 42988
+RemoveCourse 34043
+RemoveCourse -70577
+RemoveCourse 24952
+RemoveCourse -89939
+RemoveCourse 72016
+RemoveCourse -15867
+RemoveCourse -92305
+Quit

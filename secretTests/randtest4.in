@@ -1,0 +1,302 @@
+Init
+AddCourse 40696 22
+AddCourse 51454 13
+AddCourse 29980 20
+AddCourse 68876 25
+AddCourse 43726 45
+AddCourse 72993 24
+AddCourse 42002 27
+AddCourse 47782 34
+AddCourse 25727 39
+AddCourse 28400 27
+AddCourse 33300 21
+AddCourse 52502 25
+AddCourse 83154 49
+AddCourse 43638 43
+AddCourse 92575 7
+AddCourse 61047 25
+AddCourse 59950 12
+AddCourse 57876 7
+AddCourse 51887 40
+AddCourse 41503 3
+AddCourse 24426 40
+AddCourse 52624 39
+AddCourse 19588 31
+AddCourse 42235 7
+AddCourse 39049 18
+AddCourse 22639 43
+AddCourse 33751 45
+AddCourse 52304 46
+AddCourse 97010 48
+AddCourse 49686 12
+AddCourse 11647 39
+AddCourse 61895 13
+AddCourse 40840 10
+AddCourse 92782 6
+AddCourse 10738 14
+AddCourse 29647 19
+AddCourse 49039 8
+AddCourse 43704 23
+AddCourse 95008 34
+AddCourse 44708 10
+AddCourse 65964 12
+AddCourse 59157 28
+AddCourse 98568 35
+AddCourse 31747 33
+AddCourse 79415 30
+AddCourse 25194 25
+AddCourse 42321 6
+AddCourse 13342 19
+AddCourse 30658 11
+AddCourse 50348 45
+AddCourse 73739 12
+AddCourse 21352 2
+AddCourse 23046 38
+AddCourse 48168 6
+AddCourse 57262 1
+AddCourse 98055 14
+AddCourse 62447 13
+AddCourse 65815 39
+AddCourse 31511 2
+AddCourse 33950 32
+AddCourse 95746 13
+AddCourse 40867 20
+AddCourse 20382 36
+AddCourse 11399 16
+AddCourse 20067 49
+AddCourse 30087 36
+AddCourse 30964 24
+AddCourse 52892 19
+AddCourse 20194 25
+AddCourse 46835 11
+AddCourse 35670 7
+AddCourse 21720 37
+AddCourse 66757 44
+AddCourse 92282 6
+AddCourse 53907 13
+AddCourse 22245 11
+AddCourse 96154 40
+AddCourse 96347 22
+AddCourse 91084 36
+AddCourse 93089 21
+AddCourse 77519 5
+AddCourse 10273 26
+AddCourse 81470 13
+AddCourse 14733 6
+AddCourse 80161 12
+AddCourse 69905 36
+AddCourse 65178 3
+AddCourse 41332 41
+AddCourse 22079 29
+AddCourse 79169 12
+AddCourse 82634 45
+AddCourse 85409 42
+AddCourse 87700 1
+AddCourse 78748 21
+AddCourse 56266 2
+AddCourse 52926 19
+AddCourse 62596 49
+AddCourse 52129 10
+AddCourse 21133 30
+AddCourse 96385 19
+WatchClass 40696 18 1 1
+WatchClass 51454 10 1 1
+WatchClass 29980 6 1 1
+WatchClass 68876 6 1 1
+WatchClass 43726 26 1 1
+WatchClass 72993 9 1 1
+WatchClass 42002 16 1 1
+WatchClass 47782 30 1 1
+WatchClass 25727 18 1 1
+WatchClass 28400 3 1 1
+WatchClass 33300 6 1 1
+WatchClass 52502 7 1 1
+WatchClass 83154 46 1 1
+WatchClass 43638 29 1 1
+WatchClass 92575 4 1 1
+WatchClass 61047 20 1 1
+WatchClass 59950 3 1 1
+WatchClass 57876 1 1 1
+WatchClass 51887 26 1 1
+WatchClass 41503 2 1 1
+WatchClass 24426 19 1 1
+WatchClass 52624 24 1 1
+WatchClass 19588 18 1 1
+WatchClass 42235 5 1 1
+WatchClass 39049 13 1 1
+WatchClass 22639 12 1 1
+WatchClass 33751 6 1 1
+WatchClass 52304 28 1 1
+WatchClass 97010 27 1 1
+WatchClass 49686 1 1 1
+WatchClass 11647 27 1 1
+WatchClass 61895 6 1 1
+WatchClass 40840 6 1 1
+WatchClass 92782 2 1 1
+WatchClass 10738 5 1 1
+WatchClass 29647 0 1 1
+WatchClass 49039 4 1 1
+WatchClass 43704 13 1 1
+WatchClass 95008 8 1 1
+WatchClass 44708 4 1 1
+WatchClass 65964 5 1 1
+WatchClass 59157 23 1 1
+WatchClass 98568 33 1 1
+WatchClass 31747 12 1 1
+WatchClass 79415 21 1 1
+WatchClass 25194 4 1 1
+WatchClass 42321 2 1 1
+WatchClass 13342 16 1 1
+WatchClass 30658 4 1 1
+WatchClass 50348 28 1 1
+WatchClass 73739 11 1 1
+WatchClass 21352 1 1 1
+WatchClass 23046 35 1 1
+WatchClass 48168 1 1 1
+WatchClass 57262 0 1 1
+WatchClass 98055 2 1 1
+WatchClass 62447 2 1 1
+WatchClass 65815 22 1 1
+WatchClass 31511 0 1 1
+WatchClass 33950 10 1 1
+WatchClass 95746 3 1 1
+WatchClass 40867 19 1 1
+WatchClass 20382 11 1 1
+WatchClass 11399 4 1 1
+WatchClass 20067 21 1 1
+WatchClass 30087 28 1 1
+WatchClass 30964 16 1 1
+WatchClass 52892 10 1 1
+WatchClass 20194 7 1 1
+WatchClass 46835 6 1 1
+WatchClass 35670 1 1 1
+WatchClass 21720 24 1 1
+WatchClass 66757 39 1 1
+WatchClass 92282 1 1 1
+WatchClass 53907 4 1 1
+WatchClass 22245 7 1 1
+WatchClass 96154 27 1 1
+WatchClass 96347 4 1 1
+WatchClass 91084 0 1 1
+WatchClass 93089 12 1 1
+WatchClass 77519 4 1 1
+WatchClass 10273 6 1 1
+WatchClass 81470 3 1 1
+WatchClass 14733 5 1 1
+WatchClass 80161 2 1 1
+WatchClass 69905 26 1 1
+WatchClass 65178 1 1 1
+WatchClass 41332 18 1 1
+WatchClass 22079 14 1 1
+WatchClass 79169 2 1 1
+WatchClass 82634 35 1 1
+WatchClass 85409 0 1 1
+WatchClass 87700 0 1 1
+WatchClass 78748 19 1 1
+WatchClass 56266 0 1 1
+WatchClass 52926 8 1 1
+WatchClass 62596 25 1 1
+WatchClass 52129 6 1 1
+WatchClass 21133 28 1 1
+WatchClass 96385 17 1 1
+RemoveCourse 40696
+RemoveCourse 51454
+RemoveCourse 29980
+RemoveCourse 68876
+RemoveCourse 43726
+RemoveCourse 72993
+RemoveCourse 42002
+RemoveCourse 47782
+RemoveCourse 25727
+RemoveCourse 28400
+RemoveCourse 33300
+RemoveCourse 52502
+RemoveCourse 83154
+RemoveCourse 43638
+RemoveCourse 92575
+RemoveCourse 61047
+RemoveCourse 59950
+RemoveCourse 57876
+RemoveCourse 51887
+RemoveCourse 41503
+RemoveCourse 24426
+RemoveCourse 52624
+RemoveCourse 19588
+RemoveCourse 42235
+RemoveCourse 39049
+RemoveCourse 22639
+RemoveCourse 33751
+RemoveCourse 52304
+RemoveCourse 97010
+RemoveCourse 49686
+RemoveCourse 11647
+RemoveCourse 61895
+RemoveCourse 40840
+RemoveCourse 92782
+RemoveCourse 10738
+RemoveCourse 29647
+RemoveCourse 49039
+RemoveCourse 43704
+RemoveCourse 95008
+RemoveCourse 44708
+RemoveCourse 65964
+RemoveCourse 59157
+RemoveCourse 98568
+RemoveCourse 31747
+RemoveCourse 79415
+RemoveCourse 25194
+RemoveCourse 42321
+RemoveCourse 13342
+RemoveCourse 30658
+RemoveCourse 50348
+RemoveCourse 73739
+RemoveCourse 21352
+RemoveCourse 23046
+RemoveCourse 48168
+RemoveCourse 57262
+RemoveCourse 98055
+RemoveCourse 62447
+RemoveCourse 65815
+RemoveCourse 31511
+RemoveCourse 33950
+RemoveCourse 95746
+RemoveCourse 40867
+RemoveCourse 20382
+RemoveCourse 11399
+RemoveCourse 20067
+RemoveCourse 30087
+RemoveCourse 30964
+RemoveCourse 52892
+RemoveCourse 20194
+RemoveCourse 46835
+RemoveCourse 35670
+RemoveCourse 21720
+RemoveCourse 66757
+RemoveCourse 92282
+RemoveCourse 53907
+RemoveCourse 22245
+RemoveCourse 96154
+RemoveCourse 96347
+RemoveCourse 91084
+RemoveCourse 93089
+RemoveCourse 77519
+RemoveCourse 10273
+RemoveCourse 81470
+RemoveCourse 14733
+RemoveCourse 80161
+RemoveCourse 69905
+RemoveCourse 65178
+RemoveCourse 41332
+RemoveCourse 22079
+RemoveCourse 79169
+RemoveCourse 82634
+RemoveCourse 85409
+RemoveCourse 87700
+RemoveCourse 78748
+RemoveCourse 56266
+RemoveCourse 52926
+RemoveCourse 62596
+RemoveCourse 52129
+RemoveCourse 21133
+RemoveCourse 96385
+Quit
