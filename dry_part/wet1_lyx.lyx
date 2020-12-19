@@ -1,0 +1,1169 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+מבני נתונים - תרגיל רטוב
+\family roman
+\series medium
+\shape up
+\size largest
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+1
+\end_layout
+
+\begin_layout Section*
+מבני הנתונים וטיפוסים בהם השתמשנו
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $AVL\text{\_}Tree<KEY,VAL>$
+\end_inset
+
+ - עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+גנרי דו כיווני )הורה מצביע לילד וילד מצביע להורה( כפי שנלמד בהרצאה.
+\end_layout
+
+\begin_layout Standard
+הצמתים ממוינים לפי ערך המפתח ומכילים את המידע .
+\end_layout
+
+\begin_layout Standard
+הפעולות המוגדרות וסיבוכיות הזמן והמקום של המבנה כפי שנלמדו בכיתה.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $List<T>$
+\end_inset
+
+ - רשימה מקושרת דו כיוונית.
+\end_layout
+
+\begin_layout Standard
+אברי הרשימה הם טיפוס 
+\begin_inset Formula $ListNode<T>$
+\end_inset
+
+ , המכיל פוינטר חכם ל ערך 
+\begin_inset Formula $T$
+\end_inset
+
+ ,מצביע לאיבר לפני ברשימה ומצביע לאיבר אחרי ברשימה.
+\end_layout
+
+\begin_layout Standard
+הפעולות המוגדרות וסיבוכיות הזמן והמקום של המבנה כפי שנלמדו בכיתה.
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $Lecture$
+\end_inset
+
+ -אוביקט המייצג הרצאה:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+שדות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $courseID$
+\end_inset
+
+ -מספר טבעי חיובי )
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה הקורס שאליו שייכת ההרצאה
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lectureID$
+\end_inset
+
+ - מספר טבעי אי שלילי )
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה ההרצאה
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $num\text{\_}views$
+\end_inset
+
+ - מספר טבעי אי שלילי המייצגג כמה צפיות יש להרצאה
+\end_layout
+
+\begin_layout Standard
+לאובייקט הנ
+\begin_inset Quotes erd
+\end_inset
+
+ל מוגדר יחס סדר בעזרת אופרטורי השוואה) גדול , קטן , שווה( המוגדר באופן הבא:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+1
+\numeric off
+( לפי 
+\begin_inset Formula $num\text{\_}views$
+\end_inset
+
+ - מספר צפיות בסדר ירוד )הרצאה 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ בעלת מספר צפיות גדול יותר מאלה של 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ תקיים 
+\begin_inset Formula $l_{1}>l_{2}$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+אם מתקיים שוויון במספר הצפיות:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+2
+\numeric off
+( לפי 
+\begin_inset Formula $courseID$
+\end_inset
+
+ - מזהה הקורס בסדר עולה ) בהינתן שוויון במספר הצפיות ,הרצאה 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ בעלת מזהה קורס קטן מזה של 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ תקיים 
+\begin_inset Formula $l_{1}>l_{2}$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+אם מתקיים שוויון גם במזהה הקורס:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+3
+\numeric off
+( לפי 
+\begin_inset Formula $lectureID$
+\end_inset
+
+ - מזהה ההרצאה בסדר עולה.
+\end_layout
+
+\begin_layout Standard
+במידה ומתקיים שוויון בכל שלושת השדות, נגיד ש 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ שווה ל 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+פעולות מוגדרות :
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אתחול:
+\bar default
+ אתחול שדות המבנה.
+\end_layout
+
+\begin_layout Standard
+השמת מספר קבוע של ערכים מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+הוספת זמן צפיה:
+\bar default
+ עדכון שדה זמן הצפיה לפי פרמטר.
+\end_layout
+
+\begin_layout Standard
+עדכון שדה מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+שליפת זמן צפיה:
+\bar default
+ החזרת שדה זמן הצפיה.
+\end_layout
+
+\begin_layout Standard
+קריאה של שדה מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אופרטורי השוואה:
+\bar default
+ השוואה בין הרצאות כפי שתוארה לעיל.
+\end_layout
+
+\begin_layout Standard
+השוואה של 
+\begin_inset Formula $int$
+\end_inset
+
+ים .
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+סיבוכיות זמן של כלל הפעולות:
+\end_layout
+
+\begin_layout Standard
+כל הפעולות הן בסיבוכיות זמן ומקום 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ )פעולות על מספר קבוע של 
+\begin_inset Formula $int$
+\end_inset
+
+ים(.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+סיבוכיות מקום:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $O(1)$
+\end_inset
+
+ , מספר קבוע של קבועים מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $Course$
+\end_inset
+
+ - אוביקט המייצג קורס:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+מטרה:
+\end_layout
+
+\begin_layout Standard
+מטרת המבנה היא להכיל את המידע הרלוונטי לקורס מסוים והרצאותיו.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+שדות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $courseID$
+\end_inset
+
+ - מספר טבעי חיובי )
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה הקורס.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lecture\text{\_}arr$
+\end_inset
+
+ - מערך של מצביעים ל
+\begin_inset Formula $ListNode<Lecture>$
+\end_inset
+
+.
+ מערך זה כולל מצביעים לחוליות ברשימה של כל ההרצאות של הקורס .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $num\_of\_classes$
+\end_inset
+
+- מספר טבעי חיובי המייצג את מספר ההרצאות שיש בקורס )האורך של 
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $unwatched$
+\end_inset
+
+ - רשימה של עצמים מטיפוס 
+\begin_inset Formula $Lecture$
+\end_inset
+
+.
+ רשימה זו כוללת את כל ההרצאות של הקורס להן
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+0
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+צפיות ורק אותן.
+\end_layout
+
+\begin_layout Standard
+מטרת השדה היא לאפשר מעבר רק על הרצאות שלא נצפו בלי לבצע פעולות על איברי
+ ביניים.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $is\_watched$
+\end_inset
+
+ - מערך של 
+\begin_inset Formula $bool$
+\end_inset
+
+ באורך זהה לשל 
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+ ועם אינדקסים תואמים - הערך באינקדס 
+\begin_inset Formula $i$
+\end_inset
+
+ הוא 
+\begin_inset Formula $true$
+\end_inset
+
+ אם ההרצאה ה
+\begin_inset Formula $i$
+\end_inset
+
+ כבר נצפתה, ו
+\begin_inset Formula $false$
+\end_inset
+
+ אחרת.
+ 
+\end_layout
+
+\begin_layout Standard
+מטרת השדה היא להוות מעקב נפרד אחרי ההרצאות שכבר נצפו .
+ כך מתאפשר שחזור נכון של 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ בהעתקה או השמה של קורסים, ומוודא שבעת הריסת אובייקט 
+\begin_inset Formula $Course$
+\end_inset
+
+ שחרור הזיכרון של 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ ו
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+ לא יוביל לשחרור כפול של חוליות ברשימה.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+פעולות מוגדרות:
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אתחול )מפרמטרים או כהעתקה עמוקה(:
+\end_layout
+
+\begin_layout Standard
+אתחול השדות , חלק מהשדות הן מערכים עם שדות מורכבים לכן האתחול נעשה ב
+\begin_inset Formula $O(m=num\text{\_}of\text{\_}classes)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אופרטור השוואה:
+\end_layout
+
+\begin_layout Standard
+העתקה עמוקה של השדות, בדומה לאתחול סיבוכיות זמן של 
+\begin_inset Formula $O(m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+שליפת שדות:)
+\begin_inset Formula $Getters$
+\end_inset
+
+(:
+\end_layout
+
+\begin_layout Standard
+נעשה ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+, השדות הפשוטים מועברים ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+ וכך גם המורכבים)מערכים ורשימות( כיוון שמעבירים רפרנס או מצביע לשדה.
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+הריסה:
+\end_layout
+
+\begin_layout Standard
+מעבר על מספר ההרצאות בקורס והריסתן אחת אחת 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Subsection*
+אוביקט 
+\begin_inset Formula $BoomDS$
+\end_inset
+
+ ולו השדות הבאים:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $courses$
+\end_inset
+
+- עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ של 
+\begin_inset Formula $Course$
+\end_inset
+
+, ממוין לפי מזהה הקורס.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lectures$
+\end_inset
+
+- עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ של 
+\begin_inset Formula $Lecture$
+\end_inset
+
+, ממוין לפי אופרטורי ההשוואה של מחלקת 
+\begin_inset Formula $Lecture$
+\end_inset
+
+.
+ כלומר, מספר צפיות בסדר יורד, לאחר מכן מזהה קורס בסדר עולה, ולאחר מכן מזהה
+ הרצאה בסדר עולה.
+\end_layout
+
+\begin_layout Standard
+עץ זה מכיל רק את ההרצאות שלהן יותר מ
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+0
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+צפיות.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $most\_watched$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ - מצביע ל
+\begin_inset Formula $AVL\_NODE$
+\end_inset
+
+ מהעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ המהווה את הצומת הימני ביותר בעץ - כלומר את ההרצאה ה
+\begin_inset Quotes erd
+\end_inset
+
+גדולה
+\begin_inset Quotes erd
+\end_inset
+
+ ביותר והראשונה בסדר ההדפסה.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $smallest\_id$
+\end_inset
+
+ - 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+מצביע ל
+\begin_inset Formula $AVL\_NODE$
+\end_inset
+
+ מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+ המהווה את הצומת השמאלי)??( ביותר בעץ - כלומר את הקורס ה
+\begin_inset Quotes erd
+\end_inset
+
+גדול
+\begin_inset Quotes erd
+\end_inset
+
+ ביותר והראשון בסדר ההדפסה.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+פעולות מוגדרות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $AddCourse$
+\end_inset
+
+ - 
+\end_layout
+
+\begin_layout Standard
+מבצעת הוספה של קורס חדש לעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+, ומעדכנת את 
+\begin_inset Formula $smallest\_id$
+\end_inset
+
+ לפי הצורך.
+\end_layout
+
+\begin_layout Standard
+יצירת הקורס היא בסיבוכיות זמן 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ )אתחול קורס(, כאשר 
+\begin_inset Formula $m$
+\end_inset
+
+ הוא מספר ההרצאות בקורס שמתווסף.
+\end_layout
+
+\begin_layout Standard
+סיבוכיות הזמן של ההכנסת איבר חדש לעץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ היא 
+\begin_inset Formula $O(logn)$
+\end_inset
+
+, כאשר 
+\begin_inset Formula $n$
+\end_inset
+
+ הוא מספר הקורסים בעץ בעת ההוספה.
+\end_layout
+
+\begin_layout Standard
+לכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות זמן היא 
+\begin_inset Formula $O(log(n)+m)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RemoveCourse$
+\end_inset
+
+- 
+\end_layout
+
+\begin_layout Standard
+מבצעת הסרה של קורס מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+, ושל כל ההרצאות בעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ ששייכות לקורס הזה.
+ הסרה של הרצאה מהעץ היא בסיבוכיות זמן 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $M$
+\end_inset
+
+ הוא מספר ההרצאות על פני כל הקורסים בעת ההוספה.
+\end_layout
+
+\begin_layout Standard
+עבור לא יותר מ
+\begin_inset Formula $m$
+\end_inset
+
+ הרצאות שמוסרות מהעץ, כאשר 
+\begin_inset Formula $m$
+\end_inset
+
+ הוא מספר ההרצאות בקורס המוסר, נקבל כי סיבוכיות הזמן של הסרת כל ההרצאות
+ היא 
+\begin_inset Formula $O(mlogM)$
+\end_inset
+
+.
+ בנוסף, מתבצעת הסרה של הקורס מעץ הקורסים, סיבוכיות הזמן לכך היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $n$
+\end_inset
+
+ הוא מספר הקורסים בעץ.
+ כיוון שניתן להניח כי יש יותר הרצאות מקורסים, ההסרה של הקורס מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+ לא משפיעה על סיבוכיות הזמן.
+\end_layout
+
+\begin_layout Standard
+לכן סיבוכיות הזמן של הפעולה היא 
+\begin_inset Formula $O(mlogM)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $WatchClass$
+\end_inset
+
+- 
+\end_layout
+
+\begin_layout Standard
+מוסיף זמן צפייה להרצאה מסויימת.
+ עדכון מיקום ההרצאה בעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ מתבצע על ידי הסרת ההרצאה אם היא כבר בעץ, הוספת הזמן הנדרש, והוספת ההרצאה
+ מחדש לעץ עם הזמן המעודכן.
+ הפעולות הכבדות הן הוצאה והכנסה מעץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ ולכן סיבוכיות הזמן של חלק זה היא 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+ כפי שנלמד.
+\end_layout
+
+\begin_layout Standard
+בנוסף, הפונקציה דואגת לשמורה של 
+\begin_inset Formula $Course$
+\end_inset
+
+ שהרצאה שלו ניצפת : מנתקת איבר ברשימת ההרצאות של הקורס מהחוליות, כדי שבמעבר
+ על הרצאות שלא נצפו עד כה נעבור 
+\series bold
+רק
+\series default
+ על הרצאות שלא נצפו.
+ לשם כך נקראת הפעולה 
+\begin_inset Formula $removeFromUnwatched$
+\end_inset
+
+ שמנתקת איבר מהרשימה 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ בשדה של הקורס ומשאירה אותו כ
+\begin_inset Quotes erd
+\end_inset
+
+צף
+\begin_inset Quotes erd
+\end_inset
+
+)ניתוק איבר מרשימה 
+\begin_inset Formula $O(1)$
+\end_inset
+
+( , בנוסף מכתיבה במערך ה
+\begin_inset Formula $is\text{\_}watched$
+\end_inset
+
+ שההרצאה נצפתה )שינוי ערך במערך 
+\begin_inset Formula $O(1)$
+\end_inset
+
+(.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ הדגאה לשמורה היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+לכן הפעולה בסך הכל מתבצעת בסיבוכיות זמן של 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+ולכן גם 
+\begin_inset Formula $O(logM+t)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $t$
+\end_inset
+
+ הוא מספר דקות הצפייה שהתווספו.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $TimeViewed$
+\end_inset
+
+ -
+\end_layout
+
+\begin_layout Standard
+מתבצע חיפוש על עץ ההרצאות, עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ שגודלו 
+\begin_inset Formula $n$
+\end_inset
+
+ כמספר ההרצאות ולכן החיפוש נעשה ב
+\begin_inset Formula $O(logn)$
+\end_inset
+
+, לאחר מכן מתבצעת פעולת גישה לשדה של ההרצאה ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+לכן סיבוכיות הפעולה היא 
+\begin_inset Formula $O(logn)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $GetMostViewedClasses$
+\end_inset
+
+-
+\end_layout
+
+\begin_layout Standard
+תחילה, מתבצע סיור על העץ של ההרצאות שצפו בהן, סיור המתחיל מ 
+\begin_inset Formula $most\text{\_}watched$
+\end_inset
+
+ בפעולות עוקב בדומה לסיור 
+\begin_inset Formula $inOrder$
+\end_inset
+
+ הפוך.
+\end_layout
+
+\begin_layout Standard
+כאשר מגיעים לעלה השמאלי ביותר של עץ ההרצאות, במידה ונותרו עוד הרצאות להדפסה
+ מתוך ה
+\begin_inset Formula $m$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+מתחיל סיור על עץ הקורסים באופן דומה לסיור על עץ ההרצאות, רק שבסיור זה עבור
+ כל קורס שעוברים עליו עוברים על כל ההרצאות שלא נצפו עד כה בקורס זה )לשם
+ כך השדה 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ ב
+\begin_inset Formula $Course$
+\end_inset
+
+, במהלך התוכנית אנו דואגים לשמור על רשימה זו כך שתכיל רק הרצאות שעוד לא
+ נצפו( .
+\end_layout
+
+\begin_layout Standard
+הסיור עובר רק על הרצאות לפי הסדר שהוגדר להדפסה ורק על הרצאות שמוגדרות להדפסה
+ )עד כדי קבועים בסיור ה
+\begin_inset Formula $inOrder$
+\end_inset
+
+ ההפוך( ולכן סיבוכיות היא 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ במקרה הגרוע.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Quit$
+\end_inset
+
+ -
+\end_layout
+
+\begin_layout Standard
+שחרור הזכרון מהעצים ואיפוס הפוניטרים.
+\end_layout
+
+\begin_layout Standard
+שחרור עץ נעשה באמצעות סיור 
+\begin_inset Formula $PostOrder$
+\end_inset
+
+ על העץ
+\end_layout
+
+\end_body
+\end_document
