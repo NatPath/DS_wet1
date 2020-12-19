@@ -128,7 +128,11 @@
 \end_layout
 
 \begin_layout Standard
-הצמתים ממוינים לפי ערך המפתח ומכילים את המידע 
+הצמתים ממוינים לפי ערך המפתח ומכילים את המידע .
+\end_layout
+
+\begin_layout Standard
+הפעולות המוגדרות וסיבוכיות הזמן והמקום של המבנה כפי שנלמדו בכיתה.
 \end_layout
 
 \begin_layout Subsection*
@@ -150,6 +154,10 @@
  ,מצביע לאיבר לפני ברשימה ומצביע לאיבר אחרי ברשימה.
 \end_layout
 
+\begin_layout Standard
+הפעולות המוגדרות וסיבוכיות הזמן והמקום של המבנה כפי שנלמדו בכיתה.
+\end_layout
+
 \begin_layout Subsubsection*
 \begin_inset Formula $Lecture$
 \end_inset
@@ -158,60 +166,9 @@
 \end_layout
 
 \begin_layout Standard
-עצם המכיל
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
- 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\numeric on
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-3
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\numeric off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
- 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
+
+\series bold
+\bar under
 שדות:
 \end_layout
 
@@ -333,11 +290,110 @@
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+\bar under
 פעולות מוגדרות :
 \end_layout
 
 \begin_layout Standard
-הוספת ושליפת זמן צפיה.
+
+\bar under
+אתחול:
+\bar default
+ אתחול שדות המבנה.
+\end_layout
+
+\begin_layout Standard
+השמת מספר קבוע של ערכים מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+הוספת זמן צפיה:
+\bar default
+ עדכון שדה זמן הצפיה לפי פרמטר.
+\end_layout
+
+\begin_layout Standard
+עדכון שדה מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+שליפת זמן צפיה:
+\bar default
+ החזרת שדה זמן הצפיה.
+\end_layout
+
+\begin_layout Standard
+קריאה של שדה מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אופרטורי השוואה:
+\bar default
+ השוואה בין הרצאות כפי שתוארה לעיל.
+\end_layout
+
+\begin_layout Standard
+השוואה של 
+\begin_inset Formula $int$
+\end_inset
+
+ים .
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+סיבוכיות זמן של כלל הפעולות:
+\end_layout
+
+\begin_layout Standard
+כל הפעולות הן בסיבוכיות זמן ומקום 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ )פעולות על מספר קבוע של 
+\begin_inset Formula $int$
+\end_inset
+
+ים(.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+סיבוכיות מקום:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $O(1)$
+\end_inset
+
+ , מספר קבוע של קבועים מסוג 
+\begin_inset Formula $int$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -348,60 +404,9 @@
 \end_layout
 
 \begin_layout Standard
-עצם המכיל
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
- 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\numeric on
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-5
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\numeric off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
- 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
+
+\series bold
+\bar under
 שדות:
 \end_layout
 
@@ -414,6 +419,29 @@
 \end_inset
 
 ( המייצג את מזהה הקורס.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lecture\text{\_}arr$
+\end_inset
+
+ - מערך של מצביעים ל
+\begin_inset Formula $ListNode<Lecture>$
+\end_inset
+
+.
+ מערך זה כולל מצביעים לחוליות ברשימה של כל ההרצאות של הקורס .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $num\_of\_classes$
+\end_inset
+
+- מספר טבעי חיובי המייצג את מספר ההרצאות שיש בקורס )האורך של 
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+(.
 \end_layout
 
 \begin_layout Standard
@@ -479,38 +507,12 @@
 \uwave default
 \noun default
 \color inherit
-צפיות ורק אותן, על מנת לאפשר מעבר רק על ההרצאות שלא נצפו בלי לבצע פעולות
- על איברי ביניים.
+צפיות ורק אותן.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $lecture\text{\_}arr$
-\end_inset
-
- - מערך של מצביעים ל
-\begin_inset Formula $ListNode<Lecture>$
-\end_inset
-
-.
- מערך זה כולל מצביעים לחוליות ברשימה של כל ההרצאות של הקורס, גם אחרי שהוסרו
- מהרשימה 
-\begin_inset Formula $unwatched$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $num\_of\_classes$
-\end_inset
-
-- מספר טבעי חיובי המייצג את מספר ההרצאות שיש בקורס, ולכן גם את האורך של
- 
-\begin_inset Formula $lecture\_arr$
-\end_inset
-
-.
+מטרת השדה היא לאפשר מעבר רק על הרצאות שלא נצפו בלי לבצע פעולות על איברי
+ ביניים.
 \end_layout
 
 \begin_layout Standard
@@ -546,7 +548,8 @@
 \end_layout
 
 \begin_layout Standard
-מעקב נפרד אחרי ההרצאות שכבר נצפו מאפשר שחזור נכון של 
+מטרת השדה היא להוות מעקב נפרד אחרי ההרצאות שכבר נצפו .
+ כך מתאפשר שחזור נכון של 
 \begin_inset Formula $unwatched$
 \end_inset
 
@@ -564,6 +567,62 @@
 
  לא יוביל לשחרור כפול של חוליות ברשימה.
  
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+פעולות מוגדרות:
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אתחול )מפרמטרים או כהעתקה(:
+\end_layout
+
+\begin_layout Standard
+אתחול השדות , חלק מהשדות הן מערכים עם שדות מורכבים לכן האתחול נעשה ב
+\begin_inset Formula $O(m)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+שליפת שדות:)
+\begin_inset Formula $Getters$
+\end_inset
+
+(:
+\end_layout
+
+\begin_layout Standard
+נעשה ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+, השדות הפשוטים מועברים ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+ וכך גם המורכבים)מערכים ורשימות( כיוון שמעבירים רפרנס או מצביע לשדה.
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+הריסה:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $O(m)$
+\end_inset
+
+ , מעבר על מספר ההרצאות בקורס והריסתן אחת אחת.
 \end_layout
 
 \begin_layout Subsection*
