@@ -407,6 +407,17 @@
 
 \series bold
 \bar under
+מטרה:
+\end_layout
+
+\begin_layout Standard
+מטרת המבנה היא להכיל את המידע הרלוונטי לקורס מסוים והרצאותיו.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
 שדות:
 \end_layout
 
@@ -579,15 +590,29 @@
 \begin_layout Standard
 
 \bar under
-אתחול )מפרמטרים או כהעתקה(:
+אתחול )מפרמטרים או כהעתקה עמוקה(:
 \end_layout
 
 \begin_layout Standard
 אתחול השדות , חלק מהשדות הן מערכים עם שדות מורכבים לכן האתחול נעשה ב
-\begin_inset Formula $O(m)$
+\begin_inset Formula $O(m=num\text{\_}of\text{\_}classes)$
 \end_inset
 
  .
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+אופרטור השוואה:
+\end_layout
+
+\begin_layout Standard
+העתקה עמוקה של השדות, בדומה לאתחול סיבוכיות זמן של 
+\begin_inset Formula $O(m)$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -619,10 +644,11 @@
 \end_layout
 
 \begin_layout Standard
+מעבר על מספר ההרצאות בקורס והריסתן אחת אחת 
 \begin_inset Formula $O(m)$
 \end_inset
 
- , מעבר על מספר ההרצאות בקורס והריסתן אחת אחת.
+ .
 \end_layout
 
 \begin_layout Subsection*
@@ -788,7 +814,7 @@
 \begin_inset Formula $courses$
 \end_inset
 
- המהווה את הצומת הימני ביותר בעץ - כלומר את הקורס ה
+ המהווה את הצומת השמאלי)??( ביותר בעץ - כלומר את הקורס ה
 \begin_inset Quotes erd
 \end_inset
 
@@ -799,18 +825,22 @@
  ביותר והראשון בסדר ההדפסה.
 \end_layout
 
-\begin_layout Subsection*
-\begin_inset Formula $BoomDS$
-\end_inset
+\begin_layout Standard
 
- מכיל את המתודות הבאות:
+\series bold
+\bar under
+פעולות מוגדרות:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $AddCourse$
 \end_inset
 
- - מבצעת הוספה של קורס חדש לעץ 
+ - 
+\end_layout
+
+\begin_layout Standard
+מבצעת הוספה של קורס חדש לעץ 
 \begin_inset Formula $courses$
 \end_inset
 
@@ -819,11 +849,26 @@
 \end_inset
 
  לפי הצורך.
- סיבוכיות הזמן של פעולה זו זהה לסיבוכיות הזמן של הוספה בעץ 
+\end_layout
+
+\begin_layout Standard
+יצירת הקורס היא בסיבוכיות זמן 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ )אתחול קורס(, כאשר 
+\begin_inset Formula $m$
+\end_inset
+
+ הוא מספר ההרצאות בקורס שמתווסף.
+\end_layout
+
+\begin_layout Standard
+סיבוכיות הזמן של ההכנסת איבר חדש לעץ 
 \begin_inset Formula $AVL$
 \end_inset
 
-, כלומר 
+ היא 
 \begin_inset Formula $O(logn)$
 \end_inset
 
@@ -835,10 +880,26 @@
 \end_layout
 
 \begin_layout Standard
+לכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות זמן היא 
+\begin_inset Formula $O(log(n)+m)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $RemoveCourse$
 \end_inset
 
-- מבצעת הסרה של קורס מהעץ 
+- 
+\end_layout
+
+\begin_layout Standard
+מבצעת הסרה של קורס מהעץ 
 \begin_inset Formula $courses$
 \end_inset
 
@@ -873,6 +934,15 @@
 \end_inset
 
 .
+ בנוסף, מתבצעת הסרה של הקורס מעץ הקורסים, סיבוכיות הזמן לכך היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $n$
+\end_inset
+
+ הוא מספר הקורסים בעץ.
  כיוון שניתן להניח כי יש יותר הרצאות מקורסים, ההסרה של הקורס מהעץ 
 \begin_inset Formula $courses$
 \end_inset
@@ -881,21 +951,100 @@
 \end_layout
 
 \begin_layout Standard
+לכן סיבוכיות הזמן של הפעולה היא 
+\begin_inset Formula $O(mlogM)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $WatchClass$
 \end_inset
 
-- מוסיף זמן צפייה להרצאה מסויימת.
+- 
+\end_layout
+
+\begin_layout Standard
+מוסיף זמן צפייה להרצאה מסויימת.
  עדכון מיקום ההרצאה בעץ 
 \begin_inset Formula $lectures$
 \end_inset
 
  מתבצע על ידי הסרת ההרצאה אם היא כבר בעץ, הוספת הזמן הנדרש, והוספת ההרצאה
  מחדש לעץ עם הזמן המעודכן.
- לכן סיבוכיות הזמן של העדכון היא 
+ הפעולות הכבדות הן הוצאה והכנסה מעץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ ולכן סיבוכיות הזמן של חלק זה היא 
 \begin_inset Formula $O(logM)$
 \end_inset
 
-, ולכן גם 
+ כפי שנלמד.
+\end_layout
+
+\begin_layout Standard
+בנוסף, הפונקציה דואגת לשמורה של 
+\begin_inset Formula $Course$
+\end_inset
+
+ שהרצאה שלו ניצפת : מנתקת איבר ברשימת ההרצאות של הקורס מהחוליות, כדי שבמעבר
+ על הרצאות שלא נצפו עד כה נעבור 
+\series bold
+רק
+\series default
+ על הרצאות שלא נצפו.
+ לשם כך נקראת הפעולה 
+\begin_inset Formula $removeFromUnwatched$
+\end_inset
+
+ שמנתקת איבר מהרשימה 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ בשדה של הקורס ומשאירה אותו כ
+\begin_inset Quotes erd
+\end_inset
+
+צף
+\begin_inset Quotes erd
+\end_inset
+
+)ניתוק איבר מרשימה 
+\begin_inset Formula $O(1)$
+\end_inset
+
+( , בנוסף מכתיבה במערך ה
+\begin_inset Formula $is\text{\_}watched$
+\end_inset
+
+ שההרצאה נצפתה )שינוי ערך במערך 
+\begin_inset Formula $O(1)$
+\end_inset
+
+(.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ הדגאה לשמורה היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+לכן הפעולה בסך הכל מתבצעת בסיבוכיות זמן של 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+ולכן גם 
 \begin_inset Formula $O(logM+t)$
 \end_inset
 
@@ -904,6 +1053,116 @@
 \end_inset
 
  הוא מספר דקות הצפייה שהתווספו.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $TimeViewed$
+\end_inset
+
+ -
+\end_layout
+
+\begin_layout Standard
+מתבצע חיפוש על עץ ההרצאות, עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ שגודלו 
+\begin_inset Formula $n$
+\end_inset
+
+ כמספר ההרצאות ולכן החיפוש נעשה ב
+\begin_inset Formula $O(logn)$
+\end_inset
+
+, לאחר מכן מתבצעת פעולת גישה לשדה של ההרצאה ב
+\begin_inset Formula $O(1)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+לכן סיבוכיות הפעולה היא 
+\begin_inset Formula $O(logn)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $GetMostViewedClasses$
+\end_inset
+
+-
+\end_layout
+
+\begin_layout Standard
+תחילה, מתבצע סיור על העץ של ההרצאות שצפו בהן, סיור המתחיל מ 
+\begin_inset Formula $most\text{\_}watched$
+\end_inset
+
+ בפעולות עוקב בדומה לסיור 
+\begin_inset Formula $inOrder$
+\end_inset
+
+ הפוך.
+\end_layout
+
+\begin_layout Standard
+כאשר מגיעים לעלה השמאלי ביותר של עץ ההרצאות, במידה ונותרו עוד הרצאות להדפסה
+ מתוך ה
+\begin_inset Formula $m$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+מתחיל סיור על עץ הקורסים באופן דומה לסיור על עץ ההרצאות, רק שבסיור זה עבור
+ כל קורס שעוברים עליו עוברים על כל ההרצאות שלא נצפו עד כה בקורס זה )לשם
+ כך השדה 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ ב
+\begin_inset Formula $Course$
+\end_inset
+
+, במהלך התוכנית אנו דואגים לשמור על רשימה זו כך שתכיל רק הרצאות שעוד לא
+ נצפו( .
+\end_layout
+
+\begin_layout Standard
+הסיור עובר רק על הרצאות לפי הסדר שהוגדר להדפסה ורק על הרצאות שמוגדרות להדפסה
+ )עד כדי קבועים בסיור ה
+\begin_inset Formula $inOrder$
+\end_inset
+
+ ההפוך( ולכן סיבוכיות היא 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ במקרה הגרוע.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Quit$
+\end_inset
+
+ -
+\end_layout
+
+\begin_layout Standard
+שחרור הזכרון מהעצים ואיפוס הפוניטרים.
+\end_layout
+
+\begin_layout Standard
+שחרור עץ נעשה באמצעות סיור 
+\begin_inset Formula $PostOrder$
+\end_inset
+
+ על העץ
 \end_layout
 
 \end_body
