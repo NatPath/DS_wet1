@@ -124,19 +124,11 @@ void printNode(Node_ptr<KEY,VAL>& node) {
     std::cout<<node->getKey()<<" BF: "<<balance_factor(node)<<" Height: "<< node->getHeight()<<std::endl;
 }
 
-/*
-Side oppSide(Side side){
-    if (side==L){
-        return R;
-    }
-    if (side == R){
-        return L;
-    }
-    else{
-        return N;
-    }
-}
-*/
+/**
+ * swapNodes-
+ *   gets 2 nodes and swaps their places, after doing so the function also switches their names 
+ * */  
+
 template <typename KEY,typename VAL>
 void swapNodes(Node_ptr<KEY,VAL>& node1,Node_ptr<KEY,VAL>& node2){
     Node_ptr<KEY,VAL> temp_left1=node1->getLeft();
@@ -168,6 +160,7 @@ void swapNodes(Node_ptr<KEY,VAL>& node1,Node_ptr<KEY,VAL>& node2){
         connectNodes(node2,node1,side2);
     }
     else if (temp_left2==node1 || temp_right2==node1){
+        //nodes2 is the parent of node1
         connectNodes(node2,temp_left1,L);
         connectNodes(node2,temp_right1,R);
 
@@ -195,6 +188,7 @@ void swapNodes(Node_ptr<KEY,VAL>& node1,Node_ptr<KEY,VAL>& node2){
     node1=node2;
     node2=temp;
 }
+// frees the memory of a single node
 template <typename KEY,typename VAL>
 void freeNode(Node_ptr<KEY,VAL>& to_delete){
     Side side=childSide(to_delete->getParent(),to_delete);
