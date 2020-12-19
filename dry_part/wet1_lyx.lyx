@@ -261,7 +261,7 @@
 \begin_inset Formula $num\text{\_}views$
 \end_inset
 
- - מספר צפיות בסדר עולה )הרצאה 
+ - מספר צפיות בסדר ירוד )הרצאה 
 \begin_inset Formula $l_{1}$
 \end_inset
 
@@ -289,7 +289,7 @@
 \begin_inset Formula $courseID$
 \end_inset
 
- - מזהה הקורס בסדר יורד ) בהינתן שוויון במספר הצפיות ,הרצאה 
+ - מזהה הקורס בסדר עולה ) בהינתן שוויון במספר הצפיות ,הרצאה 
 \begin_inset Formula $l_{1}$
 \end_inset
 
@@ -317,7 +317,7 @@
 \begin_inset Formula $lectureID$
 \end_inset
 
- - מזהה הקורס בסדר יורד.
+ - מזהה ההרצאה בסדר עולה.
 \end_layout
 
 \begin_layout Standard
@@ -337,7 +337,7 @@
 \end_layout
 
 \begin_layout Standard
-הוספת זמן צפיה
+הוספת ושליפת זמן צפיה.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -409,11 +409,78 @@
 \begin_inset Formula $courseID$
 \end_inset
 
- - מספר טבעי חיובי)
+ - מספר טבעי חיובי )
 \begin_inset Formula $int$
 \end_inset
 
-( המייצג את מזהה הקורס
+( המייצג את מזהה הקורס.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $unwatched$
+\end_inset
+
+ - רשימה של עצמים מטיפוס 
+\begin_inset Formula $Lecture$
+\end_inset
+
+.
+ רשימה זו כוללת את כל ההרצאות של הקורס להן
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+0
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+צפיות ורק אותן, על מנת לאפשר מעבר רק על ההרצאות שלא נצפו בלי לבצע פעולות
+ על איברי ביניים.
 \end_layout
 
 \begin_layout Standard
@@ -424,7 +491,79 @@
 \begin_inset Formula $ListNode<Lecture>$
 \end_inset
 
+.
+ מערך זה כולל מצביעים לחוליות ברשימה של כל ההרצאות של הקורס, גם אחרי שהוסרו
+ מהרשימה 
+\begin_inset Formula $unwatched$
+\end_inset
 
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $num\_of\_classes$
+\end_inset
+
+- מספר טבעי חיובי המייצג את מספר ההרצאות שיש בקורס, ולכן גם את האורך של
+ 
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $is\_watched$
+\end_inset
+
+ - מערך של 
+\begin_inset Formula $bool$
+\end_inset
+
+ באורך זהה לשל 
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+ ועם אינדקסים תואמים - הערך באינקדס 
+\begin_inset Formula $i$
+\end_inset
+
+ הוא 
+\begin_inset Formula $true$
+\end_inset
+
+ אם ההרצאה ה
+\begin_inset Formula $i$
+\end_inset
+
+ כבר נצפתה, ו
+\begin_inset Formula $false$
+\end_inset
+
+ אחרת.
+ 
+\end_layout
+
+\begin_layout Standard
+מעקב נפרד אחרי ההרצאות שכבר נצפו מאפשר שחזור נכון של 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ בהעתקה או השמה של קורסים, ומוודא שבעת הריסת אובייקט 
+\begin_inset Formula $Course$
+\end_inset
+
+ שחרור הזיכרון של 
+\begin_inset Formula $unwatched$
+\end_inset
+
+ ו
+\begin_inset Formula $lecture\_arr$
+\end_inset
+
+ לא יוביל לשחרור כפול של חוליות ברשימה.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -436,11 +575,276 @@
 \end_layout
 
 \begin_layout Standard
-עץ 
+\begin_inset Formula $courses$
+\end_inset
+
+- עץ 
 \begin_inset Formula $AVL$
 \end_inset
 
- של קורסים, ממוין לפי מזהה הקורס
+ של 
+\begin_inset Formula $Course$
+\end_inset
+
+, ממוין לפי מזהה הקורס.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lectures$
+\end_inset
+
+- עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ של 
+\begin_inset Formula $Lecture$
+\end_inset
+
+, ממוין לפי אופרטורי ההשוואה של מחלקת 
+\begin_inset Formula $Lecture$
+\end_inset
+
+.
+ כלומר, מספר צפיות בסדר יורד, לאחר מכן מזהה קורס בסדר עולה, ולאחר מכן מזהה
+ הרצאה בסדר עולה.
+\end_layout
+
+\begin_layout Standard
+עץ זה מכיל רק את ההרצאות שלהן יותר מ
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+0
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+צפיות.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $most\_watched$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ - מצביע ל
+\begin_inset Formula $AVL\_NODE$
+\end_inset
+
+ מהעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ המהווה את הצומת הימני ביותר בעץ - כלומר את ההרצאה ה
+\begin_inset Quotes erd
+\end_inset
+
+גדולה
+\begin_inset Quotes erd
+\end_inset
+
+ ביותר והראשונה בסדר ההדפסה.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $smallest\_id$
+\end_inset
+
+ - 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+מצביע ל
+\begin_inset Formula $AVL\_NODE$
+\end_inset
+
+ מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+ המהווה את הצומת הימני ביותר בעץ - כלומר את הקורס ה
+\begin_inset Quotes erd
+\end_inset
+
+גדול
+\begin_inset Quotes erd
+\end_inset
+
+ ביותר והראשון בסדר ההדפסה.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $BoomDS$
+\end_inset
+
+ מכיל את המתודות הבאות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $AddCourse$
+\end_inset
+
+ - מבצעת הוספה של קורס חדש לעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+, ומעדכנת את 
+\begin_inset Formula $smallest\_id$
+\end_inset
+
+ לפי הצורך.
+ סיבוכיות הזמן של פעולה זו זהה לסיבוכיות הזמן של הוספה בעץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+, כלומר 
+\begin_inset Formula $O(logn)$
+\end_inset
+
+, כאשר 
+\begin_inset Formula $n$
+\end_inset
+
+ הוא מספר הקורסים בעץ בעת ההוספה.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $RemoveCourse$
+\end_inset
+
+- מבצעת הסרה של קורס מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+, ושל כל ההרצאות בעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ ששייכות לקורס הזה.
+ הסרה של הרצאה מהעץ היא בסיבוכיות זמן 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $M$
+\end_inset
+
+ הוא מספר ההרצאות על פני כל הקורסים בעת ההוספה.
+\end_layout
+
+\begin_layout Standard
+עבור לא יותר מ
+\begin_inset Formula $m$
+\end_inset
+
+ הרצאות שמוסרות מהעץ, כאשר 
+\begin_inset Formula $m$
+\end_inset
+
+ הוא מספר ההרצאות בקורס המוסר, נקבל כי סיבוכיות הזמן של הסרת כל ההרצאות
+ היא 
+\begin_inset Formula $O(mlogM)$
+\end_inset
+
+.
+ כיוון שניתן להניח כי יש יותר הרצאות מקורסים, ההסרה של הקורס מהעץ 
+\begin_inset Formula $courses$
+\end_inset
+
+ לא משפיעה על סיבוכיות הזמן.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $WatchClass$
+\end_inset
+
+- מוסיף זמן צפייה להרצאה מסויימת.
+ עדכון מיקום ההרצאה בעץ 
+\begin_inset Formula $lectures$
+\end_inset
+
+ מתבצע על ידי הסרת ההרצאה אם היא כבר בעץ, הוספת הזמן הנדרש, והוספת ההרצאה
+ מחדש לעץ עם הזמן המעודכן.
+ לכן סיבוכיות הזמן של העדכון היא 
+\begin_inset Formula $O(logM)$
+\end_inset
+
+, ולכן גם 
+\begin_inset Formula $O(logM+t)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $t$
+\end_inset
+
+ הוא מספר דקות הצפייה שהתווספו.
 \end_layout
 
 \end_body
