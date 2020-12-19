@@ -1,0 +1,447 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+מבני נתונים - תרגיל רטוב
+\family roman
+\series medium
+\shape up
+\size largest
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+1
+\end_layout
+
+\begin_layout Section*
+מבני הנתונים וטיפוסים בהם השתמשנו
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $AVL\text{\_}Tree<KEY,VAL>$
+\end_inset
+
+ - עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+גנרי דו כיווני )הורה מצביע לילד וילד מצביע להורה( כפי שנלמד בהרצאה.
+\end_layout
+
+\begin_layout Standard
+הצמתים ממוינים לפי ערך המפתח ומכילים את המידע 
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Formula $List<T>$
+\end_inset
+
+ - רשימה מקושרת דו כיוונית.
+\end_layout
+
+\begin_layout Standard
+אברי הרשימה הם טיפוס 
+\begin_inset Formula $ListNode<T>$
+\end_inset
+
+ , המכיל פוינטר חכם ל ערך 
+\begin_inset Formula $T$
+\end_inset
+
+ ,מצביע לאיבר לפני ברשימה ומצביע לאיבר אחרי ברשימה.
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $Lecture$
+\end_inset
+
+ -אוביקט המייצג הרצאה:
+\end_layout
+
+\begin_layout Standard
+עצם המכיל
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+3
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+שדות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $courseID$
+\end_inset
+
+ -מספר טבעי חיובי )
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה הקורס שאליו שייכת ההרצאה
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lectureID$
+\end_inset
+
+ - מספר טבעי אי שלילי )
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה ההרצאה
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $num\text{\_}views$
+\end_inset
+
+ - מספר טבעי אי שלילי המייצגג כמה צפיות יש להרצאה
+\end_layout
+
+\begin_layout Standard
+לאובייקט הנ
+\begin_inset Quotes erd
+\end_inset
+
+ל מוגדר יחס סדר בעזרת אופרטורי השוואה) גדול , קטן , שווה( המוגדר באופן הבא:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+1
+\numeric off
+( לפי 
+\begin_inset Formula $num\text{\_}views$
+\end_inset
+
+ - מספר צפיות בסדר עולה )הרצאה 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ בעלת מספר צפיות גדול יותר מאלה של 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ תקיים 
+\begin_inset Formula $l_{1}>l_{2}$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+אם מתקיים שוויון במספר הצפיות:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+2
+\numeric off
+( לפי 
+\begin_inset Formula $courseID$
+\end_inset
+
+ - מזהה הקורס בסדר יורד ) בהינתן שוויון במספר הצפיות ,הרצאה 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ בעלת מזהה קורס קטן מזה של 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ תקיים 
+\begin_inset Formula $l_{1}>l_{2}$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+אם מתקיים שוויון גם במזהה הקורס:
+\end_layout
+
+\begin_layout Standard
+
+\numeric on
+3
+\numeric off
+( לפי 
+\begin_inset Formula $lectureID$
+\end_inset
+
+ - מזהה הקורס בסדר יורד.
+\end_layout
+
+\begin_layout Standard
+במידה ומתקיים שוויון בכל שלושת השדות, נגיד ש 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ שווה ל 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+פעולות מוגדרות :
+\end_layout
+
+\begin_layout Standard
+הוספת זמן צפיה
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $Course$
+\end_inset
+
+ - אוביקט המייצג קורס:
+\end_layout
+
+\begin_layout Standard
+עצם המכיל
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+5
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+שדות:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $courseID$
+\end_inset
+
+ - מספר טבעי חיובי)
+\begin_inset Formula $int$
+\end_inset
+
+( המייצג את מזהה הקורס
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $lecture\text{\_}arr$
+\end_inset
+
+ - מערך של מצביעים ל
+\begin_inset Formula $ListNode<Lecture>$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+אוביקט 
+\begin_inset Formula $BoomDS$
+\end_inset
+
+ ולו השדות הבאים:
+\end_layout
+
+\begin_layout Standard
+עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ של קורסים, ממוין לפי מזהה הקורס
+\end_layout
+
+\end_body
+\end_document
