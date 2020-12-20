@@ -3,7 +3,6 @@
 Course::Course(int courseID, int numOfClasses){
     this->courseID = courseID;
     this->num_of_classes=numOfClasses;
-    //this->unwatched_arr = new Lecture[numOfClasses];
     try{
         lecture_arr = new ListNode<Lecture>*[numOfClasses];
         unwatched = List<Lecture>();
@@ -35,25 +34,14 @@ Course::Course(const Course& copy){
         *lecture_arr[i] = *copy.lecture_arr[i];
         is_watched[i] = copy.is_watched[i];
     }
-    /*
-    for(int i =0; i<num_of_classes-1;i++){
-        lecture_arr[i]->connectNext(lecture_arr[i+1]);
-    }
-    */
 
      for(int i = num_of_classes-1; i>=0; i--){
         if(!is_watched[i]) {
             unwatched.add(lecture_arr[i]);
         }
-       
     }
     
-   
-    
-
-    
 }
-
 
 
 Course& Course::operator=(const Course& copy){
@@ -71,14 +59,6 @@ Course& Course::operator=(const Course& copy){
             is_watched_tmp[i] = copy.is_watched[i];
         }
 
-
-    
-        /*
-        for (int i = 0; i < copy.num_of_classes - 1; i++)
-        {
-            lecture_arr_tmp[i]->connectNext(lecture_arr_tmp[i + 1]);
-        }
-        */
 
         for (int i = 0; i < num_of_classes; i++)
         {
@@ -106,7 +86,6 @@ Course& Course::operator=(const Course& copy){
             if(!is_watched[i]){
                 unwatched.add(lecture_arr[i]);
             }
-            
         }
     }
     catch (...)
@@ -115,7 +94,6 @@ Course& Course::operator=(const Course& copy){
             if(is_watched_tmp[i]){
                 delete lecture_arr_tmp[i];
             }
-        
          }
         delete[] lecture_arr_tmp;
         delete[] is_watched_tmp;
@@ -156,18 +134,13 @@ Lecture& Course::getLecture(int classID){
     return *lecture_arr[classID]->getValue();
 }
 
-
 Course::~Course(){
-
-    
     
     for(int i=0;i<num_of_classes;i++){
         if(is_watched[i]){
             delete lecture_arr[i];
         }
-        
     }
-
     
     delete[] lecture_arr;
     delete[] is_watched;

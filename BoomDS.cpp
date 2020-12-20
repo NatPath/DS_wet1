@@ -1,10 +1,5 @@
 #include "BoomDS.h"
 
-// add find function in avl that gets a node's key and returns a pointer to the required node's data.
-// add > operator to lecture, will just call > operator of lecture key
-// add failures
-// add option to return inserted node to tree
-
 StatusType BoomDS::AddCourse(int courseID,int numOfClasses){
     Course insert = Course(courseID,numOfClasses);
     //check memory allocation in AVL
@@ -21,11 +16,6 @@ StatusType BoomDS::AddCourse(int courseID,int numOfClasses){
 }
 
 StatusType BoomDS::RemoveCourse(int courseID){
-    /*
-    Course del = Course(courseID,1);
-    courses.deleteNode(del);
-    return StatusType::SUCCESS;
-    */ 
     std::shared_ptr<AVL_NODE<int, Course>> found_spot = courses.findLastOfSearchPath(courseID);
     if(!found_spot){
         //empty course tree
@@ -63,7 +53,6 @@ StatusType BoomDS::WatchClass(int courseID, int classID, int time){
 
     }
 
-   // Course watched_course = found_spot->getValue();
     if(found_spot->getValue().get_id()!=courseID){
         return StatusType::FAILURE;
     }

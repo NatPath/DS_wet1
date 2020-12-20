@@ -1,8 +1,6 @@
 #include <memory>
-/*
-#include "Lecture.h"
-#include "Course.h"
-*/
+
+// type definitions which are used all over the program
 
 class Lecture;
 class Course;

@@ -388,11 +388,6 @@ class AVL_Tree{
         }
         else if (found_spot->getRight()!=nullptr){
             substitute= findMinNode(i->getRight());
-            //i=substitute->getParent();
-            /*
-            found_spot->setKey(substitute->getKey());
-            found_spot->setValue(substitute->getValue());
-            */
             swapNodes(substitute,found_spot);
             i=substitute->getParent();
             if (i==found_spot){
@@ -406,10 +401,6 @@ class AVL_Tree{
         }
         else{
             substitute= findMaxNode(i->getLeft());
-            /*
-            found_spot->setKey(substitute->getKey());
-            found_spot->setValue(substitute->getValue());
-            */
             swapNodes(substitute,found_spot);
             i=substitute->getParent();
             if (i==found_spot){

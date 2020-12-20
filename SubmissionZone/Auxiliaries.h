@@ -3,6 +3,7 @@
 #include <exception>
 #include <iostream>
 
+// Auxilary functions used all over the program
 
 template<class T>
 const T& max(const T& a,const T& b){

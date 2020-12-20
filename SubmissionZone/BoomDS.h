@@ -7,8 +7,6 @@
 #include "Course.h"
 #include "library.h"
 
-
-
 class BoomDS{
     
     AVL_Tree<int,Course> courses;
@@ -27,8 +25,6 @@ class BoomDS{
         StatusType WatchClass(int courseID, int classID, int time);
         StatusType TimeViewed( int courseID, int classID, int *timeViewed);
         StatusType GetMostViewedClasses(int numOfClasses, int *courses, int *classes);
-        
-
 
 };
 

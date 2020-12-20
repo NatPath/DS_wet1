@@ -150,20 +150,6 @@ class List{
     void remove(T& to_remove){
         ListNode<T>* i=root;
 
-        /* single link version
-        if(!i->getNext()){
-            if(i->getValue()==to_remove){
-                root = nullptr;
-            }
-        }
-        while(i->getNext()){
-            if(i->getNext()->getValue() == to_remove){
-                i->connectNext(i->getNext()->getNext());
-                return;
-            }
-        }
-        */
-
        while(i){
            if(*(i->getValue())==to_remove){
                if (i->getPrev()){
@@ -201,42 +187,9 @@ class List{
             itt=itt->getNext();
         }
     }
-    /*
-    class iterator;
-    iterator begin(){
-        return iterator(this,0);
-    }
-    */
 
 
 
 };
-/*
-template<class T>
-class List<T>::iterator{
-    friend class List<T>;
-    List<T>* list;
-    int index;
-
-    public:
-    iterator(List<T>* list,int index):list(list),index(index){};
-    iterator operator++(int){
-        iterator result=*this;
-        ++*this;
-        return result;
-    }
-    iterator& operator++(){
-        ++index;
-        return *this;
-    }
-    T& operator*() const{
-        if (index>=list->size()){
-            throw std::runtime_error("trying to access out of range index");
-        }
-        return *list.value;
-
-    }
-};
-*/
 
 #endif
