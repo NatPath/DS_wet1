@@ -11,12 +11,12 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman "default" "default"
-\font_sans "default" "default"
-\font_typewriter "default" "default"
+\font_roman "default" "David"
+\font_sans "default" "David"
+\font_typewriter "default" "David"
 \font_math "auto" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc false
 \font_osf false
 \font_sf_scale 100 100
@@ -912,7 +912,7 @@
 \begin_inset Formula $courses$
 \end_inset
 
- המהווה את הצומת השמאלי)??( ביותר בעץ - כלומר את הקורס ה
+ המהווה את הצומת השמאלי ביותר בעץ - כלומר את הקורס ה
 \begin_inset Quotes erd
 \end_inset
 
@@ -1204,7 +1204,16 @@
 \begin_inset Formula $inOrder$
 \end_inset
 
- הפוך.
+ הפוך - ראשית מתבצעת קריאה רקורסיבית עבור הבן הימני, לאחר מכן נכתב במערכים
+ הנתונים המידע עבור הצומת הנוכחי, לאחר מכן מתבצעת קריאה רקורסיבית עבור הבן
+ השמאלי ולבסוף עבור האב.
+ 
+\end_layout
+
+\begin_layout Standard
+הפונקציה מקבלת ערכים בוליאנים עבור כל אחת מהקריאות האפשריות כדי לסמן לכל
+ איטרציה האם היא נקראה על ידי בן או אב של צומת שכבר עברנו עליו ברקורסיה,
+ על מנת למנוע מעבר כפול על צמתים.
 \end_layout
 
 \begin_layout Standard
@@ -1217,9 +1226,18 @@
 \end_layout
 
 \begin_layout Standard
-מתחיל סיור על עץ הקורסים באופן דומה לסיור על עץ ההרצאות, רק שבסיור זה עבור
- כל קורס שעוברים עליו עוברים על כל ההרצאות שלא נצפו עד כה בקורס זה )לשם
- כך השדה 
+מתחיל סיור על עץ הקורסים באופן דומה לסיור על עץ ההרצאות, כך שמתחילים מ
+\begin_inset Formula $smallest\_id$
+\end_inset
+
+.
+ עם זאת, כיוון שכעת הסיור הוא מהצומת הקטן לגדול, תתבצע קודם קריאה רקורסיבית
+ עבור הבן השמאלי.
+ עבור הצומת הנוכחי,
+\end_layout
+
+\begin_layout Standard
+עוברים על כל ההרצאות שלא נצפו עד כה בקורס זה )לשם כך השדה 
 \begin_inset Formula $unwatched$
 \end_inset
 
@@ -1229,6 +1247,8 @@
 
 , במהלך התוכנית אנו דואגים לשמור על רשימה זו כך שתכיל רק הרצאות שעוד לא
  נצפו( .
+ לאחר תתבצע קריאה רקורסיבית עבור הבן השמאלי ולבסוף עבור האב, תוך שימוש בערכים
+ בוליאנים כדי למנוע מעבר כפול על צמתים כמו בסיור על עץ ההרצאות.
 \end_layout
 
 \begin_layout Standard
@@ -1252,7 +1272,7 @@
 \end_layout
 
 \begin_layout Standard
-שחרור הזכרון מהעצים ואיפוס הפוניטרים.
+שחרור הזכרון מהעצים ואיפוס הפוינטרים.
 \end_layout
 
 \begin_layout Standard
@@ -1379,7 +1399,7 @@
 \end_layout
 
 \begin_layout Standard
-הזכרון הדרוש עבור עץ הקורסים הו 
+הזכרון הדרוש עבור עץ הקורסים הוא 
 \begin_inset Formula $O(n)$
 \end_inset
 
@@ -1404,14 +1424,118 @@
 \end_layout
 
 \begin_layout Standard
-הפונקציות שפועלות באופן רקורסיבי ולכן נדרש עבורן הסבר סיבוכיות מקום:
+הפונקציות שפועלות באופן רקורסיבי:
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $WatchClass$
+חיפוש בעץ 
+\begin_inset Formula $AVL$
 \end_inset
 
-- 
+, בין היתר לצורכי הוספה והסרה של איברים: הפונקציה נקראת עבור כל איבר במסלול
+ החיפוש של האיבר המבוקש.
+ במקרה הגרוע האיבר המבוקש לא נמצא בעץ ולכן עומק הרקורסיה יהיה כעומק העץ.
+ כידוע עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ מאוזן ולכן עומק העץ הוא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $GetMostViewedClasses$
+\end_inset
+
+: כולל רקורסיבי על עץ ההרצאות ועל עץ הקורסים כפי שתואר למעלה.
+ בכל איטרציה יש
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+3
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+קריאות רקורסיביות אפשריות שכולן באותו העומק.
+ עבור עץ ההרצאות, יש לכל היותר 
+\begin_inset Formula $n$
+\end_inset
+
+ איברים לעבור עליהם.
+ 
+\end_layout
+
+\begin_layout Standard
+במקרה הגרוע ביותר כל אחד מהאיברים דורש הגדלת עומק הרקורסיה, אבל כיוון שיש
+ לכל היותר 
+\begin_inset Formula $n$
+\end_inset
+
+ איברים עומק הרקורסיה יהיה לכל היותר 
+\begin_inset Formula $n$
+\end_inset
+
+ כלומר 
+\begin_inset Formula $O(n)$
+\end_inset
+
+.
+ עבור עץ הקורסים השיקולים זהים.
+ ניתן להניח כי מספר הקורסים קטן מממספר ההרצאות הכולל ולכן גם עומק הרקורסיה
+ של המעבר על עץ הקורסים הוא 
+\begin_inset Formula $O(n)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
