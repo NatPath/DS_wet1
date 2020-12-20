@@ -389,11 +389,23 @@
 \begin_inset Formula $O(1)$
 \end_inset
 
- , מספר קבוע של קבועים מסוג 
+ , השדות של 
+\begin_inset Formula $Lecture$
+\end_inset
+
+ הן מספר קבוע של קבועים מסוג 
 \begin_inset Formula $int$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+הפעולות לא מקצות זכרון חדש ולכן גם הן 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ כל אחת.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -594,11 +606,20 @@
 \end_layout
 
 \begin_layout Standard
-אתחול השדות , חלק מהשדות הן מערכים עם שדות מורכבים לכן האתחול נעשה ב
-\begin_inset Formula $O(m=num\text{\_}of\text{\_}classes)$
+אתחול השדות , חלק מהשדות הם מערכים ורשימות, כשכל רשימה היא בגודל לכל היותר
+ 
+\begin_inset Formula $m$
 \end_inset
 
- .
+ לכן האתחול נעשה ב
+\begin_inset Formula $O(m)$
+\end_inset
+
+ )כאשר מעתה 
+\begin_inset Formula $m=\text{num\_of\_classes}$
+\end_inset
+
+, מספר ההרצאות בקורס(.
 \end_layout
 
 \begin_layout Standard
@@ -608,11 +629,11 @@
 \end_layout
 
 \begin_layout Standard
-העתקה עמוקה של השדות, בדומה לאתחול סיבוכיות זמן של 
+העתקה עמוקה של השדות, בדומה לאתחול סיבוכיות זמן היא 
 \begin_inset Formula $O(m)$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -649,6 +670,83 @@
 \end_inset
 
  .
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ֹ
+\bar under
+סיבוכיות מקום:
+\end_layout
+
+\begin_layout Standard
+גודל הרשימות והמערכים שזכרונם מנוהל על ידי קורס:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $|\text{lecture\_arr}|=m$
+\end_inset
+
+ , 
+\begin_inset Formula $|\text{unwatched|}\leq m$
+\end_inset
+
+, 
+\begin_inset Formula $\text{|is\_watched|}\leq m$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+שאר השדות הן 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+מכאן ש סיבוכיות המקום של 
+\begin_inset Formula $Course$
+\end_inset
+
+ היא 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+נציין כי הפונקציות של הפעולות לא רקורסיביות ולא מקצות זכרון חדש ולכן סיבוכיות
+ המקום שלהן היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+תרשים של קורס עם 
+\begin_inset Formula $10$
+\end_inset
+
+הרצאות לדוגמא:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename course_diagram.png
+	scale 60
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
@@ -1162,7 +1260,179 @@
 \begin_inset Formula $PostOrder$
 \end_inset
 
- על העץ
+ רקורסיבי על העצים.
+\end_layout
+
+\begin_layout Standard
+עץ ההרצאות משוחרר ב
+\begin_inset Formula $O(n)$
+\end_inset
+
+ כש
+\begin_inset Formula $n$
+\end_inset
+
+ מספר ההרצאות , כי כל איבר בעץ משתחרר ב 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+עץ הקורסים משוחרר גם הוא ב 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ , נוכיח זאת:
+\end_layout
+
+\begin_layout Standard
+נסמן את מספר ההרצאות בקורס ה 
+\begin_inset Formula $i$
+\end_inset
+
+ ב 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+מתקיים : 
+\begin_inset Formula $\sum_{i=1}^{n}n_{i}=n$
+\end_inset
+
+ , שכן סך ההרצאות בכל הקורסים הוא סך ההרצאות.
+\end_layout
+
+\begin_layout Standard
+שחרור צומת של הקורס ה 
+\begin_inset Formula $i$
+\end_inset
+
+ בעץ הקורסים היא 
+\begin_inset Formula $O(n_{i})$
+\end_inset
+
+ )שחרור של קורס נעשה ב
+\begin_inset Formula $O(n_{i})$
+\end_inset
+
+ ( .
+\end_layout
+
+\begin_layout Standard
+לכן שחרור סך הצמית הוא :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{i=1}^{n}O(n_{i})=O(\sum_{i=1}^{n}n_{i})=O(n)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+קבלנו אזי ששחרור מבנה הנתונים הוא 
+\begin_inset Formula $O(n)+O(n)=O(n)$
+\end_inset
+
+ ולכן גם 
+\begin_inset Formula $O(n+m)$
+\end_inset
+
+ כיוון שידוע ש 
+\begin_inset Formula $n\geq m$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+סיבוכיות מקום:
+\end_layout
+
+\begin_layout Standard
+המבנה מנהל זכרון של שני עצים, עץ ההרצאות ועץ הקורסים.
+ 
+\end_layout
+
+\begin_layout Standard
+הזכרון הדרוש עבור עץ ההרצאות הוא 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $n$
+\end_inset
+
+ הוא מספר ההרצאות.
+\end_layout
+
+\begin_layout Standard
+הזכרון הדרוש עבור עץ הקורסים הו 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ גם כן, משיקולים זהים לשיקולי סיבוכיות השחרור של העץ שצוינו לעיל .
+\end_layout
+
+\begin_layout Standard
+)
+\begin_inset Formula $\sum_{i=1}^{n}O(n_{i})=O(\sum_{i=1}^{n}n_{i})=O(n)$
+\end_inset
+
+(.
+\end_layout
+
+\begin_layout Standard
+ישנן פעולות של המבנה שהן רקורסיביות ולכן דורשות זכרון נוסף, אך עומק הרקורסיות
+ תמיד קטן מ 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+הפונקציות שפועלות באופן רקורסיבי ולכן נדרש עבורן הסבר סיבוכיות מקום:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $WatchClass$
+\end_inset
+
+- 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\bar under
+תרשים של 
+\begin_inset Formula $BoomDS$
+\end_inset
+
+ להמחשה:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename boomDs_figure.png
+	scale 70
+
+\end_inset
+
+
 \end_layout
 
 \end_body
